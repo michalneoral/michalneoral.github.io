@@ -1,0 +1,9 @@
+_site
+.sass-cache
+.DS_store
+
+# VSCODE IDE
+.vscode
+
+#Pycharm IDE
+.idea
