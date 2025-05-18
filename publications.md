@@ -1,10 +1,8 @@
 ---
 layout: page
-permalink: /research/
-title: Research
+permalink: /publications/
+title: Publications
 ---
-
-Describe your research interests here.
 
 <h2>Main Publications</h2>
 <ul>
@@ -65,17 +63,17 @@ Describe your research interests here.
 <ul>
     <li>
 		<b>Dense Motion Estimation in a Monocular Video</b><br>
-		<b>Michal Neoral</b>, supervisor prof. Ing. Jiří Matas, Ph.D., co-superviser Mgr. Jan Šochman, Ph.D.<br>
+		<b>Michal Neoral</b>, supervisor: prof. Ing. Jiří Matas, Ph.D., co-supervisor: Mgr. Jan Šochman, Ph.D.<br>
         2025 <b>Dissertation</b>, in review process
     </li><br>
 	<li>
 		<b>Object Scene Flow in Video Sequences</b><br>
-		<b>Michal Neoral</b>, supervisor Mgr. Jan Šochman, Ph.D.<br>
+		<b>Michal Neoral</b>, supervisor: Mgr. Jan Šochman, Ph.D.<br>
         2017 <b>Master Thesis</b>, awarded with the Dean's Prize for outstanding master thesis.
     </li><br>
 	<li>
 		<b>Extraction of Features from Moving Garment</b><br>
-		<b>Michal Neoral</b>, supervisor Ing. Pavel Krsek, Ph.D.<br>
+		<b>Michal Neoral</b>, supervisor: Ing. Pavel Krsek, Ph.D.<br>
         2014 <b>Bachelor Thesis</b>.
     </li><br>
 </ul>
@@ -160,116 +158,4 @@ Describe your research interests here.
 
 [//]: # (</ul>)
 
-
-\begin{center}
-    \small{
-    \faIcon{phone-alt} +420 22 435 5781 | \faIcon[regular]{envelope} \href{mailto:neoramic@fel.cvut.cz}{neoramic@fel.cvut.cz} | \faIcon{globe} \href{https://cmp.felk.cvut.cz/~neoramic/}{cmp.felk.cvut.cz/\textasciitilde neoramic}
-    }
-\end{center}
-\vspace{-6mm}
-
-\begin{center}
-    \small{
-    \faIcon{mobile-alt} +420 606 865 739 | \faIcon[regular]{envelope} \href{mailto:michalneoral@email.cz}{michalneoral@email.cz} 
-    % \socialicon{\faLinkedin} \href{https://www.linkedin.com/in/your-profile/}{your-profile} | 
-    % \socialicon{\faGithub} \href{https://github.com/your-username}{your-username} | 
-    % \ieeeicon{\includegraphics[height=1.3em]{ieee_collabratec_icon.png}} \href{https://ieee-collabratec.ieee.org/app/p/your-profile}{your-profile} |
-    % \socialicon{\faTwitter} \href{https://twitter.com/your-handle}{your-handle}
-    }
-\end{center}
-
-\section{\textbf{Education}}
-\vspace{-0.4mm}
-\resumeSubHeadingListStart
-
-\resumeSubheading
-{Czech Technical University in Prague}{Prague, Czech Republic}
-{Ph.D. candidate}{2018 -- 2025}
-\resumeItemListStart
-\item Faculty of Electrical Engineering
-\item Informatics / Artificial Intelligence and Biocybernetics
-\item thesis topic: Dense Motion Estimation in a Monocular Video
-\resumeItemListEnd
-
-\resumeSubheading
-{Czech Technical University in Prague}{Prague, Czech Republic}
-{Master's degree in engineering -- Ing. (MSc equivalent)}{2014 -- 2017}
-\resumeItemListStart
-\item Faculty of Electrical Engineering
-\item Open Informatics
-\item specialization: Computer Vision and Image Processing
-\resumeItemListEnd
-
-\resumeSubheading
-{Czech Technical University in Prague}{Prague, Czech Republic}
-{Bachelor's degree in engineering -- Bc. (BSc equivalent)}{2011 -- 2014}
-\resumeItemListStart
-\item Faculty of Electrical Engineering
-\item Cybernetics and Robotics
-\item specialization: Robotics
-\resumeItemListEnd
-
-\resumeSubHeadingListEnd
-\vspace{-6mm}
-
-\section{\textbf{Teaching}}
-\vspace{-0.4mm}
-  \resumeSubHeadingListStart
-  \resumeSubheading
-      {{Pattern Recognition and Machine Learning}}{}
-      {Czech Technical University in Prague}{2018 -- 2025}
-      \resumeItemListStart
-        \item teaching
-        \item material preparation
-        \item development of automatic evaluation of student homeworks
-      \resumeItemListEnd 
-  \resumeSubheading
-    {{Digital Photography Processing}}{}
-    {Czech Technical University in Prague}{2020 -- 2022}
-  \resumeSubheading
-    {Computer Vision Methods}{}
-    {Czech Technical University in Prague}{2018 -- 2019}
-  \resumeSubHeadingListEnd
-\vspace{-6mm}
-
-\section{\textbf{Patents and Publications} \hfill \textcolor{darkblue}{\scriptsize C=Conference Paper, P=Patent, S=In Submission, T=Thesis}}
-\vspace{0.2mm}
-\small{
-\begin{enumerate}[leftmargin=*, labelsep=0.5em, align=left, widest={[\textbf{S.1}]}, itemindent=0em, label={\textbf{[\arabic*]}]}]
-
-
-\end{enumerate}
-
-\section{\textbf{Projects and Internships}}
-\vspace{-0.4mm}
-\resumeSubHeadingListStart
-
-\resumeProject
-  {Toyota Motor Europe (TME), Brussels, Belgium.}
-  {Internship}
-  {February 2017 -- June 2017}
-  {{}}
-\resumeItemListStart
-  \item Tools: C++, CUDA, Python, CAFFE2, TensorFlow
-  \item Developed and implementation of monocular depth estimation
-\resumeItemListEnd
-
-\resumeProject
-  {Project: computer vision research for Toyota Motor Europe}
-  {The Toyota Research Lab at the Faculty of Electrical Engineering}
-  {2016 -- 2024}
-  {{}}
-
-
-\resumeProject
-  {Project: SyRoTek -- Systém pro Robotickou Tele-výuku}
-  {A Robotic System for Education}
-  {2015 -- 2016}
-  {{}}
-
-\resumeProject
-  {Project: CloPeMa -- Clothes Perception and Manipulation}
-  {}
-  {2013 -- 2015}
-  {{}}
 
