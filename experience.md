@@ -6,7 +6,7 @@ title: Work Experience, Projects, and Internships
 
 <h2>Work Experience</h2>
 
-<h3>Researcher and Developer</h3>
+<h3>Research engineer / Ph.D. student</h3>
 <ul>
 	<li>
         <b>Czech Technical University in Prague</b><br>
