@@ -4,7 +4,7 @@ permalink: /research/
 title: Research
 ---
 
-Describe your research interests here.
+[//]: # (Describe your research interests here.)
 
 <h2>Main Publications</h2>
 <ul>
