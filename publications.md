@@ -7,9 +7,9 @@ title: Publications
 <h2>Main Publications</h2>
 <ul>
 	<li>
-		<b>Multi-Flow Tracker with Independent Matching Quality Estimation</b><br>
+		<b>MFTIQ: Multi-Flow Tracker with Independent Matching Quality Estimation</b><br>
 		<i>Jonáš Šerých, <b>Michal Neoral</b>, and Jiří Matas</i><br>
-		Proceedings of the IEEE/CVF Winter Conference on Applications of Computer Vision, February 2025, Tuscon, Arizona USA.<br>
+		Proceedings of the IEEE/CVF Winter Conference on Applications of Computer Vision, February 2025, Tucson, Arizona USA.<br>
 		<a href="https://openaccess.thecvf.com/content/WACV2025/papers/Serych_MFTIQ_Multi-Flow_Tracker_with_Independent_Matching_Quality_Estimation_WACV_2025_paper.pdf"><div class="color-button">pdf</div></a>
         <a href="https://arxiv.org/abs/2411.09551"><div class="color-button">arXiv</div></a>
         <a href="https://openaccess.thecvf.com/content/WACV2025/supplemental/Serych_MFTIQ_Multi-Flow_Tracker_WACV_2025_supplemental.pdf"><div class="color-button">supplementary</div></a>
@@ -30,7 +30,7 @@ title: Publications
 		<b>Monocular Arbitrary Moving Object Discovery and Segmentation</b><br>
 		<i><b>Michal Neoral</b>, Jan Šochman, and Jiří Matas</i><br>
 		In The 32nd British Machine Vision Conference, November 2021, Online. <br>
-        <a href="https://www.bmvc2021-virtualconference.com/assets/papers/1500.pdf"><div class="color-button">pdf</div></a>
+        <a href="https://www.bmva-archive.org.uk/bmvc/2021/assets/papers/1500.pdf"><div class="color-button">pdf</div></a>
         <a href="https://github.com/michalneoral/Raptor"><div class="color-button">code</div></a>
 	</li><br>
     <li>
@@ -43,13 +43,20 @@ title: Publications
     <li>
 		<b>Object Scene Flow with Temporal Consistency</b><br>
 		<i><b>Michal Neoral</b>, and Jan Šochman</i><br>
-		In 22nd Computer Vision Winter Workshop (CVWW) Pattern Recognition and Image Processing Group; TU Wien \& PRIP Club; Vienna; Austria, February 2017, ISBN: 978-3-200-04969-7. <br>
+		In 22nd Computer Vision Winter Workshop (CVWW) Pattern Recognition and Image Processing Group; TU Wien &amp; PRIP Club; Vienna; Austria, February 2017, ISBN: 978-3-200-04969-7. <br>
         <a href="https://cvww2017.prip.tuwien.ac.at/papers/CVWW2017_paper_27.pdf"><div class="color-button">pdf</div></a>
 	</li><br>
 </ul>
 
 <h2>Other Publications</h2>
 <ul>
+	<li>
+		<b>The Third Visual Object Tracking Segmentation VOTS2025 Challenge Results</b><br>
+		<i>Matej Kristan, Jiří Matas, Pavel Tokmakov, Alan Lukežič, Michael Felsberg, Luka Čehovin Zajc, Khanh-Tung Tran, Xuan-Son Vu, Johanna Björklund, <b>Michal Neoral</b>, Hyung Jin Chang, and others</i><br>
+		Proceedings of the IEEE/CVF International Conference on Computer Vision Workshops, October 2025, Honolulu, Hawaii USA.<br>
+		<a href="https://openaccess.thecvf.com/content/ICCV2025W/VOTS2025/papers/Kristan_The_Third_Visual_Object_Tracking_Segmentation_VOTS2025_Challenge_Results_ICCVW_2025_paper.pdf"><div class="color-button">pdf</div></a>
+        <a href="https://www.votchallenge.net/vots2025/"><div class="color-button">challenge page</div></a>
+	</li><br>
 	<li>
 		<b>Point Tracking in Surgery–The 2024 Surgical Tattoos in Infrared (STIR) Challenge</b><br>
 		<i>Adam Schmidt, Mert Asim Karaoglu, Soham Sinha, Mingang Jang, Ho-Gun Ha, Kyungmin Jung, Kyeongmo Gu, Ihsan Ullah, Hyunki Lee, Jonáš Šerých, <b>Michal Neoral</b>, Jiří Matas, Rulin Zhou, Wenlong He, An Wang, Hongliang Ren, Bruno Silva, Sandro Queiros, Estevao Lima, Joao L. Vilac, Shunsuke Kikuchi, Atsushi Kouno, Hiroki Matsuzaki, Tongtong Li, Yulu Chen, Ling Li, Xiang Ma, Xiaojian Li, Mona Sheikh Zeinoddin, Xu Wang, Zafer Tandogdu, Greg Shaw, Evangelos Mazomenos, Danail Stoyanov, Yuxin Chen, Zijian Wu, Alexander Ladikos, Simon DiMaio, Septimiu E. Salcudean, and Omid Mohareri</i><br>
@@ -64,12 +71,14 @@ title: Publications
     <li>
 		<b>Dense Motion Estimation in a Monocular Video</b><br>
 		<b>Michal Neoral</b>, supervisor: prof. Ing. Jiří Matas, Ph.D., co-supervisor: Mgr. Jan Šochman, Ph.D.<br>
-        2025 <b>Dissertation</b>, in review process
+        2025 <b>Dissertation</b>, defended.<br>
+        <a href="https://dspace.cvut.cz/handle/10467/122044"><div class="color-button">thesis</div></a>
     </li><br>
 	<li>
 		<b>Object Scene Flow in Video Sequences</b><br>
 		<b>Michal Neoral</b>, supervisor: Mgr. Jan Šochman, Ph.D.<br>
-        2017 <b>Master Thesis</b>, awarded with the Dean's Prize for outstanding master thesis.
+        2017 <b>Master Thesis</b>, awarded with the Dean's Prize for outstanding master thesis.<br>
+        <a href="https://dspace.cvut.cz/handle/10467/68536"><div class="color-button">thesis</div></a>
     </li><br>
 	<li>
 		<b>Extraction of Features from Moving Garment</b><br>
