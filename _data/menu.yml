@@ -1,25 +1,20 @@
-#- title: "About"
-#  href: "/about/"
+- title: "About"
+  href: "/about/"
 
 - title: "Publications"
   href: "/publications/"
 
 - title: "Experience"
   href: "/experience/"
-#- title: "Research"
-#  href: "/research/"
 
-#- title: "Projects"
-#  href: "/projects/"
-
-#- title: "Blog"
-#  href: "/blog/"
-
-- title: "CV"
-  href: "/cv/"
+- title: "Projects"
+  href: "/projects/"
 
 - title: "Teaching"
   href: "/teaching/"
+
+- title: "CV"
+  href: "/cv/"
 
 #- title: "Miscellany"
 #  href: "/miscellany/"

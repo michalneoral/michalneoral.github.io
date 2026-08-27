@@ -4,16 +4,37 @@ permalink: /projects/
 title: Projects
 ---
 
-[//]: # (Here is a non-exhaustive list of my non-research projects. My research work can be found <a href="/research">here</a>. You can also check out my Github profile <a href="">here</a> for a complete list of my projects.)
+Code released alongside my research, and a few smaller things that turned out to be useful to other people. My papers are under <a href="/publications/">Publications</a> and the projects I have worked on under <a href="/experience/">Experience</a>. Everything public is on <a href="https://github.com/michalneoral">my GitHub profile</a>.
 
+<h2>Research code</h2>
 <ul>
 	<li>
-		<b>Project title #1</b>: Give a brief description of your first project here. You can link the relevant research paper(s), report, code repository and any other detail(s) by editing <i>projects.md</i> file<br>
-		<a href=""><div class="color-button">paper</div></a><a href="project_1.pdf"><div class="color-button">report</div></a><a href=""><div class="color-button">code</div></a>
+		<b>MFT</b> -- long-term tracking of every pixel. Reference implementation of the WACV 2024 paper.<br>
+		<a href="https://github.com/serycjon/MFT"><div class="color-button">code</div></a>
+        <a href="https://cmp.felk.cvut.cz/~serycjon/MFT/"><div class="color-button">project page</div></a>
+        <a href="/publications/"><div class="color-button">paper</div></a>
 	</li><br>
 	<li>
-		<b>Project title #2</b>: Give a brief description of your second project here. You can link the relevant research paper(s), report, code repository and any other detail(s) by editing <i>projects.md</i> file<br>
-		<a href=""><div class="color-button">paper</div></a><a href="project_1.pdf"><div class="color-button">report</div></a><a href=""><div class="color-button">code</div></a>
+		<b>MFTIQ</b> -- multi-flow tracker with independent matching quality estimation. Reference implementation of the WACV 2025 paper.<br>
+		<a href="https://github.com/serycjon/MFTIQ"><div class="color-button">code</div></a>
+        <a href="https://cmp.felk.cvut.cz/~serycjon/MFTIQ/"><div class="color-button">project page</div></a>
+        <a href="/publications/"><div class="color-button">paper</div></a>
 	</li><br>
+	<li>
+		<b>Raptor</b> -- monocular arbitrary moving object discovery and segmentation. Reference implementation of the BMVC 2021 paper.<br>
+		<a href="https://github.com/michalneoral/Raptor"><div class="color-button">code</div></a>
+        <a href="/publications/"><div class="color-button">paper</div></a>
+	</li><br>
+</ul>
 
+<h2>Other</h2>
+<ul>
+	<li>
+		<b>CTU template for thesis reviews</b> -- a LaTeX template for writing bachelor and master thesis reviews at CTU, which saves a fair amount of formatting work every June.<br>
+		<a href="https://github.com/michalneoral/CTU-template-for-thesis-reviews"><div class="color-button">code</div></a>
+	</li><br>
+	<li>
+		<b>Mosaic Maker</b> -- final student projects from the Digital Photography Processing course.<br>
+		<a href="https://github.com/michalneoral/DIF---Final-Projects-Mosaic-Maker"><div class="color-button">code</div></a>
+	</li><br>
 </ul>
