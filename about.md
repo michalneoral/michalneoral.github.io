@@ -14,7 +14,7 @@ Most of my work so far has been about <b>motion</b>: what moves in a video, and 
 
 More recently I have been working on <b>detection, classification and fine-grained recognition</b>: object detection and classification in large video archives with fast incremental learning of new classes, open-set recognition where unknown classes appear at inference time, and compact image descriptors distilled from frozen vision-language models.
 
-A recurring theme in both is that a method has to hold up on real footage, not only on a benchmark split. Much of my research was done in a long collaboration between CTU and <b>Toyota Motor Europe</b>, which is a good school for that.
+Much of this work was done in a long collaboration between CTU and <b>Toyota Motor Europe</b>, which ran from 2015 to 2025 and produced most of my papers and four patent filings.
 
 <h2>Background</h2>
 
@@ -25,7 +25,7 @@ I have also been teaching labs at the faculty since 2018, in Pattern Recognition
 <h2>Contact</h2>
 
 <ul>
-	<li>{{ site.academic_email }}</li>
-	<li>{{ site.general_email }}</li>
-	<li><a href="https://github.com/{{ site.github_username }}">github.com/{{ site.github_username }}</a></li>
+	<li>Academic: <a href="mailto:{{ site.academic_email }}">{{ site.academic_email }}</a></li>
+	<li>Personal: <a href="mailto:{{ site.general_email }}">{{ site.general_email }}</a></li>
+	<li>Code: <a href="https://github.com/{{ site.github_username }}">github.com/{{ site.github_username }}</a></li>
 </ul>

@@ -30,11 +30,11 @@ Code released alongside my research, and a few smaller things that turned out to
 <h2>Other</h2>
 <ul>
 	<li>
-		<b>CTU template for thesis reviews</b> -- a LaTeX template for writing bachelor and master thesis reviews at CTU, which saves a fair amount of formatting work every June.<br>
+		<b>CTU template for thesis reviews</b> -- an unofficial LaTeX template for writing reviewer and supervisor reports on bachelor and master theses at CTU. Czech and English, separate reviewer and supervisor layouts, and the same section structure as the official form in KOS. Runs on Overleaf or locally.<br>
 		<a href="https://github.com/michalneoral/CTU-template-for-thesis-reviews"><div class="color-button">code</div></a>
 	</li><br>
 	<li>
-		<b>Mosaic Maker</b> -- final student projects from the Digital Photography Processing course.<br>
+		<b>Mosaic Maker</b> -- a generator that turns the voting results and photos from the Digital Photography Processing final projects into print-ready overview PDFs, one page per author, for the course exhibition.<br>
 		<a href="https://github.com/michalneoral/DIF---Final-Projects-Mosaic-Maker"><div class="color-button">code</div></a>
 	</li><br>
 </ul>
