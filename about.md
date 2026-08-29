@@ -16,11 +16,35 @@ More recently I have been working on <b>detection, classification and fine-grain
 
 Much of this work was done in a long collaboration between CTU and <b>Toyota Motor Europe</b>, which ran from 2015 to 2025 and produced most of my papers and four patent filings.
 
-<h2>Background</h2>
+<h2>Education</h2>
 
-Bc. in Cybernetics and Robotics (2014), Ing. in Open Informatics with a specialization in Computer Vision and Image Processing (2017, awarded the Dean's Prize), and Ph.D. in Informatics / Artificial Intelligence and Biocybernetics (2025), all at the Faculty of Electrical Engineering, CTU in Prague. The full detail is on the <a href="/">homepage</a> and in my <a href="/cv/">CV</a>, the work itself under <a href="/publications/">Publications</a> and <a href="/experience/">Experience</a>.
+All three degrees are from the Faculty of Electrical Engineering, Czech Technical University in Prague.
 
-I have also been teaching labs at the faculty since 2018, in Pattern Recognition and Machine Learning, Computer Vision Methods, and Digital Photography Processing. Details are under <a href="/teaching/">Teaching</a>.
+<ul>
+	<li>
+		<b>Doctoral degree</b>, Ph.D. (Philosophiæ Doctor), 2018 &ndash; 2025<br>
+		field of study: <b>Informatics / Artificial Intelligence and Biocybernetics</b><br>
+		dissertation: <a href="https://dspace.cvut.cz/handle/10467/122044"><b>Dense Motion Estimation in a Monocular Video</b></a><br>
+		supervisor: prof. Ing. Jiří Matas, Ph.D., co-supervisor: Mgr. Jan Šochman, Ph.D.
+	</li><br>
+	<li>
+		<b>Master's degree</b>, Ing. (MSc equivalent), 2014 &ndash; 2017<br>
+		programme: Open Informatics, specialization: <b>Computer Vision and Image Processing</b><br>
+		thesis: <a href="https://dspace.cvut.cz/handle/10467/68536"><b>Object Scene Flow in Video Sequences</b></a><br>
+		supervisor: Mgr. Jan Šochman, Ph.D.<br>
+		awarded the Dean's Prize for an outstanding master thesis
+	</li><br>
+	<li>
+		<b>Bachelor's degree</b>, Bc. (BSc equivalent), 2011 &ndash; 2014<br>
+		programme: Cybernetics and Robotics, specialization: <b>Robotics</b><br>
+		thesis: <b>Extraction of Features from Moving Garment</b><br>
+		supervisor: Ing. Pavel Krsek, Ph.D.
+	</li><br>
+</ul>
+
+<h2>Teaching</h2>
+
+I have been teaching labs at the faculty since 2018, in Pattern Recognition and Machine Learning, Computer Vision Methods, and Digital Photography Processing. Details are under <a href="/teaching/">Teaching</a>, and the rest of the record is in my <a href="/cv/">CV</a>.
 
 <h2>Contact</h2>
 
