@@ -6,7 +6,7 @@ permalink: /about/
 
 {% include image.html url="/images/profile.jpg" width=300 align="right" %}
 
-I am a computer vision researcher at the <a href="https://cmp.felk.cvut.cz/"><b>Center for Machine Perception (CMP)</b></a>, Czech Technical University in Prague, in the <b>Visual Recognition Group (VRG)</b> at the Faculty of Electrical Engineering. I finished my Ph.D. there in 2025, after a bachelor's degree in robotics and a master's in computer vision at the same faculty.
+I am a computer vision researcher at the <a href="https://cmp.felk.cvut.cz/"><b>Center for Machine Perception (CMP)</b></a>, Czech Technical University in Prague, in the <a href="https://vrg.fel.cvut.cz/"><b>Visual Recognition Group (VRG)</b></a> at the Faculty of Electrical Engineering. I finished my Ph.D. there in 2025, after a bachelor's degree in robotics and a master's in computer vision at the same faculty.
 
 <h2>Research interests</h2>
 
