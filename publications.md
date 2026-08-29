@@ -108,7 +108,7 @@ title: Publications
     </li><br>
     <li>
 		<b>METHODS FOR OPTICAL FLOW ESTIMATION</b><br>
-		<i>Jan Šochman, Nikolay Chumerin, Jiří Matas, and <b>Michal Neoral</b>. (2020).</i><br>
+		<i>Nikolay Chumerin, <b>Michal Neoral</b>, Jan Šochman, and Jiří Matas. (2020).</i><br>
         WO Patent WO2020088766A1, filed Oct 31, 2018, and issued May 07, 2020. <b>Patent Application</b>
     </li><br>
 </ul>
