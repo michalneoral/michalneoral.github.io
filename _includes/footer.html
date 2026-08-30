@@ -15,6 +15,19 @@
 
       <div class="footer-col  footer-col-2">
         <ul class="social-media-list">
+          {% if site.scholar_id %}
+          <li>
+              <span class="icon  icon--scholar">
+                <svg viewBox="0 0 24 24">
+                  <path fill="#828282" d="M12 3L1 9l11 6 9-4.91V17h2V9L12 3zM5 13.18v4L12 21l7-3.82v-4L12 17l-7-3.82z"/>
+                </svg>
+              </span>
+            <a href="https://scholar.google.com/citations?user={{ site.scholar_id }}">
+              <span class="username">Google Scholar</span>
+            </a>
+          </li>
+          {% endif %}
+
           {% if site.github_username %}
           <li>
               <span class="icon  icon--github">
@@ -72,7 +85,6 @@
             </a>
           </li>
           {% endif %}
-          </svg>
         </ul>
       </div>
 
