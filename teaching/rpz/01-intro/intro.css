@@ -1,0 +1,486 @@
+/* Styly specifické pro 01 – Introduction */
+
+:root {
+  --pen-green: #5E9E45;
+  --pen-brown: #A9570A;
+  --rpz-accent: #4BA173;
+  --rpz-mint: #63D297;
+  --rpz-dark: #202729;
+  --rpz-slate: #353744;
+  --rpz-red: #E8322C;
+  --rpz-ink: #424242;
+  --rpz-muted: #8A8F93;
+  --rpz-soft: #EAF7F0;
+}
+
+/* ---------- Obecné ---------- */
+.reveal .lead { font-size: 1.1em; }
+.reveal .small { font-size: 0.7em; }
+.reveal .muted { color: var(--rpz-muted); }
+.reveal .red { color: var(--rpz-red); font-weight: 600; }
+.reveal .strong-accent { color: var(--rpz-accent); font-weight: 700; }
+
+.reveal .ico {
+  height: 1.25em;
+  width: auto;
+  vertical-align: -0.3em;
+  margin: 0 !important;
+}
+
+.reveal .tok-g, .reveal .tok-b { font-weight: 700; }
+.reveal .tok-g { color: var(--pen-green); }
+.reveal .tok-b { color: var(--pen-brown); }
+
+/* ---------- Karty (co se naučíte, podpora) ---------- */
+.reveal .cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 36px;
+  margin-top: 36px;
+}
+.reveal .cards.two { grid-template-columns: repeat(2, 1fr); }
+.reveal .card {
+  background: #FFFFFF;
+  border: 1.5px solid #DCE6E0;
+  border-radius: 21px;
+  padding: 30px 36px;
+  font-size: 0.8em;
+  box-shadow: 0 9px 27px rgba(22, 34, 42, 0.06);
+}
+.reveal .card h3 {
+  font-size: 1.15em;
+  margin: 0 0 0.2em 0;
+}
+.reveal .card .tag {
+  display: inline-block;
+  font-size: 0.75em;
+  font-weight: 600;
+  color: var(--rpz-accent);
+  background: var(--rpz-soft);
+  border-radius: 999px;
+  padding: 0.05em 0.7em;
+  margin-bottom: 0.5em;
+}
+.reveal .card ul { margin: 0.3em 0 0 1em; }
+.reveal .card.warn { background: #FBF1EF; border-color: #EBC5BF; }
+.reveal .card.ok { background: #EFF7F1; border-color: #C3E0CB; }
+
+/* ---------- Plán cvičení ---------- */
+.reveal table.plan { font-size: 0.58em; width: 100%; }
+.reveal table.plan td, .reveal table.plan th { padding: 0.28em 0.7em; }
+.reveal table.plan tr.test td { background: #FDECEA; font-weight: 600; }
+.reveal table.plan tr.off td { color: var(--rpz-muted); font-style: italic; }
+.reveal table.plan tr.first td { background: var(--rpz-soft); font-weight: 600; }
+
+/* ---------- Body: pruhy ---------- */
+.reveal .bar {
+  display: flex;
+  gap: 12px;
+  height: 195px;
+  margin: 60px 0 24px;
+}
+.reveal .seg {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-radius: 18px;
+  color: #FFFFFF;
+  font-weight: 700;
+  line-height: 1.15;
+  font-size: 0.8em;
+  overflow: hidden;
+  white-space: nowrap;
+}
+.reveal .seg small { font-weight: 400; font-size: 0.7em; opacity: 0.9; }
+.reveal .seg.labs { background: var(--rpz-accent); }
+.reveal .seg.asg { background: var(--rpz-mint); color: var(--rpz-dark); }
+.reveal .seg.tests { background: var(--rpz-accent); }
+.reveal .seg.written { background: var(--rpz-slate); }
+.reveal .seg.oral { background: var(--rpz-red); }
+.reveal .seg.bonus {
+  background: repeating-linear-gradient(135deg, #9FE3BE 0 15px, #C4EFD7 15px 30px);
+  color: var(--rpz-ink);
+}
+
+/* ---------- Body za úlohu: schodový graf ---------- */
+.reveal .steps {
+  display: grid;
+  grid-template-columns: 1.1fr 3fr 0.9fr;
+  align-items: end;
+  height: 450px;
+  margin-top: 45px;
+  border-bottom: 4.5px solid var(--rpz-ink);
+  gap: 9px;
+}
+.reveal .step {
+  border-radius: 15px 15px 0 0;
+  color: #FFFFFF;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-weight: 700;
+  font-size: 0.85em;
+  line-height: 1.2;
+}
+.reveal .step small { font-weight: 400; font-size: 0.65em; }
+.reveal .step.s1 { height: 100%; background: var(--rpz-accent); }
+.reveal .step.s2 { height: 77%; background: #7CC49C; }
+.reveal .step.s3 {
+  height: 26%;
+  background: #FFFFFF;
+  border: 4.5px dashed var(--rpz-red);
+  border-bottom: none;
+  color: var(--rpz-red);
+}
+.reveal .steps-axis {
+  display: grid;
+  grid-template-columns: 1.1fr 3fr 0.9fr;
+  gap: 9px;
+  font-size: 0.55em;
+  color: var(--rpz-muted);
+  margin-top: 9px;
+}
+.reveal .steps-axis span:nth-child(3) { color: var(--rpz-red); font-weight: 600; }
+
+/* Fragment, který vyroste zespodu */
+.reveal .fragment.grow-up {
+  opacity: 0;
+  transform: scaleY(0);
+  transform-origin: bottom;
+  transition: transform 0.6s cubic-bezier(.2, .9, .3, 1.2), opacity 0.3s;
+}
+.reveal .fragment.grow-up.visible {
+  opacity: 1;
+  transform: scaleY(1);
+}
+
+/* ---------- Stupnice známek ---------- */
+.reveal .scale {
+  display: flex;
+  height: 135px;
+  margin-top: 45px;
+  gap: 6px;
+  font-weight: 700;
+}
+.reveal .scale > div {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: #FFFFFF;
+  border-radius: 12px;
+  font-size: 0.8em;
+}
+.reveal .scale small { font-weight: 400; font-size: 0.6em; }
+
+/* ---------- Checklist ---------- */
+.reveal .check ul { list-style: none; margin-left: 0; }
+.reveal .check li { position: relative; padding-left: 1.6em; margin: 0.35em 0; }
+.reveal .check li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.2em;
+  width: 0.9em;
+  height: 0.9em;
+  border: 4.5px solid var(--rpz-accent);
+  border-radius: 7.5px;
+}
+.reveal .check li.visible::after {
+  content: "";
+  position: absolute;
+  left: 0.3em;
+  top: 0.25em;
+  width: 0.3em;
+  height: 0.6em;
+  border: solid var(--rpz-accent);
+  border-width: 0 6px 6px 0;
+  transform: rotate(45deg);
+}
+
+/* ---------- Venn ---------- */
+.reveal .venn { width: 100%; max-width: 660px; height: auto; }
+.reveal .venn text { font-family: "Montserrat", sans-serif; font-weight: 700; font-size: 39px; }
+
+/* ---------- Ohrádky se zvířátky ---------- */
+.reveal .farm {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 27px;
+}
+.reveal .pen {
+  display: grid;
+  grid-template-columns: repeat(3, 144px);
+  gap: 6px 15px;
+  padding: 15px 21px;
+  border: 9px solid;
+  border-radius: 12px;
+  background: #FFFFFF;
+  transition: opacity 0.4s, box-shadow 0.4s;
+}
+.reveal .pen.pen-b { border-color: var(--pen-brown); }
+.reveal .pen.pen-g { border-color: var(--pen-green); grid-template-columns: repeat(2, 144px); }
+.reveal .animal {
+  width: 144px;
+  height: 120px;
+  object-fit: contain;
+  margin: 0 !important;
+  transition: opacity 0.4s, transform 0.4s, filter 0.4s;
+}
+.reveal .wolf { width: 390px; margin: 0 !important; }
+
+/* Zvýraznění řízené fragmenty (theme/highlight.html) */
+.reveal .hl-active .animal,
+.reveal .hl-active .face { opacity: 0.15; }
+.reveal .hl-active .animal.given,
+.reveal .hl-active .face.given { opacity: 0.6; }
+.reveal .hl-active .animal.hl,
+.reveal .hl-active .face.hl {
+  opacity: 1;
+  transform: scale(1.12);
+  filter: drop-shadow(0 0 15px rgba(255, 196, 0, 0.95));
+}
+.reveal .pen.given { box-shadow: 0 0 0 12px rgba(32, 39, 41, 0.10); }
+.reveal .pen.hl { box-shadow: 0 0 0 12px rgba(255, 196, 0, 0.45); }
+
+.reveal .probs p { margin: 0.18em 0; font-size: 0.95em; }
+.reveal .calc p { margin: 0.3em 0; font-size: 0.95em; }
+.reveal .calc .indent { padding-left: 3.6em; }
+
+/* ---------- Karty (příklad se třemi kartami) ---------- */
+.reveal .deck {
+  display: flex;
+  gap: 90px;
+  justify-content: center;
+  margin: 45px 0 15px;
+}
+.reveal .card3 { display: flex; flex-direction: column; align-items: center; gap: 12px; }
+.reveal .card3 .faces { display: flex; gap: 15px; }
+.reveal .face {
+  width: 135px;
+  height: 195px;
+  border-radius: 15px;
+  border: 4.5px solid var(--rpz-ink);
+  transition: opacity 0.4s, transform 0.4s, filter 0.4s;
+}
+.reveal .face.red { background: #D0453A; }
+.reveal .face.black { background: #1E2327; }
+.reveal .card3 .label { font-size: 0.55em; color: var(--rpz-muted); }
+
+/* ---------- Bayes ---------- */
+.reveal .bayes-legend {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 21px;
+  font-size: 0.6em;
+  margin-top: 15px;
+}
+.reveal .bayes-legend > div {
+  border-radius: 15px;
+  padding: 15px 21px;
+  border: 4.5px solid;
+}
+.reveal .bayes-legend b, .reveal .bayes-legend strong { display: block; font-size: 1.15em; }
+/* Barvy boxů odpovídají barvám částí vzorce */
+.reveal .bayes-legend > div.bl-post  { border-color: #3C7DD9; background: #EEF4FC; }
+.reveal .bayes-legend > div.bl-prior { border-color: #9B3C8C; background: #F7EEF5; }
+.reveal .bayes-legend > div.bl-like  { border-color: #E0A800; background: #FDF7E3; }
+.reveal .bayes-legend > div.bl-marg  { border-color: #4E8F3A; background: #EEF6EB; }
+.reveal .bl-post strong, .reveal .bl-post b  { color: #3C7DD9; }
+.reveal .bl-prior strong, .reveal .bl-prior b { color: #9B3C8C; }
+.reveal .bl-like strong, .reveal .bl-like b  { color: #B58800; }
+.reveal .bl-marg strong, .reveal .bl-marg b  { color: #4E8F3A; }
+.reveal .bayes-legend .ex { display: block; color: #8A8F93; font-style: italic; margin-top: 0.4em; }
+.reveal .example { color: #8A8F93; font-style: italic; }
+
+/* ---------- Konec ---------- */
+.reveal section.the-end h2 {
+  color: #FFFFFF;
+  text-shadow: 0 4.5px 18px rgba(0, 0, 0, 0.6);
+}
+
+/* ---------- Opravy ---------- */
+.reveal .card-title {
+  display: block;
+  font-family: "Montserrat", "Helvetica Neue", Arial, sans-serif;
+  font-weight: 700;
+  font-size: 1em;
+  color: var(--rpz-accent);
+  text-wrap: balance;
+  margin-bottom: 0.3em;
+}
+.reveal .seg small,
+.reveal .step small,
+.reveal .scale small { display: block; }
+.reveal .seg { white-space: normal; text-align: center; font-size: 0.7em; }
+.reveal .step { text-align: center; }
+.reveal .compact { font-size: 0.85em; }
+
+/* ---------- Otázka + odpověď (slidy s ohrádkami) ---------- */
+.reveal .probs p:has(.ans.visible) .qmark,
+.reveal .calc p:has(.ans.visible) .qmark { display: none; }
+.reveal .qmark { color: var(--rpz-red); font-weight: 700; }
+.reveal .qstack { position: relative; height: 150px; margin-top: 24px; }
+.reveal .question {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  padding: 18px 30px;
+  background: var(--rpz-soft);
+  border-radius: 18px;
+  font-size: 0.78em;
+  color: var(--rpz-dark);
+}
+.reveal .question::before {
+  content: "?";
+  flex: 0 0 auto;
+  width: 66px;
+  height: 66px;
+  border-radius: 50%;
+  background: var(--rpz-accent);
+  color: #FFFFFF;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 700;
+  font-size: 1.3em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ---------- Plán cvičení: štítek testu a zvýraznění ---------- */
+.reveal .test-badge {
+  display: inline-block;
+  padding: 0.05em 0.6em;
+  border-radius: 999px;
+  background: var(--rpz-red);
+  color: #FFFFFF;
+  font-size: 0.8em;
+  font-weight: 700;
+}
+.reveal table.plan tr.test td { transition: background 0.4s; }
+.reveal .hl-active table.plan tr.test.hl td { background: #F9C9C4; }
+
+/* ---------- Rámeček 76 % ---------- */
+.reveal .group76 { position: relative; display: flex; gap: 12px; }
+.reveal .frame76 {
+  position: absolute;
+  inset: -21px;
+  border: 6px solid var(--rpz-red);
+  border-radius: 24px;
+  pointer-events: none;
+}
+.reveal .frame76 span {
+  position: absolute;
+  top: -0.75em;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #FFFFFF;
+  color: var(--rpz-red);
+  font-weight: 700;
+  font-size: 0.8em;
+  padding: 0 0.4em;
+}
+
+/* ---------- Videa ---------- */
+.reveal .videos { list-style: none; margin: 0; padding: 0; }
+.reveal .videos li { margin: 0.35em 0; font-size: 0.8em; }
+.reveal .videos .who { color: var(--rpz-muted); font-size: 0.85em; }
+
+/* Menší ohrádky, když je vedle nich delší výpočet */
+.reveal .farm.compact .pen { grid-template-columns: repeat(3, 100px); gap: 4px 8px; padding: 10px 12px; }
+.reveal .farm.compact .pen.pen-g { grid-template-columns: repeat(2, 100px); }
+.reveal .farm.compact .animal { width: 100px; height: 84px; }
+
+/* ---------- Pruhy bodů: procentní šířky bez mezer ----------
+   Mezery tvoří průhledný okraj, takže "Written exam" a "Oral" mají na obou
+   slidech přesně stejnou pozici i šířku a auto-animate s nimi nehýbe. */
+.reveal .bar { gap: 0; margin: 60px 0 60px; }
+.reveal .group76 { gap: 0; }
+.reveal .seg {
+  border: 6px solid transparent;
+  background-clip: padding-box;
+  box-sizing: border-box;
+}
+
+/* ---------- Větší odstupy tam, kde je místo ---------- */
+.reveal .steps-axis { margin-bottom: 100px; }
+.reveal .scale { margin-bottom: 60px; }
+.reveal .check li { margin: 0.6em 0; }
+
+/* ---------- Výrazné boxy s upozorněním ---------- */
+.reveal .alert {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+  margin-top: 60px;
+  padding: 24px 36px;
+  border: 4px solid #E0A800;
+  border-radius: 18px;
+  background: #FDF7E3;
+  color: var(--rpz-dark);
+  font-size: 0.8em;
+}
+.reveal .alert p { margin: 0; }
+.reveal .alert::before {
+  content: "!";
+  flex: 0 0 auto;
+  width: 66px;
+  height: 66px;
+  border-radius: 50%;
+  background: #E0A800;
+  color: #FFFFFF;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 700;
+  font-size: 1.3em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.reveal .alert.red { border-color: var(--rpz-red); background: #FDECEA; color: var(--rpz-red); font-weight: 600; }
+.reveal .alert.red::before { background: var(--rpz-red); }
+
+/* Závěrečné sdělení uprostřed volného místa */
+.reveal .verdict {
+  text-align: center;
+  color: var(--rpz-red);
+  font-size: 1.5em;
+  font-weight: 700;
+  margin-top: 1.6em;
+}
+.reveal .verdict strong { color: var(--rpz-red); }
+
+/* ---------- Axiomy: zarovnané vzorce ---------- */
+.reveal .axioms p {
+  display: grid;
+  grid-template-columns: 560px auto;
+  align-items: baseline;
+  margin: 0.25em 0;
+}
+.reveal .axioms .ax-label { font-weight: 700; color: var(--rpz-strong, #424242); }
+.reveal .venn-corner { position: absolute; right: 0; bottom: 40px; width: 690px; }
+
+/* ---------- Mamograf: vlastní legenda mřížky ---------- */
+.reveal .waffle-legend { display: flex; gap: 30px; font-size: 0.5em; margin-top: 12px; }
+.reveal .waffle-legend span::before {
+  content: "";
+  display: inline-block;
+  width: 0.9em;
+  height: 0.9em;
+  border-radius: 4px;
+  margin-right: 0.4em;
+  vertical-align: -0.1em;
+  background: var(--c);
+}
+
+/* ---------- Memy: obrázek přes celou výšku, bez textu ---------- */
+.reveal section.meme img {
+  display: block;
+  margin: 0 auto !important;
+  border-radius: 12px;
+  box-shadow: 0 18px 48px rgba(0, 0, 0, 0.45);
+}

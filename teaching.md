@@ -6,7 +6,7 @@ title: Teaching
 
 <h2>RPZ - Pattern Recognition and Machine Learning</h2>
 
-2018 -- 2025<br>
+2018 -- present<br>
 <b>RPZ - Rozpoznávání a strojové učení</b> (CZE)<br>
 The course introduces statistical decision theory and surveys canonical and advanced classifiers such as perceptrons, AdaBoost, support vector machines, and neural nets.<br>
 Czech Technical University in Prague, Faculty of Electrical Engineering<br>
@@ -17,6 +17,17 @@ Lecturer: prof. Ing. Jiří Matas, Ph.D.<br>
     <li>teaching material preparation</li>
     <a href="https://cw.fel.cvut.cz/wiki/courses/be5b33rpz"><div class="color-button">link</div></a><br>
 </ul>
+
+<h3>Lab slides</h3>
+
+<div class="slide-deck">
+    <a href="/teaching/rpz/01-intro/"><img src="/images/teaching/rpz-01-intro.jpg" alt="First slide of Lab 1: 01 - Introduction, Pattern Recognition and Machine Learning" width="320"></a>
+    <div>
+        <b>Lab 1: Introduction</b><br>
+        Course organisation and grading, the first assignment, and a probability refresher: total probability and Bayes' theorem on worked examples.<br>
+        <a href="/teaching/rpz/01-intro/"><div class="color-button">slides</div></a>
+    </div>
+</div>
 
 <h2>Past Courses</h2>
 <ul>
