@@ -102,7 +102,7 @@
     code span.vs { color: #032f62; } /* VerbatimString */
     code span.wa { color: #ff5555; } /* Warning */
   </style>
-  <link rel="stylesheet" href="index_files/libs/revealjs/dist/theme/quarto-d3d96b7661240fa550c91d0c983aff65.css">
+  <link rel="stylesheet" href="index_files/libs/revealjs/dist/theme/quarto-ee5f16ea4037ba2af5b940526b7a1645.css">
   <link rel="stylesheet" href="../../theme/fonts/fonts.css">
   <link rel="stylesheet" href="intro.css">
   <link href="index_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
@@ -197,6 +197,46 @@
       margin-left: auto;
       margin-right: 0; 
     }
+  </style>
+  <script>
+  // Smazat uložené nastavení menu MathJaxu (cookie mjx.menu). Jinak může zůstat zapnutý
+  // průzkumník vzorců, který po kliknutí do vzorce zachytává šipky a zvýrazňuje části vzorce.
+  document.cookie = "mjx.menu=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/";
+  </script>
+  <script type="text/x-mathjax-config">
+  // Barevné symboly pro bayesovské rozhodování, jednotné napříč slidy.
+  // Použití ve vzorcích: \cx, \cX (pozorování), \ck, \cK (stavy), \cd, \cD (rozhodnutí),
+  // \cp, \cpXK (pravděpodobnost), \cW (ztráta), \cq (strategie), \cA, \cC (třídy A a C),
+  // \muA, \muC, \sA, \sC (parametry tříd).
+  MathJax.Hub.Config({
+    // Vzorce nejsou v pořadí Tab a nemají menu: šipky vždy ovládají prezentaci.
+    showMathMenu: false,
+    showMathMenuMSIE: false,
+    menuSettings: { inTabOrder: false, explorer: false, zoom: "None" },
+    TeX: {
+      Macros: {
+        cx: "{\\color{#0F8B8D}{x}}",
+        cX: "{\\color{#0F8B8D}{X}}",
+        ck: "{\\color{#A23B72}{k}}",
+        cK: "{\\color{#A23B72}{K}}",
+        cd: "{\\color{#E08A00}{d}}",
+        cD: "{\\color{#E08A00}{D}}",
+        cp: "{\\color{#4E8F3A}{p}}",
+        cpXK: "{\\color{#4E8F3A}{p_{XK}}}",
+        cW: "{\\color{#8C564B}{W}}",
+        cq: "{\\color{#6A4C93}{q}}",
+        cA: "{\\color{#3C7DD9}{A}}",
+        cC: "{\\color{#C0392B}{C}}",
+        muA: "{\\color{#3C7DD9}{\\mu_A}}",
+        muC: "{\\color{#C0392B}{\\mu_C}}",
+        sA: "{\\color{#3C7DD9}{\\sigma_A}}",
+        sC: "{\\color{#C0392B}{\\sigma_C}}"
+      }
+    }
+  });
+  </script>
+  <style>
+    .MathJax:focus, .MathJax_Display:focus, .MathJax_SVG:focus { outline: none; }
   </style>
   <script type="module" src="index_files/libs/quarto-ojs/quarto-ojs-runtime.js"></script>
   <link href="index_files/libs/quarto-ojs/quarto-ojs.css" rel="stylesheet">
@@ -605,21 +645,21 @@ Michal Neoral
 </section>
 <section class="slide level2">
 <h2>Probability</h2>
-<div class="axioms">
+<div class="formula-grid">
 <div class="fragment" data-fragment-index="1">
-<p><span class="ax-label">A1: Non-negativity</span> <span class="math inline">\(P(A) \ge 0\)</span></p>
+<p><span class="fg-label">A1: Non-negativity</span> <span class="math inline">\(P(A) \ge 0\)</span></p>
 </div>
 <div class="fragment" data-fragment-index="2">
-<p><span class="ax-label">A2: Normalization</span> <span class="math inline">\(P(\Omega) = 1\)</span></p>
+<p><span class="fg-label">A2: Normalization</span> <span class="math inline">\(P(\Omega) = 1\)</span></p>
 </div>
 <div class="fragment" data-fragment-index="3">
-<p><span class="ax-label">A3: Additivity</span> <span class="math inline">\(P(A \cup B) = P(A) + P(B) \;\text{ if }\; A \cap B = \emptyset\)</span></p>
+<p><span class="fg-label">A3: Additivity</span> <span class="math inline">\(P(A \cup B) = P(A) + P(B) \;\text{ if }\; A \cap B = \emptyset\)</span></p>
 </div>
 <div class="fragment" data-fragment-index="4" style="margin-top: 0.9em;">
-<p><span class="ax-label">In general:</span> <span class="math inline">\(P(A \cup B) = P(A) + P(B) - P(A \cap B)\)</span></p>
+<p><span class="fg-label">In general:</span> <span class="math inline">\(P(A \cup B) = P(A) + P(B) - P(A \cap B)\)</span></p>
 </div>
 <div class="fragment" data-fragment-index="5" style="margin-top: 0.9em;">
-<p><span class="ax-label"></span> <span class="math inline">\(P(A \cap B) = \; ?\)</span></p>
+<p><span class="fg-label"></span> <span class="math inline">\(P(A \cap B) = \; ?\)</span></p>
 </div>
 </div>
 <svg class="venn venn-corner fragment" data-fragment-index="4" viewbox="0 0 400 240" role="img" aria-label="Venn diagram of events A and B">
@@ -650,18 +690,18 @@ Michal Neoral
 <div class="farm">
 <div style="display:flex; gap:36px; align-items:flex-start;">
   <div class="pen pen-b" data-id="pen-b">
-    <img class="animal pig" src="img/pig.png" alt="pig">
-    <img class="animal pig" src="img/pig.png" alt="pig">
-    <img class="animal sheep" src="img/sheep.png" alt="sheep">
-    <img class="animal sheep" src="img/sheep.png" alt="sheep">
-    <img class="animal sheep" src="img/sheep.png" alt="sheep">
-    <img class="animal sheep" src="img/sheep.png" alt="sheep">
+    <img class="hl-item animal pig" src="img/pig.png" alt="pig">
+    <img class="hl-item animal pig" src="img/pig.png" alt="pig">
+    <img class="hl-item animal sheep" src="img/sheep.png" alt="sheep">
+    <img class="hl-item animal sheep" src="img/sheep.png" alt="sheep">
+    <img class="hl-item animal sheep" src="img/sheep.png" alt="sheep">
+    <img class="hl-item animal sheep" src="img/sheep.png" alt="sheep">
   </div>
   <div class="pen pen-g" data-id="pen-g">
-    <img class="animal sheep" src="img/sheep.png" alt="sheep">
-    <img class="animal pig" src="img/pig.png" alt="pig">
-    <img class="animal pig" src="img/pig.png" alt="pig">
-    <img class="animal pig" src="img/pig.png" alt="pig">
+    <img class="hl-item animal sheep" src="img/sheep.png" alt="sheep">
+    <img class="hl-item animal pig" src="img/pig.png" alt="pig">
+    <img class="hl-item animal pig" src="img/pig.png" alt="pig">
+    <img class="hl-item animal pig" src="img/pig.png" alt="pig">
   </div>
 </div>
 <img class="wolf" data-id="wolf" src="img/wolf.png" alt="wolf">
@@ -708,18 +748,18 @@ Michal Neoral
 <img class="wolf" data-id="wolf" src="img/wolf.png" alt="wolf" style="width:300px">
 <div style="display:flex; gap:36px; align-items:flex-start;">
   <div class="pen pen-b" data-id="pen-b">
-    <img class="animal pig" src="img/pig.png" alt="pig">
-    <img class="animal pig" src="img/pig.png" alt="pig">
-    <img class="animal sheep" src="img/sheep.png" alt="sheep">
-    <img class="animal sheep" src="img/sheep.png" alt="sheep">
-    <img class="animal sheep" src="img/sheep.png" alt="sheep">
-    <img class="animal sheep" src="img/sheep.png" alt="sheep">
+    <img class="hl-item animal pig" src="img/pig.png" alt="pig">
+    <img class="hl-item animal pig" src="img/pig.png" alt="pig">
+    <img class="hl-item animal sheep" src="img/sheep.png" alt="sheep">
+    <img class="hl-item animal sheep" src="img/sheep.png" alt="sheep">
+    <img class="hl-item animal sheep" src="img/sheep.png" alt="sheep">
+    <img class="hl-item animal sheep" src="img/sheep.png" alt="sheep">
   </div>
   <div class="pen pen-g" data-id="pen-g">
-    <img class="animal sheep" src="img/sheep.png" alt="sheep">
-    <img class="animal pig" src="img/pig.png" alt="pig">
-    <img class="animal pig" src="img/pig.png" alt="pig">
-    <img class="animal pig" src="img/pig.png" alt="pig">
+    <img class="hl-item animal sheep" src="img/sheep.png" alt="sheep">
+    <img class="hl-item animal pig" src="img/pig.png" alt="pig">
+    <img class="hl-item animal pig" src="img/pig.png" alt="pig">
+    <img class="hl-item animal pig" src="img/pig.png" alt="pig">
   </div>
 </div>
 </div>
@@ -911,9 +951,9 @@ Michal Neoral
 <h2>Example: three cards</h2>
 <p>We have <strong>3 cards</strong> that are identical in form, except for their colors:</p>
 <div class="deck">
-<div class="card3"><div class="faces"><div class="face red"></div><div class="face red"></div></div><div class="label">RR: both sides red</div></div>
-<div class="card3"><div class="faces"><div class="face black"></div><div class="face black"></div></div><div class="label">BB: both sides black</div></div>
-<div class="card3"><div class="faces"><div class="face red"></div><div class="face black"></div></div><div class="label">RB: one side red, one black</div></div>
+<div class="card3"><div class="faces"><div class="hl-item face red"></div><div class="hl-item face red"></div></div><div class="label">RR: both sides red</div></div>
+<div class="card3"><div class="faces"><div class="hl-item face black"></div><div class="hl-item face black"></div></div><div class="label">BB: both sides black</div></div>
+<div class="card3"><div class="faces"><div class="hl-item face red"></div><div class="hl-item face black"></div></div><div class="label">RB: one side red, one black</div></div>
 </div>
 <p>The cards are mixed in a hat, one is drawn at random and put on the ground.</p>
 <div class="fragment lead">
@@ -924,9 +964,9 @@ Michal Neoral
 <section class="slide level2">
 <h2>Example: three cards, solution</h2>
 <div class="deck">
-<div class="card3"><div class="faces"><div class="face red"></div><div class="face red"></div></div><div class="label">RR</div></div>
-<div class="card3"><div class="faces"><div class="face black"></div><div class="face black"></div></div><div class="label">BB</div></div>
-<div class="card3 card-rb"><div class="faces"><div class="face red"></div><div class="face black"></div></div><div class="label">RB</div></div>
+<div class="card3"><div class="faces"><div class="hl-item face red"></div><div class="hl-item face red"></div></div><div class="label">RR</div></div>
+<div class="card3"><div class="faces"><div class="hl-item face black"></div><div class="hl-item face black"></div></div><div class="label">BB</div></div>
+<div class="card3 card-rb"><div class="faces"><div class="hl-item face red"></div><div class="hl-item face black"></div></div><div class="label">RB</div></div>
 </div>
 <div class="fragment" data-hl=".face">
 <p>All <strong>6 sides</strong> are equally likely to be on top.</p>
@@ -1070,7 +1110,7 @@ P(RB \mid R) = \frac{P(R \mid RB)\,P(RB)}{P(R \mid RR)\,P(RR) + P(R \mid RB)\,P(
         shuffle: false,
 
         // Turns fragments on and off globally
-        fragments: true,
+        fragments: false,
 
         // Flags whether to include the current fragment in the URL,
         // so that reloading brings you to the same fragment position

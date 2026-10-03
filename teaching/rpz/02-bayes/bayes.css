@@ -1,0 +1,254 @@
+/* Styly specifické pro prezentaci 02 - Bayesian Decision Making.
+   Obecné komponenty (karty, otázky, boxy, ...) jsou v theme/rpz.scss. */
+
+:root {
+  --rpz-accent: #4BA173;
+  --rpz-mint: #63D297;
+  --rpz-dark: #202729;
+  --rpz-red: #E8322C;
+  --rpz-muted: #8A8F93;
+  --class-a: #3C7DD9;
+  --class-c: #C0392B;
+}
+
+/* ---------- Mapa krajů s vyznačenými A a C ---------- */
+.reveal .map-wrap { position: relative; width: 100%; }
+.reveal .map-wrap img { width: 100%; margin: 0 !important; }
+.reveal .map-wrap svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+
+/* ---------- Výstup úlohy: číselná osa s prahy ---------- */
+.reveal .axis {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr 1.3fr 1fr;
+  margin: 70px 0 30px;
+  border-top: 6px solid var(--rpz-dark);
+}
+.reveal .axis > div {
+  padding-top: 24px;
+  text-align: center;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.75em;
+}
+.reveal .axis .tick {
+  position: absolute;
+  top: -42px;
+  transform: translateX(-50%);
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.75em;
+  color: var(--rpz-red);
+  font-weight: 700;
+}
+.reveal .axis .tick::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 36px;
+  width: 6px;
+  height: 36px;
+  margin-left: -3px;
+  background: var(--rpz-red);
+}
+.reveal .axis .tick.t1 { left: calc(100% / 3.3); }
+.reveal .axis .tick.t2 { left: calc(100% * 2.3 / 3.3); }
+
+/* Otázky pod zadáním diskrétního příkladu: menší, aby se vešly */
+.reveal .questions .ask { font-size: 0.72em; margin: 10px 0; padding: 10px 24px; }
+.reveal .questions .ask::before { width: 50px; height: 50px; }
+
+/* ---------- Obrázky písmen: mřížka 10 × 10 pixelů ---------- */
+.reveal .pix-stack { position: relative; width: 690px; height: 690px; margin: 10px auto 0; }
+.reveal .pixgrid {
+  position: absolute;
+  width: 600px;
+  height: 600px;
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+  grid-template-rows: repeat(10, 1fr);
+  gap: 3px;
+  padding: 3px;
+  background: #5A6166;
+  border-radius: 6px;
+  box-shadow: 0 10px 30px rgba(32, 39, 41, 0.25);
+}
+.reveal .pixgrid i { display: block; }
+.reveal .pixgrid.back2 { left: 90px; top: 0; opacity: 0.35; }
+.reveal .pixgrid.back1 { left: 45px; top: 45px; opacity: 0.6; }
+.reveal .pixgrid.front { left: 0; top: 90px; }
+
+/* Levá a pravá polovina */
+.reveal .pixgrid .half {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding-top: 12px;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 700;
+  font-size: 64px;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+}
+.reveal .pixgrid .half.left { left: 0; background: rgba(60, 125, 217, 0.38); color: #A9CCFF; border-right: 4px solid #F5C518; }
+.reveal .pixgrid .half.right { right: 0; background: rgba(224, 138, 0, 0.38); color: #FFD79A; }
+.reveal .stack-label {
+  text-align: center;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 700;
+  margin-top: 6px;
+}
+.reveal .feature { margin-top: 30px; font-size: 0.95em; }
+.reveal .feature p { margin: 0.4em 0; }
+
+/* ---------- Definice rizika a barevná tabulka symbolů ---------- */
+.reveal .risk-def { margin: 0 0 0.1em; font-size: 1em; }
+.reveal .risk-def .MathJax_SVG_Display, .reveal .risk-def mjx-container { margin: 0.3em 0 !important; }
+.reveal table.symtab {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0 4px;
+  font-size: 0.58em;
+}
+.reveal table.symtab thead th {
+  text-align: left;
+  color: #8A8F93;
+  font-weight: 600;
+  border: none;
+  padding: 0 0.8em;
+}
+.reveal table.symtab tbody th,
+.reveal table.symtab tbody td {
+  border: none;
+  padding: 0.2em 0.8em;
+  vertical-align: middle;
+  text-align: left;
+}
+.reveal table.symtab tbody th { width: 3em; font-size: 1.3em; border-radius: 12px 0 0 12px; }
+.reveal table.symtab tbody td:nth-child(4) { color: #6B7175; font-style: italic; }
+.reveal table.symtab tbody td:last-child { border-radius: 0 12px 12px 0; color: #424242; }
+.reveal table.symtab tr.sym-X > * { background: rgba(15, 139, 141, 0.10); }
+.reveal table.symtab tr.sym-K > * { background: rgba(162, 59, 114, 0.10); }
+.reveal table.symtab tr.sym-D > * { background: rgba(224, 138, 0, 0.12); }
+.reveal table.symtab tr.sym-p > * { background: rgba(78, 143, 58, 0.11); }
+.reveal table.symtab tr.sym-W > * { background: rgba(140, 86, 75, 0.11); }
+.reveal table.symtab tr.sym-q > * { background: rgba(106, 76, 147, 0.10); }
+
+/* ---------- Tabulky zadání: ::: {.gt} kolem markdown tabulky ---------- */
+.reveal .gt table {
+  border-collapse: separate;
+  border-spacing: 0;
+  margin: 0.25em 0 0.7em;
+  font-size: 0.85em;
+  border: 2px solid #DCE6E0;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 6px 18px rgba(32, 39, 41, 0.06);
+}
+.reveal .gt table th,
+.reveal .gt table td {
+  padding: 0.3em 0.7em;
+  border: none;
+  border-bottom: 1px solid #E8EEEA;
+  text-align: center;
+  vertical-align: middle;
+}
+.reveal .gt table thead th {
+  background: #EAF7F0;
+  color: #202729;
+  border-bottom: 2px solid #DCE6E0;
+}
+.reveal .gt table tbody tr:last-child td { border-bottom: none; }
+.reveal .gt table td:first-child,
+.reveal .gt table th:first-child {
+  text-align: left;
+  background: #F7F9F8;
+  border-right: 2px solid #DCE6E0;
+}
+.reveal .gt .cls-a { color: var(--class-a); font-weight: 700; }
+.reveal .gt .cls-c { color: var(--class-c); font-weight: 700; }
+.reveal .gt td:has(.w0) { background: #EAF7F0; }
+.reveal .gt td:has(.w1) { background: #FDECEA; }
+.reveal .gt .w0 { color: #2F7A52; font-weight: 700; }
+.reveal .gt .w1 { color: var(--class-c); font-weight: 700; }
+.reveal .chip {
+  display: inline-block;
+  min-width: 1.5em;
+  padding: 0.05em 0.35em;
+  border-radius: 10px;
+  color: #FFFFFF;
+  font-weight: 700;
+  text-align: center;
+}
+.reveal .chip.a { background: var(--class-a); }
+.reveal .chip.c { background: var(--class-c); }
+
+/* ---------- Diskrétní příklad: víc místa ---------- */
+.reveal .given-line { display: block; font-size: 0.95em; margin: 0.2em 0; }
+.reveal .given-row { margin-top: 0.6em; }
+.reveal .given-row .gt table { font-size: 1em; }
+.reveal .given-label { display: block; font-weight: 700; color: #424242; margin: 0.3em 0 0.2em; }
+.reveal .qrow {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  margin-top: 50px;
+}
+.reveal .qrow .ask { height: 100%; margin: 0; font-size: 0.75em; box-sizing: border-box; }
+
+/* Výsledky: minimum dílčího rizika */
+.reveal .gt.results table { font-size: 0.85em; margin: 0.1em 0 0.4em; }
+.reveal .gt.results table td, .reveal .gt.results table th { padding: 0.2em 0.7em; }
+.reveal .best {
+  display: inline-block;
+  padding: 0 0.4em;
+  border-radius: 8px;
+  background: #C9F0D4;
+  color: #1E6B3E;
+  font-weight: 700;
+}
+
+/* ---------- Odvození kvadratické nerovnice ---------- */
+.reveal section.derivation > p,
+.reveal section.derivation > div { font-size: 0.85em; }
+.reveal .coef-row { display: flex; gap: 24px; justify-content: center; margin-top: 20px; }
+.reveal .coef { padding: 12px 22px; border-radius: 14px; }
+.reveal .coef.ca { background: #FFF1A8; }
+.reveal .coef.cb { background: #C9F0D4; }
+.reveal .coef.cc { background: #C6EEF6; }
+
+/* ---------- Animace oblastí rozhodování ---------- */
+.reveal .r-stack img { width: 1500px; max-width: 100%; margin: 0 !important; background: #FFFFFF; }
+.reveal .capstack { position: relative; height: 90px; margin-top: 10px; }
+.reveal .caption-step {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #FFFFFF;
+  font-size: 0.85em;
+  color: #202729;
+}
+.reveal .caption-step p { margin: 0; }
+
+/* ---------- Riziko pro spojité x ---------- */
+.reveal .risk-formula { font-size: 0.8em; margin-top: 10px; }
+
+/* Dva kroky grafu rizika (oblasti, pak integrály) */
+.reveal .risk-stack img { width: auto; max-width: 100%; max-height: 520px; background: #FFFFFF; }
+
+/* Hustší slide (výsledky): menší písmo a okraje vzorců */
+.reveal section.dense > p,
+.reveal section.dense > div { font-size: 0.82em; }
+.reveal section.dense .MathJax_Display,
+.reveal section.dense .MathJax_SVG_Display { margin: 0.25em 0 !important; }
+.reveal section.dense .given-label { margin: 0.2em 0 0; }
+
+/* Slide s rizikem: o něco menší mezery, ať se vejde i otázka na q* */
+.reveal .risk-def .MathJax_Display { margin: 0.15em 0 !important; }
+
+/* Slidy s odvozením: menší mezery kolem vzorců, ať se vejde víc kroků */
+.reveal section.derivation .MathJax_Display { margin: 0.3em 0 !important; }
+.reveal section.derivation p { margin: 0.35em 0; }

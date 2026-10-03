@@ -26,6 +26,17 @@ Lecturer: prof. Ing. Jiří Matas, Ph.D.<br>
         <b>Lab 1: Introduction</b><br>
         Course organisation and grading, the first assignment, and a probability refresher: total probability and Bayes' theorem on worked examples.<br>
         <a href="/teaching/rpz/01-intro/"><div class="color-button">slides</div></a>
+        <a href="/teaching/rpz/01-intro/rpz-01-intro.pdf"><div class="color-button">pdf</div></a>
+    </div>
+</div>
+
+<div class="slide-deck">
+    <a href="/teaching/rpz/02-bayes/"><img src="/images/teaching/rpz-02-bayes.jpg" alt="First slide of Lab 2: 02 - Bayesian Decision Making, Pattern Recognition and Machine Learning" width="320"></a>
+    <div>
+        <b>Lab 2: Bayesian Decision Making</b><br>
+        The Bayesian risk and the optimal strategy on a discrete and a continuous example, decision regions for two normal distributions, and the risk computed with the CDF.<br>
+        <a href="/teaching/rpz/02-bayes/"><div class="color-button">slides</div></a>
+        <a href="/teaching/rpz/02-bayes/rpz-02-bayes.pdf"><div class="color-button">pdf</div></a>
     </div>
 </div>
 
