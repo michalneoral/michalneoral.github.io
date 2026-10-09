@@ -1,0 +1,1880 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<script src="index_files/libs/clipboard/clipboard.min.js"></script>
+<script src="index_files/libs/quarto-html/tabby.min.js"></script>
+<script src="index_files/libs/quarto-html/popper.min.js"></script>
+<script src="index_files/libs/quarto-html/tippy.umd.min.js"></script>
+<link href="index_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="index_files/libs/quarto-html/light-border.css" rel="stylesheet">
+<link href="index_files/libs/quarto-html/quarto-syntax-highlighting-bb62276ab45c84d9efd712f51ff97b5a.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.10.18">
+
+  <meta name="author" content="Michal Neoral">
+  <meta name="dcterms.date" content="2026-10-09">
+  <title>03 - Minimax</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="index_files/libs/revealjs/dist/reset.css">
+  <link rel="stylesheet" href="index_files/libs/revealjs/dist/reveal.css">
+  <style>
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: 1.5em;}
+    div.column{flex: auto;}
+    @media screen {
+    div.columns{gap: min(4vw, 1.5em);}
+    div.column{overflow-x: auto;}
+    }
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+      vertical-align: middle;
+    }
+    /* CSS for syntax highlighting */
+    html { -webkit-text-size-adjust: 100%; }
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+      }
+    pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+    div.sourceCode
+      { color: #24292e;  }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span { color: #24292e; } /* Normal */
+    code span.al { color: #ff5555; font-weight: bold; } /* Alert */
+    code span.an { color: #6a737d; } /* Annotation */
+    code span.at { color: #d73a49; } /* Attribute */
+    code span.bn { color: #005cc5; } /* BaseN */
+    code span.bu { color: #d73a49; } /* BuiltIn */
+    code span.cf { color: #d73a49; } /* ControlFlow */
+    code span.ch { color: #032f62; } /* Char */
+    code span.cn { color: #005cc5; } /* Constant */
+    code span.co { color: #6a737d; } /* Comment */
+    code span.cv { color: #6a737d; } /* CommentVar */
+    code span.do { color: #6a737d; } /* Documentation */
+    code span.dt { color: #d73a49; } /* DataType */
+    code span.dv { color: #005cc5; } /* DecVal */
+    code span.er { color: #ff5555; text-decoration: underline; } /* Error */
+    code span.ex { color: #d73a49; font-weight: bold; } /* Extension */
+    code span.fl { color: #005cc5; } /* Float */
+    code span.fu { color: #6f42c1; } /* Function */
+    code span.im { color: #032f62; } /* Import */
+    code span.in { color: #6a737d; } /* Information */
+    code span.kw { color: #d73a49; } /* Keyword */
+    code span.op { color: #24292e; } /* Operator */
+    code span.ot { color: #6f42c1; } /* Other */
+    code span.pp { color: #d73a49; } /* Preprocessor */
+    code span.re { color: #6a737d; } /* RegionMarker */
+    code span.sc { color: #005cc5; } /* SpecialChar */
+    code span.ss { color: #032f62; } /* SpecialString */
+    code span.st { color: #032f62; } /* String */
+    code span.va { color: #e36209; } /* Variable */
+    code span.vs { color: #032f62; } /* VerbatimString */
+    code span.wa { color: #ff5555; } /* Warning */
+  </style>
+  <link rel="stylesheet" href="index_files/libs/revealjs/dist/theme/quarto-121e95d9c5d343cc4dd9f1b4ff953259.css">
+  <link rel="stylesheet" href="../../theme/fonts/fonts.css">
+  <link rel="stylesheet" href="minimax.css">
+  <link href="index_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
+  <link href="index_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
+  <link href="index_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
+  <link href="index_files/libs/revealjs/plugin/reveal-chalkboard/font-awesome/css/all.css" rel="stylesheet">
+  <link href="index_files/libs/revealjs/plugin/reveal-chalkboard/style.css" rel="stylesheet">
+  <link href="index_files/libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
+  <style type="text/css">
+    .reveal div.sourceCode {
+      margin: 0;
+      overflow: auto;
+    }
+    .reveal div.hanging-indent {
+      margin-left: 1em;
+      text-indent: -1em;
+    }
+    .reveal .slide:not(.center) {
+      height: 100%;
+    }
+    .reveal .slide.scrollable {
+      overflow-y: auto;
+    }
+    .reveal .footnotes {
+      height: 100%;
+      overflow-y: auto;
+    }
+    .reveal .slide .absolute {
+      position: absolute;
+      display: block;
+    }
+    .reveal .footnotes ol {
+      counter-reset: ol;
+      list-style-type: none; 
+      margin-left: 0;
+    }
+    .reveal .footnotes ol li:before {
+      counter-increment: ol;
+      content: counter(ol) ". "; 
+    }
+    .reveal .footnotes ol li > p:first-child {
+      display: inline-block;
+    }
+    .reveal .slide ul,
+    .reveal .slide ol {
+      margin-bottom: 0.5em;
+    }
+    .reveal .slide ul li,
+    .reveal .slide ol li {
+      margin-top: 0.4em;
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide ul[role="tablist"] li {
+      margin-bottom: 0;
+    }
+    .reveal .slide ul li > *:first-child,
+    .reveal .slide ol li > *:first-child {
+      margin-block-start: 0;
+    }
+    .reveal .slide ul li > *:last-child,
+    .reveal .slide ol li > *:last-child {
+      margin-block-end: 0;
+    }
+    .reveal .slide .columns:nth-child(3) {
+      margin-block-start: 0.8em;
+    }
+    .reveal blockquote {
+      box-shadow: none;
+    }
+    .reveal .tippy-content>* {
+      margin-top: 0.2em;
+      margin-bottom: 0.7em;
+    }
+    .reveal .tippy-content>*:last-child {
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide > img.stretch.quarto-figure-center,
+    .reveal .slide > img.r-stretch.quarto-figure-center {
+      display: block;
+      margin-left: auto;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-left,
+    .reveal .slide > img.r-stretch.quarto-figure-left  {
+      display: block;
+      margin-left: 0;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-right,
+    .reveal .slide > img.r-stretch.quarto-figure-right  {
+      display: block;
+      margin-left: auto;
+      margin-right: 0; 
+    }
+  </style>
+  <script>
+  // Smazat uložené nastavení menu MathJaxu (cookie mjx.menu). Jinak může zůstat zapnutý
+  // průzkumník vzorců, který po kliknutí do vzorce zachytává šipky a zvýrazňuje části vzorce.
+  document.cookie = "mjx.menu=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/";
+  </script>
+  <script type="text/x-mathjax-config">
+  // Barevné symboly pro bayesovské rozhodování, jednotné napříč slidy.
+  // Použití ve vzorcích: \cx, \cX (pozorování), \ck, \cK (stavy), \cd, \cD (rozhodnutí),
+  // \cp, \cpXK (pravděpodobnost), \cW (ztráta), \cq (strategie), \cA, \cC (třídy A a C),
+  // \muA, \muC, \sA, \sC (parametry tříd).
+  MathJax.Hub.Config({
+    // Vzorce nejsou v pořadí Tab a nemají menu: šipky vždy ovládají prezentaci.
+    showMathMenu: false,
+    showMathMenuMSIE: false,
+    menuSettings: { inTabOrder: false, explorer: false, zoom: "None" },
+    TeX: {
+      Macros: {
+        cx: "{\\color{#0F8B8D}{x}}",
+        cX: "{\\color{#0F8B8D}{X}}",
+        ck: "{\\color{#A23B72}{k}}",
+        cK: "{\\color{#A23B72}{K}}",
+        cd: "{\\color{#E08A00}{d}}",
+        cD: "{\\color{#E08A00}{D}}",
+        cp: "{\\color{#4E8F3A}{p}}",
+        cpXK: "{\\color{#4E8F3A}{p_{XK}}}",
+        cW: "{\\color{#8C564B}{W}}",
+        cq: "{\\color{#6A4C93}{q}}",
+        cA: "{\\color{#3C7DD9}{A}}",
+        cC: "{\\color{#C0392B}{C}}",
+        muA: "{\\color{#3C7DD9}{\\mu_A}}",
+        muC: "{\\color{#C0392B}{\\mu_C}}",
+        sA: "{\\color{#3C7DD9}{\\sigma_A}}",
+        sC: "{\\color{#C0392B}{\\sigma_C}}",
+        // Minimax (03): třídy 1/2 a F/M, likelihood ratio r a jeho práh lambda, chyby tříd
+        cone: "{\\color{#3C7DD9}{1}}",
+        ctwo: "{\\color{#C0392B}{2}}",
+        cF: "{\\color{#3C7DD9}{F}}",
+        cM: "{\\color{#C0392B}{M}}",
+        cr: "{\\color{#7A8B00}{r}}",
+        cl: "{\\color{#7A8B00}{\\lambda}}",
+        eone: "{\\epsilon({\\color{#3C7DD9}{1}})}",
+        etwo: "{\\epsilon({\\color{#C0392B}{2}})}",
+        mone: "{\\color{#3C7DD9}{\\mu_1}}",
+        mtwo: "{\\color{#C0392B}{\\mu_2}}",
+        sone: "{\\color{#3C7DD9}{\\sigma_1}}",
+        stwo: "{\\color{#C0392B}{\\sigma_2}}"
+      }
+    }
+  });
+  </script>
+  <style>
+    .MathJax:focus, .MathJax_Display:focus, .MathJax_SVG:focus { outline: none; }
+  </style>
+  <script type="module" src="index_files/libs/quarto-ojs/quarto-ojs-runtime.js"></script>
+  <link href="index_files/libs/quarto-ojs/quarto-ojs.css" rel="stylesheet">
+</head>
+<body class="quarto-light">
+  <div class="reveal">
+    <div class="slides">
+
+<section class="quarto-title-block center">
+  <h1 class="title">03 - Minimax</h1>
+  <p class="subtitle">Pattern Recognition and Machine Learning, Lab 3</p>
+
+<div class="quarto-title-authors">
+<div class="quarto-title-author">
+<div class="quarto-title-author-name">
+Michal Neoral
+</div>
+        <p class="quarto-title-affiliation">
+            neoramic@fel.cvut.cz
+          </p>
+    </div>
+</div>
+
+  <p class="date">9 October 2026</p>
+</section>
+<section class="slide level2">
+<h2>Test next week</h2>
+<div class="cards two">
+<div class="card">
+<p><span class="card-title">Test: 16 October</span></p>
+<ul>
+<li>At the <strong>beginning of the lab</strong></li>
+<li>Topics: <strong>Bayesian</strong> and <strong>non-Bayesian</strong> tasks</li>
+<li>Theory and worked problems</li>
+<li>Also things from the <strong>assignments</strong>, e.g. what a Python function computes</li>
+<li>Bring a <strong>calculator</strong></li>
+<li>No phone, laptop or notes</li>
+</ul>
+</div>
+<div class="card">
+<p><span class="card-title">Bonus tasks</span></p>
+<ul>
+<li>Handed in <strong>in person</strong> after the lab</li>
+<li>You <strong>explain</strong> the task and convince us that the solution is correct</li>
+</ul>
+</div>
+</div>
+<div>
+<div class="alert">
+<p><strong>Cannot come to the test?</strong> Let me know in advance.</p>
+</div>
+</div>
+</section>
+<section>
+<section class="title-slide slide level1 center">
+<h1>Recap</h1>
+
+</section>
+<section class="slide level2">
+<h2>Recap: Bayesian decision making</h2>
+<div class="ask">
+<p>What do we need to know to find the Bayesian strategy?</p>
+</div>
+<div>
+<p><span class="math display">\[
+R(\cq) = \sum_{\cx \in \cX} \sum_{\ck \in \cK} \cpXK(\cx, \ck)\; \cW(\ck, \cq(\cx)),
+\qquad
+\cq^* = \arg\min_{\cq:\, \cX \to \cD} R(\cq)
+\]</span></p>
+</div>
+<div class="columns">
+<div class="column" style="width:50%;">
+<div class="card ok">
+<p><span class="card-title">We need</span></p>
+<ul>
+<li><span class="math inline">\(\cp(\cx \mid \ck)\)</span>: likelihoods</li>
+<li><span class="math inline">\(\cp(\ck)\)</span>: <strong>priors</strong></li>
+<li><span class="math inline">\(\cW(\ck, \cd)\)</span>: the <strong>loss</strong></li>
+</ul>
+</div>
+</div><div class="column" style="width:50%;">
+<div class="card">
+<p><span class="card-title">With the 0/1 loss</span></p>
+<p><span class="math inline">\(\cq^*(\cx) = \arg\max_{\ck} \cp(\ck \mid \cx)\)</span></p>
+<p><span class="math inline">\(\phantom{\cq^*(\cx)} = \arg\max_{\ck} \cp(\cx \mid \ck)\, \cp(\ck)\)</span></p>
+<p><span class="small muted">The prior is inside the posterior.</span></p>
+</div>
+</div></div>
+</section>
+<section class="slide level2">
+<h2>Recap: the reject option</h2>
+<div class="ask">
+<p>When is it better to answer "I do not know"?</p>
+</div>
+<div>
+<p>Decisions <span class="math inline">\(\cD = \cK \cup \{\text{not known}\}\)</span> and the loss</p>
+<p><span class="math display">\[
+\cW(\ck, \cd) =
+\begin{cases}
+0 &amp; \text{if } \cd = \ck \\
+1 &amp; \text{if } \cd \ne \ck \text{ and } \cd \ne \text{not known} \\
+\varepsilon &amp; \text{if } \cd = \text{not known}
+\end{cases}
+\]</span></p>
+</div>
+<div>
+<p>The Bayesian strategy becomes</p>
+<p><span class="math display">\[
+\cq^*(\cx) =
+\begin{cases}
+\arg\max_{\ck} \cp(\ck \mid \cx) &amp; \text{if } 1 - \max_{\ck} \cp(\ck \mid \cx) &lt; \varepsilon \\
+\text{not known} &amp; \text{otherwise}
+\end{cases}
+\]</span></p>
+</div>
+</section>
+<section class="slide level2">
+<h2>When Bayes is not enough</h2>
+<div class="cards">
+<div class="card warn">
+<p><span class="card-title">Priors are unknown</span></p>
+<p>A plate reader used <strong>anywhere</strong> in the country: every crossroad has different <span class="math inline">\(\cp(\ck)\)</span>.</p>
+</div>
+<div class="card warn">
+<p><span class="card-title">The loss is hard to set</span></p>
+<p>What is the price of an overlooked tumour compared with a false alarm?</p>
+</div>
+<div class="card warn">
+<p><span class="card-title">A guarantee is required</span></p>
+<p>"At most 1 % of dangerous states may be overlooked."</p>
+</div>
+</div>
+<div>
+<div class="ask">
+<p>What can we still do when we know only the likelihoods <span class="math inline">\(\cp(\cx \mid \ck)\)</span>?</p>
+</div>
+</div>
+</section>
+<section class="slide level2">
+<h2>Non-Bayesian tasks</h2>
+<p>Error on class <span class="math inline">\(\ck\)</span>: <span class="math inline">\(\quad \epsilon(\ck) = \sum_{\cx:\, \cq(\cx) \ne \ck} \cp(\cx \mid \ck)\)</span></p>
+<div class="cards">
+<div class="card">
+<p><span class="card-title">Neyman-Pearson</span></p>
+<div>
+<p><span class="math display">\[\min_{\cq}\; \etwo\]</span></p>
+<p>subject to <span class="math inline">\(\;\eone \le \bar\epsilon\)</span></p>
+<p><span class="small muted"><span class="math inline">\(\cone\)</span> dangerous, <span class="math inline">\(\ctwo\)</span> normal: few false alarms, overlooked danger bounded</span></p>
+</div>
+</div>
+<div class="card">
+<p><span class="card-title">Wald</span></p>
+<div>
+<p><span class="math display">\[\min_{\cq:\, \cX \to \cD}\; \max_{\ck \in \{\cone, \ctwo\}}\; \kappa(\ck)\]</span></p>
+<p>subject to <span class="math inline">\(\;\eone \le \epsilon,\ \etwo \le \epsilon\)</span></p>
+<p><span class="small muted">decisions <span class="math inline">\(\cD = \cK \cup \{?\}\)</span>, the answer "?" is no error</span></p>
+<p><span class="small muted">undecided: <span class="math inline">\(\kappa(\ck) = \sum_{\cx:\, \cq(\cx) = ?} \cp(\cx \mid \ck)\)</span></span></p>
+</div>
+</div>
+<div class="card ok">
+<p><span class="card-title">Minimax</span></p>
+<div>
+<p><span class="math display">\[\min_{\cq}\; \max_{\ck \in \cK}\; \epsilon(\ck)\]</span></p>
+<p><span class="small muted">the worst class is as good as possible</span></p>
+<p><span class="tag">today</span></p>
+</div>
+</div>
+</div>
+<div>
+<div class="alert">
+<p>For two classes, all three are solved by <strong>thresholding the likelihood ratio</strong> <span class="math inline">\(\;\cr(\cx) = \frac{\cp(\cx \mid \cone)}{\cp(\cx \mid \ctwo)}\)</span></p>
+</div>
+</div>
+</section></section>
+<section>
+<section class="title-slide slide level1 center">
+<h1>Discrete <span class="white">minimax</span></h1>
+
+</section>
+<section class="slide level2">
+<h2>The minimax task</h2>
+<p><span class="math display">\[
+\cq^* = \arg\min_{\cq:\, \cX \to \cK}\; \max_{\ck \in \cK}\; \epsilon(\ck),
+\qquad
+\epsilon(\ck) = \sum_{\cx:\, \cq(\cx) \ne \ck} \cp(\cx \mid \ck)
+\]</span></p>
+<div>
+<div class="ask">
+<p>What is <span class="math inline">\(\epsilon(\ck)\)</span> in words? What do we need, and what is missing compared with Bayes?</p>
+</div>
+</div>
+<div>
+<p><span class="given-label">For two classes: decide by the likelihood ratio</span> <span class="math display">\[
+\cr(\cx) = \frac{\cp(\cx \mid \cone)}{\cp(\cx \mid \ctwo)},
+\qquad
+\cq(\cx) =
+\begin{cases}
+\cone &amp; \text{if } \cr(\cx) &gt; \cl \\
+\ctwo &amp; \text{if } \cr(\cx) \le \cl
+\end{cases}
+\]</span></p>
+</div>
+<div>
+<p>One number gives the whole strategy: the threshold <span class="math inline">\(\cl\)</span>.</p>
+<p><span class="small muted">Lecture: the inverse ratio <span class="math inline">\(\cp(\cx \mid \ctwo) / \cp(\cx \mid \cone)\)</span> with the threshold <span class="math inline">\(\mu\)</span>. Assignment: this form.</span></p>
+</div>
+</section>
+<section class="slide level2">
+<h2>Discrete example: female or male?</h2>
+<p><span class="given-line">Observation <span class="math inline">\(\cx\)</span> = (height, weight), <span class="math inline">\(\quad \cK = \{\cone, \ctwo\} = \{\cF, \cM\}\)</span> (female, male)</span></p>
+<div class="columns given-row">
+<div class="column" style="width:50%;">
+<p><span class="given-label"><span class="math inline">\(\cp(\cx \mid \cF)\)</span></span></p>
+<div class="gt">
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th></th>
+<th style="text-align: center;">u-light</th>
+<th style="text-align: center;">light</th>
+<th style="text-align: center;">avg</th>
+<th style="text-align: center;">heavy</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>short</td>
+<td style="text-align: center;">.197</td>
+<td style="text-align: center;">.145</td>
+<td style="text-align: center;">.094</td>
+<td style="text-align: center;">.017</td>
+</tr>
+<tr class="even">
+<td>normal</td>
+<td style="text-align: center;">.077</td>
+<td style="text-align: center;">.299</td>
+<td style="text-align: center;">.145</td>
+<td style="text-align: center;">.017</td>
+</tr>
+<tr class="odd">
+<td>tall</td>
+<td style="text-align: center;">.001</td>
+<td style="text-align: center;">.008</td>
+<td style="text-align: center;">.000</td>
+<td style="text-align: center;">.000</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div><div class="column" style="width:50%;">
+<p><span class="given-label"><span class="math inline">\(\cp(\cx \mid \cM)\)</span></span></p>
+<div class="gt">
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th></th>
+<th style="text-align: center;">u-light</th>
+<th style="text-align: center;">light</th>
+<th style="text-align: center;">avg</th>
+<th style="text-align: center;">heavy</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>short</td>
+<td style="text-align: center;">.011</td>
+<td style="text-align: center;">.005</td>
+<td style="text-align: center;">.011</td>
+<td style="text-align: center;">.011</td>
+</tr>
+<tr class="even">
+<td>normal</td>
+<td style="text-align: center;">.005</td>
+<td style="text-align: center;">.071</td>
+<td style="text-align: center;">.408</td>
+<td style="text-align: center;">.038</td>
+</tr>
+<tr class="odd">
+<td>tall</td>
+<td style="text-align: center;">.002</td>
+<td style="text-align: center;">.014</td>
+<td style="text-align: center;">.255</td>
+<td style="text-align: center;">.169</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div></div>
+<div class="qrow">
+<div>
+<div class="ask">
+<p>1. What is <span class="math inline">\(\cr(\cx) = \frac{\cp(\cx \mid \cM)}{\cp(\cx \mid \cF)}\)</span> for each cell?</p>
+</div>
+</div>
+<div>
+<div class="ask">
+<p>2. How do we find the minimax strategy <span class="math inline">\(\cq^*\)</span>?</p>
+</div>
+</div>
+<div>
+<div class="ask">
+<p>3. What are its errors <span class="math inline">\(\epsilon(\cF)\)</span> and <span class="math inline">\(\epsilon(\cM)\)</span>?</p>
+</div>
+</div>
+</div>
+</section>
+<section class="slide level2 derivation">
+<h2>Derivation: the likelihood ratio and its order</h2>
+<div class="columns">
+<div class="column" style="width:50%;">
+<p><span class="given-label"><span class="math inline">\(\cr(\cx) = \cp(\cx \mid \cM) \,/\, \cp(\cx \mid \cF)\)</span></span></p>
+<div class="gt">
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th></th>
+<th style="text-align: center;">u-light</th>
+<th style="text-align: center;">light</th>
+<th style="text-align: center;">avg</th>
+<th style="text-align: center;">heavy</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>short</td>
+<td style="text-align: center;">0.056</td>
+<td style="text-align: center;">0.034</td>
+<td style="text-align: center;">0.117</td>
+<td style="text-align: center;">0.647</td>
+</tr>
+<tr class="even">
+<td>normal</td>
+<td style="text-align: center;">0.065</td>
+<td style="text-align: center;">0.237</td>
+<td style="text-align: center;">2.814</td>
+<td style="text-align: center;">2.235</td>
+</tr>
+<tr class="odd">
+<td>tall</td>
+<td style="text-align: center;">2.000</td>
+<td style="text-align: center;">1.750</td>
+<td style="text-align: center;"><span class="math inline">\(\infty\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\infty\)</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div><div class="column" style="width:50%;">
+<div>
+<p><span class="given-label">Index <span class="math inline">\(i\)</span> after sorting by <span class="math inline">\(\cr\)</span> (from 0)</span></p>
+<div class="gt">
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th></th>
+<th style="text-align: center;">u-light</th>
+<th style="text-align: center;">light</th>
+<th style="text-align: center;">avg</th>
+<th style="text-align: center;">heavy</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>short</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">5</td>
+</tr>
+<tr class="even">
+<td>normal</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">4</td>
+<td style="text-align: center;">9</td>
+<td style="text-align: center;">8</td>
+</tr>
+<tr class="odd">
+<td>tall</td>
+<td style="text-align: center;">7</td>
+<td style="text-align: center;">6</td>
+<td style="text-align: center;">10</td>
+<td style="text-align: center;">11</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div></div>
+<div>
+<p>Every threshold on <span class="math inline">\(\cr\)</span> is one index <span class="math inline">\(i^* \in \{0, 1, \dots, 12\}\)</span>: <span class="math display">\[
+\cq(\cx_i) =
+\begin{cases}
+\cM &amp; \text{if } i \ge i^* \\
+\cF &amp; \text{if } i &lt; i^*
+\end{cases}
+\qquad\qquad
+\epsilon(\cF) = \sum_{i \ge i^*} \cp(\cx_i \mid \cF),
+\qquad
+\epsilon(\cM) = \sum_{i &lt; i^*} \cp(\cx_i \mid \cM)
+\]</span></p>
+</div>
+</section>
+<section class="slide level2 derivation">
+<h2>Derivation: errors for every threshold</h2>
+<div class="gt errtab">
+<table class="caption-top" style="width:100%;">
+<colgroup>
+<col style="width: 7%">
+<col style="width: 7%">
+<col style="width: 7%">
+<col style="width: 7%">
+<col style="width: 7%">
+<col style="width: 7%">
+<col style="width: 7%">
+<col style="width: 7%">
+<col style="width: 7%">
+<col style="width: 7%">
+<col style="width: 7%">
+<col style="width: 7%">
+<col style="width: 7%">
+<col style="width: 7%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>threshold <span class="math inline">\(i^*\)</span></th>
+<th style="text-align: center;">0</th>
+<th style="text-align: center;">1</th>
+<th style="text-align: center;">2</th>
+<th style="text-align: center;">3</th>
+<th style="text-align: center;">4</th>
+<th style="text-align: center;">5</th>
+<th style="text-align: center;">6</th>
+<th style="text-align: center;">7</th>
+<th style="text-align: center;">8</th>
+<th style="text-align: center;">9</th>
+<th style="text-align: center;">10</th>
+<th style="text-align: center;">11</th>
+<th style="text-align: center;">12</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><span class="math inline">\(\cM\)</span> if <span class="math inline">\(\cr \ge\)</span></td>
+<td style="text-align: center;">.034</td>
+<td style="text-align: center;">.056</td>
+<td style="text-align: center;">.065</td>
+<td style="text-align: center;">.117</td>
+<td style="text-align: center;">.237</td>
+<td style="text-align: center;">.647</td>
+<td style="text-align: center;">1.75</td>
+<td style="text-align: center;">2.00</td>
+<td style="text-align: center;">2.24</td>
+<td style="text-align: center;">2.81</td>
+<td style="text-align: center;"><span class="math inline">\(\infty\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\infty\)</span></td>
+<td style="text-align: center;">never</td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(\epsilon(\cF)\)</span></td>
+<td style="text-align: center;"><span>1</span></td>
+<td style="text-align: center;"><span>.855</span></td>
+<td style="text-align: center;"><span>.658</span></td>
+<td style="text-align: center;"><span>.581</span></td>
+<td style="text-align: center;"><span>.487</span></td>
+<td style="text-align: center;"><span>.188</span></td>
+<td style="text-align: center;"><span>.171</span></td>
+<td style="text-align: center;"><span>.163</span></td>
+<td style="text-align: center;"><span>.162</span></td>
+<td style="text-align: center;"><span>.145</span></td>
+<td style="text-align: center;"><span>0</span></td>
+<td style="text-align: center;"><span>0</span></td>
+<td style="text-align: center;"><span>0</span></td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(\epsilon(\cM)\)</span></td>
+<td style="text-align: center;"><span>0</span></td>
+<td style="text-align: center;"><span>.005</span></td>
+<td style="text-align: center;"><span>.016</span></td>
+<td style="text-align: center;"><span>.021</span></td>
+<td style="text-align: center;"><span>.032</span></td>
+<td style="text-align: center;"><span>.103</span></td>
+<td style="text-align: center;"><span>.114</span></td>
+<td style="text-align: center;"><span>.128</span></td>
+<td style="text-align: center;"><span>.130</span></td>
+<td style="text-align: center;"><span>.168</span></td>
+<td style="text-align: center;"><span>.576</span></td>
+<td style="text-align: center;"><span>.831</span></td>
+<td style="text-align: center;"><span>1</span></td>
+</tr>
+<tr class="even">
+<td>max</td>
+<td style="text-align: center;"><span>1</span></td>
+<td style="text-align: center;"><span>.855</span></td>
+<td style="text-align: center;"><span>.658</span></td>
+<td style="text-align: center;"><span>.581</span></td>
+<td style="text-align: center;"><span>.487</span></td>
+<td style="text-align: center;"><span>.188</span></td>
+<td style="text-align: center;"><span>.171</span></td>
+<td style="text-align: center;"><span>.163</span></td>
+<td style="text-align: center;"><span><span class="mark-best">.162</span></span></td>
+<td style="text-align: center;"><span>.168</span></td>
+<td style="text-align: center;"><span>.576</span></td>
+<td style="text-align: center;"><span>.831</span></td>
+<td style="text-align: center;"><span>1</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="columns">
+<div class="column" style="width:58%;">
+<div class="r-stack err-stack">
+<p><img data-src="img/discrete-0.svg" alt="Empty axes for the errors of both classes"></p>
+<p><img data-src="img/discrete-1.svg" alt="Errors for the thresholds from 12 down to 12"></p>
+<p><img data-src="img/discrete-2.svg" alt="Errors for the thresholds from 12 down to 11"></p>
+<p><img data-src="img/discrete-3.svg" alt="Errors for the thresholds from 12 down to 10"></p>
+<p><img data-src="img/discrete-4.svg" alt="Errors for the thresholds from 12 down to 9"></p>
+<p><img data-src="img/discrete-5.svg" alt="Errors for the thresholds from 12 down to 8"></p>
+<p><img data-src="img/discrete-6.svg" alt="Errors for the thresholds from 12 down to 7"></p>
+<p><img data-src="img/discrete-7.svg" alt="Errors of both classes for every threshold"></p>
+<p><img data-src="img/discrete-8.svg" alt="The maximum of the two errors and its minimum at index 8"></p>
+</div>
+</div><div class="column" style="width:42%;">
+<p><span class="given-label">Sorted by <span class="math inline">\(\cr\)</span>, decide <span class="math inline">\(\cM\)</span> for <span class="math inline">\(i \ge i^*\)</span>:</span> <span class="math display">\[
+\epsilon(\cF) = \sum_{i \ge i^*} \cp(\cx_i \mid \cF)
+\]</span> <span class="math display">\[
+\epsilon(\cM) = \sum_{i &lt; i^*} \cp(\cx_i \mid \cM)
+\]</span></p>
+<div>
+<p><span class="math inline">\(i^* = 12\)</span>: nothing is decided <span class="math inline">\(\cM\)</span>, i.e. we <strong>always decide</strong> <span class="math inline">\(\cF\)</span>.</p>
+</div>
+<div>
+<p>Smallest maximum: <span class="math inline">\(\mathbf{i^* = 8}\)</span></p>
+</div>
+</div></div>
+</section>
+<section class="slide level2 derivation">
+<h2>Derivation: the discrete minimax strategy</h2>
+<div class="columns">
+<div class="column" style="width:42%;">
+<p><span class="given-label">Strategy <span class="math inline">\(\cq^*(\cx)\)</span> for <span class="math inline">\(i^* = 8\)</span></span></p>
+<div class="gt">
+<table class="caption-top">
+<colgroup>
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+</colgroup>
+<thead>
+<tr class="header">
+<th></th>
+<th style="text-align: center;">u-light</th>
+<th style="text-align: center;">light</th>
+<th style="text-align: center;">avg</th>
+<th style="text-align: center;">heavy</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>short</td>
+<td style="text-align: center;"><span class="chip c1">F</span></td>
+<td style="text-align: center;"><span class="chip c1">F</span></td>
+<td style="text-align: center;"><span class="chip c1">F</span></td>
+<td style="text-align: center;"><span class="chip c1">F</span></td>
+</tr>
+<tr class="even">
+<td>normal</td>
+<td style="text-align: center;"><span class="chip c1">F</span></td>
+<td style="text-align: center;"><span class="chip c1">F</span></td>
+<td style="text-align: center;"><span class="chip c2">M</span></td>
+<td style="text-align: center;"><span class="chip c2">M</span></td>
+</tr>
+<tr class="odd">
+<td>tall</td>
+<td style="text-align: center;"><span class="chip c1">F</span></td>
+<td style="text-align: center;"><span class="chip c1">F</span></td>
+<td style="text-align: center;"><span class="chip c2">M</span></td>
+<td style="text-align: center;"><span class="chip c2">M</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div><div class="column" style="width:58%;">
+<div>
+<p><span class="math display">\[
+\cq^*(\cx) =
+\begin{cases}
+\cM &amp; \text{if } \cr(\cx) \ge 2.235 \\
+\cF &amp; \text{otherwise}
+\end{cases}
+\]</span></p>
+<p><span class="math inline">\(\epsilon(\cF) = 0.162, \quad \epsilon(\cM) = 0.130, \quad \max = \mathbf{0.162}\)</span></p>
+</div>
+</div></div>
+<div>
+<div class="alert">
+<p>For discrete <span class="math inline">\(\cx\)</span> the errors usually <strong>cannot be made equal</strong>: take the smallest maximum.</p>
+</div>
+</div>
+<div>
+<p><span class="small">Assignment: ratios <span class="math inline">\(0\)</span>, <span class="math inline">\(\infty\)</span>, <code>nan</code> and ties are common. Thresholding the <strong>index</strong> handles them (<code>nan</code>: prefer the first class).</span></p>
+</div>
+</section></section>
+<section>
+<section class="title-slide slide level1 center">
+<h1>Continuous <span class="white">minimax</span></h1>
+
+</section>
+<section class="slide level2">
+<h2>Minimax for continuous <span class="math inline">\(\cx\)</span></h2>
+<p><span class="math display">\[
+\cq^* = \arg\min_{\cq:\, \cX \to \cK}\; \max_{\ck \in \cK}\; \epsilon(\ck),
+\qquad
+\epsilon(\ck) = \int_{\cx:\, \cq(\cx) \ne \ck} \cp(\cx \mid \ck)\, d\cx
+\]</span></p>
+<div>
+<div class="ask">
+<p>We move the threshold <span class="math inline">\(\cl\)</span>. What happens to <span class="math inline">\(\eone\)</span>, <span class="math inline">\(\etwo\)</span> and their maximum?</p>
+</div>
+</div>
+<div>
+<div class="alert">
+<p>For continuous <span class="math inline">\(\cx\)</span> the errors change continuously, one grows and the other shrinks. The optimum is where <span class="math inline">\(\;\eone = \etwo\)</span>.</p>
+</div>
+</div>
+</section>
+<section class="slide level2">
+<h2>Example I: two triangles</h2>
+<div class="r-stack fig-stack">
+<p><img data-src="img/tri-1.svg" alt="Densities p(x|1) = |x| and p(x|2) = 1 - |x| on the interval from -1 to 1"></p>
+<p><img data-src="img/tri-2.svg" alt="The likelihood ratio r(x) added to the densities"></p>
+<p><img data-src="img/tri-3.svg" alt="A threshold on the likelihood ratio gives the decision regions 1, 2, 1 and the two errors"></p>
+</div>
+<div class="capstack">
+<div class="caption-step">
+<p><span class="math inline">\(\cp(\cx \mid \cone) = |\cx|, \quad \cp(\cx \mid \ctwo) = 1 - |\cx|, \quad \cx \in [-1, 1]\)</span>. Find the minimax strategy.</p>
+</div>
+<div class="caption-step">
+<p>Step 1: draw the likelihood ratio <span class="math inline">\(\cr(\cx)\)</span></p>
+</div>
+<div class="caption-step">
+<p>Step 2: a threshold <span class="math inline">\(\cl\)</span> gives the regions <span class="math inline">\(\cone \mid \ctwo \mid \cone\)</span> and the errors. Which <span class="math inline">\(\cl\)</span> is optimal?</p>
+</div>
+</div>
+</section>
+<section class="slide level2 nostretch">
+<h2>Example I: try it</h2>
+<div class="columns">
+<div class="column" style="width:24%;">
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb1" data-startfrom="568" data-source-offset="0"><pre class="sourceCode numberSource js number-lines code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 567;"><span id="cb1-568"><a href="" aria-label="568"></a>viewof tt <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">range</span>([<span class="fl">0.02</span><span class="op">,</span> <span class="fl">0.98</span>]<span class="op">,</span> {<span class="dt">value</span><span class="op">:</span> <span class="fl">0.7</span><span class="op">,</span> <span class="dt">step</span><span class="op">:</span> <span class="fl">0.01</span><span class="op">,</span> <span class="dt">label</span><span class="op">:</span> <span class="st">"t"</span>})</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-1" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb2" data-startfrom="573" data-source-offset="-0"><pre class="sourceCode numberSource js number-lines code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 572;"><span id="cb2-573"><a href="" aria-label="573"></a>triErr <span class="op">=</span> ({<span class="dt">e1</span><span class="op">:</span> tt <span class="op">*</span> tt<span class="op">,</span> <span class="dt">e2</span><span class="op">:</span> (<span class="dv">1</span> <span class="op">-</span> tt) <span class="op">*</span> (<span class="dv">1</span> <span class="op">-</span> tt)<span class="op">,</span> <span class="dt">lam</span><span class="op">:</span> tt <span class="op">/</span> (<span class="dv">1</span> <span class="op">-</span> tt)})</span>
+<span id="cb2-574"><a href="" aria-label="574"></a><span class="fu">md</span><span class="vs">`λ = **</span><span class="sc">${</span>triErr<span class="op">.</span><span class="at">lam</span><span class="op">.</span><span class="fu">toFixed</span>(<span class="dv">2</span>)<span class="sc">}</span><span class="vs">**</span></span>
+<span id="cb2-575"><a href="" aria-label="575"></a></span>
+<span id="cb2-576"><a href="" aria-label="576"></a><span class="vs">ε(1) = **</span><span class="sc">${</span>triErr<span class="op">.</span><span class="at">e1</span><span class="op">.</span><span class="fu">toFixed</span>(<span class="dv">3</span>)<span class="sc">}</span><span class="vs">**</span></span>
+<span id="cb2-577"><a href="" aria-label="577"></a></span>
+<span id="cb2-578"><a href="" aria-label="578"></a><span class="vs">ε(2) = **</span><span class="sc">${</span>triErr<span class="op">.</span><span class="at">e2</span><span class="op">.</span><span class="fu">toFixed</span>(<span class="dv">3</span>)<span class="sc">}</span><span class="vs">**</span></span>
+<span id="cb2-579"><a href="" aria-label="579"></a></span>
+<span id="cb2-580"><a href="" aria-label="580"></a><span class="vs">max = **</span><span class="sc">${</span><span class="bu">Math</span><span class="op">.</span><span class="fu">max</span>(triErr<span class="op">.</span><span class="at">e1</span><span class="op">,</span> triErr<span class="op">.</span><span class="at">e2</span>)<span class="op">.</span><span class="fu">toFixed</span>(<span class="dv">3</span>)<span class="sc">}</span><span class="vs">**`</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<div id="ojs-cell-2-1" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<div id="ojs-cell-2-2" data-nodetype="expression">
+
+</div>
+</div>
+</div>
+</div>
+</div><div class="column" style="width:76%;">
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb3" data-startfrom="586" data-source-offset="-0"><pre class="sourceCode numberSource js number-lines code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 585;"><span id="cb3-586"><a href="" aria-label="586"></a>triX <span class="op">=</span> d3<span class="op">.</span><span class="fu">range</span>(<span class="op">-</span><span class="dv">1</span><span class="op">,</span> <span class="fl">1.0001</span><span class="op">,</span> <span class="fl">0.01</span>)</span>
+<span id="cb3-587"><a href="" aria-label="587"></a>Plot<span class="op">.</span><span class="fu">plot</span>({</span>
+<span id="cb3-588"><a href="" aria-label="588"></a>  <span class="dt">width</span><span class="op">:</span> <span class="dv">1350</span><span class="op">,</span> <span class="dt">height</span><span class="op">:</span> <span class="dv">430</span><span class="op">,</span> <span class="dt">marginLeft</span><span class="op">:</span> <span class="dv">70</span><span class="op">,</span></span>
+<span id="cb3-589"><a href="" aria-label="589"></a>  <span class="dt">style</span><span class="op">:</span> {<span class="dt">fontSize</span><span class="op">:</span> <span class="st">"20px"</span>}<span class="op">,</span></span>
+<span id="cb3-590"><a href="" aria-label="590"></a>  <span class="dt">x</span><span class="op">:</span> {<span class="dt">label</span><span class="op">:</span> <span class="st">"x"</span><span class="op">,</span> <span class="dt">domain</span><span class="op">:</span> [<span class="op">-</span><span class="dv">1</span><span class="op">,</span> <span class="dv">1</span>]<span class="op">,</span> <span class="dt">ticks</span><span class="op">:</span> <span class="dv">4</span>}<span class="op">,</span></span>
+<span id="cb3-591"><a href="" aria-label="591"></a>  <span class="dt">y</span><span class="op">:</span> {<span class="dt">label</span><span class="op">:</span> <span class="st">"p(x | k)"</span><span class="op">,</span> <span class="dt">domain</span><span class="op">:</span> [<span class="dv">0</span><span class="op">,</span> <span class="fl">1.1</span>]<span class="op">,</span> <span class="dt">ticks</span><span class="op">:</span> <span class="dv">2</span>}<span class="op">,</span></span>
+<span id="cb3-592"><a href="" aria-label="592"></a>  <span class="dt">marks</span><span class="op">:</span> [</span>
+<span id="cb3-593"><a href="" aria-label="593"></a>    Plot<span class="op">.</span><span class="fu">areaY</span>(triX<span class="op">.</span><span class="fu">filter</span>(x <span class="kw">=&gt;</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">abs</span>(x) <span class="op">&lt;=</span> tt <span class="op">+</span> <span class="fl">1e-9</span>)<span class="op">,</span> {<span class="dt">x</span><span class="op">:</span> d <span class="kw">=&gt;</span> d<span class="op">,</span> <span class="dt">y</span><span class="op">:</span> d <span class="kw">=&gt;</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">abs</span>(d)<span class="op">,</span> <span class="dt">fill</span><span class="op">:</span> <span class="st">"#3C7DD9"</span><span class="op">,</span> <span class="dt">fillOpacity</span><span class="op">:</span> <span class="fl">0.3</span>})<span class="op">,</span></span>
+<span id="cb3-594"><a href="" aria-label="594"></a>    Plot<span class="op">.</span><span class="fu">areaY</span>(triX<span class="op">.</span><span class="fu">filter</span>(x <span class="kw">=&gt;</span> x <span class="op">&lt;=</span> <span class="op">-</span>tt <span class="op">+</span> <span class="fl">1e-9</span>)<span class="op">,</span> {<span class="dt">x</span><span class="op">:</span> d <span class="kw">=&gt;</span> d<span class="op">,</span> <span class="dt">y</span><span class="op">:</span> d <span class="kw">=&gt;</span> <span class="dv">1</span> <span class="op">-</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">abs</span>(d)<span class="op">,</span> <span class="dt">fill</span><span class="op">:</span> <span class="st">"#C0392B"</span><span class="op">,</span> <span class="dt">fillOpacity</span><span class="op">:</span> <span class="fl">0.3</span>})<span class="op">,</span></span>
+<span id="cb3-595"><a href="" aria-label="595"></a>    Plot<span class="op">.</span><span class="fu">areaY</span>(triX<span class="op">.</span><span class="fu">filter</span>(x <span class="kw">=&gt;</span> x <span class="op">&gt;=</span> tt <span class="op">-</span> <span class="fl">1e-9</span>)<span class="op">,</span> {<span class="dt">x</span><span class="op">:</span> d <span class="kw">=&gt;</span> d<span class="op">,</span> <span class="dt">y</span><span class="op">:</span> d <span class="kw">=&gt;</span> <span class="dv">1</span> <span class="op">-</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">abs</span>(d)<span class="op">,</span> <span class="dt">fill</span><span class="op">:</span> <span class="st">"#C0392B"</span><span class="op">,</span> <span class="dt">fillOpacity</span><span class="op">:</span> <span class="fl">0.3</span>})<span class="op">,</span></span>
+<span id="cb3-596"><a href="" aria-label="596"></a>    Plot<span class="op">.</span><span class="fu">line</span>(triX<span class="op">,</span> {<span class="dt">x</span><span class="op">:</span> d <span class="kw">=&gt;</span> d<span class="op">,</span> <span class="dt">y</span><span class="op">:</span> d <span class="kw">=&gt;</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">abs</span>(d)<span class="op">,</span> <span class="dt">stroke</span><span class="op">:</span> <span class="st">"#3C7DD9"</span><span class="op">,</span> <span class="dt">strokeWidth</span><span class="op">:</span> <span class="dv">4</span>})<span class="op">,</span></span>
+<span id="cb3-597"><a href="" aria-label="597"></a>    Plot<span class="op">.</span><span class="fu">line</span>(triX<span class="op">,</span> {<span class="dt">x</span><span class="op">:</span> d <span class="kw">=&gt;</span> d<span class="op">,</span> <span class="dt">y</span><span class="op">:</span> d <span class="kw">=&gt;</span> <span class="dv">1</span> <span class="op">-</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">abs</span>(d)<span class="op">,</span> <span class="dt">stroke</span><span class="op">:</span> <span class="st">"#C0392B"</span><span class="op">,</span> <span class="dt">strokeWidth</span><span class="op">:</span> <span class="dv">4</span>})<span class="op">,</span></span>
+<span id="cb3-598"><a href="" aria-label="598"></a>    Plot<span class="op">.</span><span class="fu">ruleX</span>([<span class="op">-</span>tt<span class="op">,</span> tt]<span class="op">,</span> {<span class="dt">stroke</span><span class="op">:</span> <span class="st">"#202729"</span><span class="op">,</span> <span class="dt">strokeDasharray</span><span class="op">:</span> <span class="st">"8 6"</span><span class="op">,</span> <span class="dt">strokeWidth</span><span class="op">:</span> <span class="dv">2</span>})<span class="op">,</span></span>
+<span id="cb3-599"><a href="" aria-label="599"></a>    Plot<span class="op">.</span><span class="fu">text</span>([{<span class="dt">x</span><span class="op">:</span> <span class="op">-</span>(<span class="dv">1</span> <span class="op">+</span> tt) <span class="op">/</span> <span class="dv">2</span><span class="op">,</span> <span class="dt">t</span><span class="op">:</span> <span class="st">"1"</span><span class="op">,</span> <span class="dt">c</span><span class="op">:</span> <span class="st">"#3C7DD9"</span>}<span class="op">,</span> {<span class="dt">x</span><span class="op">:</span> <span class="dv">0</span><span class="op">,</span> <span class="dt">t</span><span class="op">:</span> <span class="st">"2"</span><span class="op">,</span> <span class="dt">c</span><span class="op">:</span> <span class="st">"#C0392B"</span>}<span class="op">,</span> {<span class="dt">x</span><span class="op">:</span> (<span class="dv">1</span> <span class="op">+</span> tt) <span class="op">/</span> <span class="dv">2</span><span class="op">,</span> <span class="dt">t</span><span class="op">:</span> <span class="st">"1"</span><span class="op">,</span> <span class="dt">c</span><span class="op">:</span> <span class="st">"#3C7DD9"</span>}]<span class="op">,</span></span>
+<span id="cb3-600"><a href="" aria-label="600"></a>              {<span class="dt">x</span><span class="op">:</span> <span class="st">"x"</span><span class="op">,</span> <span class="dt">y</span><span class="op">:</span> <span class="fl">1.04</span><span class="op">,</span> <span class="dt">text</span><span class="op">:</span> <span class="st">"t"</span><span class="op">,</span> <span class="dt">fill</span><span class="op">:</span> <span class="st">"c"</span><span class="op">,</span> <span class="dt">fontSize</span><span class="op">:</span> <span class="dv">40</span><span class="op">,</span> <span class="dt">fontWeight</span><span class="op">:</span> <span class="st">"bold"</span>})<span class="op">,</span></span>
+<span id="cb3-601"><a href="" aria-label="601"></a>    Plot<span class="op">.</span><span class="fu">ruleY</span>([<span class="dv">0</span>])</span>
+<span id="cb3-602"><a href="" aria-label="602"></a>  ]</span>
+<span id="cb3-603"><a href="" aria-label="603"></a>})</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<div id="ojs-cell-3-1" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<div id="ojs-cell-3-2" data-nodetype="expression">
+
+</div>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb4" data-startfrom="607" data-source-offset="-0"><pre class="sourceCode numberSource js number-lines code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 606;"><span id="cb4-607"><a href="" aria-label="607"></a>triT <span class="op">=</span> d3<span class="op">.</span><span class="fu">range</span>(<span class="dv">0</span><span class="op">,</span> <span class="fl">1.0001</span><span class="op">,</span> <span class="fl">0.01</span>)</span>
+<span id="cb4-608"><a href="" aria-label="608"></a>Plot<span class="op">.</span><span class="fu">plot</span>({</span>
+<span id="cb4-609"><a href="" aria-label="609"></a>  <span class="dt">width</span><span class="op">:</span> <span class="dv">1350</span><span class="op">,</span> <span class="dt">height</span><span class="op">:</span> <span class="dv">300</span><span class="op">,</span> <span class="dt">marginLeft</span><span class="op">:</span> <span class="dv">70</span><span class="op">,</span></span>
+<span id="cb4-610"><a href="" aria-label="610"></a>  <span class="dt">style</span><span class="op">:</span> {<span class="dt">fontSize</span><span class="op">:</span> <span class="st">"20px"</span>}<span class="op">,</span></span>
+<span id="cb4-611"><a href="" aria-label="611"></a>  <span class="dt">x</span><span class="op">:</span> {<span class="dt">label</span><span class="op">:</span> <span class="st">"t"</span><span class="op">,</span> <span class="dt">domain</span><span class="op">:</span> [<span class="dv">0</span><span class="op">,</span> <span class="dv">1</span>]<span class="op">,</span> <span class="dt">ticks</span><span class="op">:</span> <span class="dv">10</span>}<span class="op">,</span></span>
+<span id="cb4-612"><a href="" aria-label="612"></a>  <span class="dt">y</span><span class="op">:</span> {<span class="dt">label</span><span class="op">:</span> <span class="st">"error"</span><span class="op">,</span> <span class="dt">domain</span><span class="op">:</span> [<span class="dv">0</span><span class="op">,</span> <span class="dv">1</span>]<span class="op">,</span> <span class="dt">grid</span><span class="op">:</span> <span class="kw">true</span><span class="op">,</span> <span class="dt">ticks</span><span class="op">:</span> <span class="dv">4</span>}<span class="op">,</span></span>
+<span id="cb4-613"><a href="" aria-label="613"></a>  <span class="dt">marks</span><span class="op">:</span> [</span>
+<span id="cb4-614"><a href="" aria-label="614"></a>    Plot<span class="op">.</span><span class="fu">line</span>(triT<span class="op">,</span> {<span class="dt">x</span><span class="op">:</span> d <span class="kw">=&gt;</span> d<span class="op">,</span> <span class="dt">y</span><span class="op">:</span> d <span class="kw">=&gt;</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">max</span>(d <span class="op">*</span> d<span class="op">,</span> (<span class="dv">1</span> <span class="op">-</span> d) <span class="op">*</span> (<span class="dv">1</span> <span class="op">-</span> d))<span class="op">,</span> <span class="dt">stroke</span><span class="op">:</span> <span class="st">"#2F7A52"</span><span class="op">,</span> <span class="dt">strokeWidth</span><span class="op">:</span> <span class="dv">12</span><span class="op">,</span> <span class="dt">strokeOpacity</span><span class="op">:</span> <span class="fl">0.3</span>})<span class="op">,</span></span>
+<span id="cb4-615"><a href="" aria-label="615"></a>    Plot<span class="op">.</span><span class="fu">line</span>(triT<span class="op">,</span> {<span class="dt">x</span><span class="op">:</span> d <span class="kw">=&gt;</span> d<span class="op">,</span> <span class="dt">y</span><span class="op">:</span> d <span class="kw">=&gt;</span> d <span class="op">*</span> d<span class="op">,</span> <span class="dt">stroke</span><span class="op">:</span> <span class="st">"#3C7DD9"</span><span class="op">,</span> <span class="dt">strokeWidth</span><span class="op">:</span> <span class="fl">3.5</span>})<span class="op">,</span></span>
+<span id="cb4-616"><a href="" aria-label="616"></a>    Plot<span class="op">.</span><span class="fu">line</span>(triT<span class="op">,</span> {<span class="dt">x</span><span class="op">:</span> d <span class="kw">=&gt;</span> d<span class="op">,</span> <span class="dt">y</span><span class="op">:</span> d <span class="kw">=&gt;</span> (<span class="dv">1</span> <span class="op">-</span> d) <span class="op">*</span> (<span class="dv">1</span> <span class="op">-</span> d)<span class="op">,</span> <span class="dt">stroke</span><span class="op">:</span> <span class="st">"#C0392B"</span><span class="op">,</span> <span class="dt">strokeWidth</span><span class="op">:</span> <span class="fl">3.5</span>})<span class="op">,</span></span>
+<span id="cb4-617"><a href="" aria-label="617"></a>    Plot<span class="op">.</span><span class="fu">ruleX</span>([tt]<span class="op">,</span> {<span class="dt">stroke</span><span class="op">:</span> <span class="st">"#202729"</span><span class="op">,</span> <span class="dt">strokeDasharray</span><span class="op">:</span> <span class="st">"8 6"</span><span class="op">,</span> <span class="dt">strokeWidth</span><span class="op">:</span> <span class="dv">2</span>})<span class="op">,</span></span>
+<span id="cb4-618"><a href="" aria-label="618"></a>    Plot<span class="op">.</span><span class="fu">dot</span>([{<span class="dt">y</span><span class="op">:</span> tt <span class="op">*</span> tt<span class="op">,</span> <span class="dt">c</span><span class="op">:</span> <span class="st">"#3C7DD9"</span>}<span class="op">,</span> {<span class="dt">y</span><span class="op">:</span> (<span class="dv">1</span> <span class="op">-</span> tt) <span class="op">*</span> (<span class="dv">1</span> <span class="op">-</span> tt)<span class="op">,</span> <span class="dt">c</span><span class="op">:</span> <span class="st">"#C0392B"</span>}]<span class="op">,</span> {<span class="dt">x</span><span class="op">:</span> tt<span class="op">,</span> <span class="dt">y</span><span class="op">:</span> <span class="st">"y"</span><span class="op">,</span> <span class="dt">fill</span><span class="op">:</span> <span class="st">"c"</span><span class="op">,</span> <span class="dt">r</span><span class="op">:</span> <span class="dv">9</span>})<span class="op">,</span></span>
+<span id="cb4-619"><a href="" aria-label="619"></a>    Plot<span class="op">.</span><span class="fu">ruleY</span>([<span class="dv">0</span>])</span>
+<span id="cb4-620"><a href="" aria-label="620"></a>  ]</span>
+<span id="cb4-621"><a href="" aria-label="621"></a>})</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<div id="ojs-cell-4-1" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<div id="ojs-cell-4-2" data-nodetype="expression">
+
+</div>
+</div>
+</div>
+</div>
+</div></div>
+</section>
+<section class="slide level2 derivation">
+<h2>Derivation: example I</h2>
+<div class="columns">
+<div class="column" style="width:56%;">
+<p>By symmetry the regions are <span class="math inline">\(\cone \mid \ctwo \mid \cone\)</span> with the boundaries <span class="math inline">\(\pm t\)</span>:</p>
+<div>
+<p><span class="math display">\[
+\eone = \int_{-t}^{t} |\cx|\, d\cx = 2 \int_{0}^{t} \cx\, d\cx = t^2
+\]</span></p>
+</div>
+<div>
+<p><span class="math display">\[
+\etwo = 2 \int_{t}^{1} (1 - \cx)\, d\cx = (1 - t)^2
+\]</span></p>
+</div>
+<div>
+<p><span class="math display">\[
+\eone = \etwo: \quad t^2 = (1 - t)^2 \quad \text{gives} \quad t = \tfrac{1}{2}
+\]</span></p>
+</div>
+<div>
+<p><span class="math display">\[
+\cl^* = \cr(\tfrac{1}{2}) = 1,
+\qquad
+\eone = \etwo = \mathbf{\tfrac{1}{4}}
+\]</span></p>
+</div>
+</div><div class="column" style="width:44%;">
+<div class="r-stack side-stack">
+<p><img data-src="img/tri-2.svg" alt="The densities and the likelihood ratio"></p>
+<p><img data-src="img/tri-g.svg" alt="Boundaries at -t and t with the two error areas"></p>
+<p><img data-src="img/tri-4.svg" alt="The optimal threshold: boundaries at -0.5 and 0.5, both errors equal 0.25"></p>
+</div>
+</div></div>
+</section>
+<section class="slide level2 nostretch">
+<h2>Example II: your turn</h2>
+<div class="columns">
+<div class="column" style="width:46%;">
+<p><img data-src="img/ex2-1.svg" style="width: 100%;" alt="Densities p(x|1) = 1 and p(x|2) = x + 0.5 on the interval from 0 to 1"></p>
+</div><div class="column" style="width:54%;">
+<p><span class="math inline">\(\cp(\cx \mid \cone) = 1, \quad \cp(\cx \mid \ctwo) = \cx + 0.5\)</span></p>
+<p>on the interval <span class="math inline">\(\cx \in (0, 1)\)</span></p>
+<div>
+<div class="ask">
+<p>1. What does <span class="math inline">\(\cr(\cx)\)</span> look like?</p>
+</div>
+</div>
+<div>
+<div class="ask">
+<p>2. Where do we decide <span class="math inline">\(\cone\)</span> and where <span class="math inline">\(\ctwo\)</span>?</p>
+</div>
+</div>
+<div>
+<div class="ask">
+<p>3. Which boundary <span class="math inline">\(t\)</span> gives <span class="math inline">\(\eone = \etwo\)</span>?</p>
+</div>
+</div>
+</div></div>
+</section>
+<section class="slide level2 derivation">
+<h2>Derivation: example II</h2>
+<div class="columns">
+<div class="column" style="width:58%;">
+<p><span class="math inline">\(\cr(\cx) = \frac{1}{\cx + 0.5}\)</span> is decreasing: we decide <span class="math inline">\(\cone\)</span> for <span class="math inline">\(\cx &lt; t\)</span>.</p>
+<div>
+<p><span class="math display">\[
+\eone = \int_{t}^{1} 1\, d\cx = 1 - t
+\]</span></p>
+</div>
+<div>
+<p><span class="math display">\[
+\etwo = \int_{0}^{t} (\cx + 0.5)\, d\cx = \tfrac{1}{2} t^2 + \tfrac{1}{2} t
+\]</span></p>
+</div>
+<div>
+<p><span class="math display">\[
+t^2 + 3t - 2 = 0, \qquad t = \tfrac{1}{2} \big( \sqrt{17} - 3 \big) \approx 0.562
+\]</span></p>
+</div>
+<div>
+<p><span class="math display">\[
+\eone = \etwo \approx \mathbf{0.438},
+\qquad
+\cl^* = \cr(t) \approx 0.942
+\]</span></p>
+</div>
+</div><div class="column" style="width:42%;">
+<div class="r-stack side-stack">
+<p><img data-src="img/ex2-r.svg" alt="The densities and the decreasing likelihood ratio"></p>
+<p><img data-src="img/ex2-g.svg" alt="A boundary t with the regions 1 and 2 and the two error areas"></p>
+<p><img data-src="img/ex2-2.svg" alt="The optimal boundary t = 0.562 with both errors equal to 0.438"></p>
+</div>
+</div></div>
+</section>
+<section class="slide level2">
+<h2>Example III: two normal distributions</h2>
+<div class="r-stack fig-stack">
+<p><img data-src="img/gauss-1.svg" alt="Two normal densities with means -5 and 1 and standard deviations 2 and 5"></p>
+<p><img data-src="img/gauss-2.svg" alt="The scaled likelihood ratio with a threshold and the boundaries t1 and t2"></p>
+<p><img data-src="img/gauss-3.svg" alt="Decision regions 2, 1, 2 and the errors of both classes"></p>
+</div>
+<div class="capstack">
+<div class="caption-step">
+<p><span class="math inline">\(\cp(\cx \mid \ck)\)</span> normal with <span class="math inline">\(\mone = -5,\ \sone = 2,\ \mtwo = 1,\ \stwo = 5\)</span>. Find the minimax strategy.</p>
+</div>
+<div class="caption-step">
+<p>A threshold <span class="math inline">\(\cl\)</span> on <span class="math inline">\(\cr(\cx)\)</span> gives two boundaries <span class="math inline">\(t_1, t_2\)</span>. How do we compute them?</p>
+</div>
+<div class="caption-step">
+<p>Regions <span class="math inline">\(\ctwo \mid \cone \mid \ctwo\)</span> and the errors for <span class="math inline">\(\cl = 1\)</span>. How do we get <span class="math inline">\(\eone = \etwo\)</span>?</p>
+</div>
+</div>
+</section>
+<section class="slide level2 derivation">
+<h2>Derivation: from <span class="math inline">\(\cl\)</span> to the boundaries</h2>
+<p>We decide <span class="math inline">\(\cone\)</span> where <span class="math inline">\(\;\dfrac{\cp(\cx \mid \cone)}{\cp(\cx \mid \ctwo)} \ge \cl\)</span>:</p>
+<div>
+<p><span class="math display">\[
+\frac{\stwo}{\sone}\, \exp\!\left( -\frac{(\cx - \mone)^2}{2\sone^2} + \frac{(\cx - \mtwo)^2}{2\stwo^2} \right) \;\ge\; \cl
+\]</span></p>
+</div>
+<div>
+<p>Take the logarithm: the same inequality <span class="math inline">\(a\cx^2 + b\cx + c \ge 0\)</span> as in Lab 2 <span class="math display">\[
+-\frac{(\cx - \mone)^2}{2\sone^2} + \frac{(\cx - \mtwo)^2}{2\stwo^2}
+\;\ge\;
+\ln\!\left( \frac{\sone}{\stwo} \cdot \cl \right) =: L
+\]</span></p>
+</div>
+<div class="coef-row">
+<p><span class="coef ca"><span class="math inline">\(a = \sone^2 - \stwo^2\)</span></span> <span class="coef cb"><span class="math inline">\(b = 2(\stwo^2 \mone - \sone^2 \mtwo)\)</span></span> <span class="coef cc"><span class="math inline">\(c = \sone^2 \mtwo^2 - \stwo^2 \mone^2 - 2 \sone^2 \stwo^2 L\)</span></span></p>
+</div>
+<div>
+<div class="alert">
+<p>Lab 2 had <span class="math inline">\(\dfrac{\cp(\ctwo)}{\cp(\cone)}\)</span> in place of <span class="math inline">\(\cl\)</span>: this is the <strong>Bayesian strategy</strong> for <span class="math inline">\(\;\cp(\cone) = \dfrac{1}{1 + \cl}\)</span></p>
+</div>
+</div>
+</section>
+<section class="slide level2 derivation">
+<h2>Derivation: the errors of the strategy</h2>
+<p>For <span class="math inline">\(\sone &lt; \stwo\)</span> the regions are <span class="math inline">\(\ctwo \mid \cone \mid \ctwo\)</span> with the boundaries <span class="math inline">\(t_1 &lt; t_2\)</span>.</p>
+<div>
+<p>With the distribution functions <span class="math inline">\(F_{\cone}\)</span>, <span class="math inline">\(F_{\ctwo}\)</span> (<code>norm.cdf</code>): <span class="math display">\[
+\eone = \int_{-\infty}^{t_1} \cp(\cx \mid \cone)\, d\cx + \int_{t_2}^{\infty} \cp(\cx \mid \cone)\, d\cx
+= 1 - \big( F_{\cone}(t_2) - F_{\cone}(t_1) \big)
+\]</span></p>
+</div>
+<div>
+<p><span class="math display">\[
+\etwo = \int_{t_1}^{t_2} \cp(\cx \mid \ctwo)\, d\cx = F_{\ctwo}(t_2) - F_{\ctwo}(t_1)
+\]</span></p>
+</div>
+<div>
+<div class="alert red">
+<p><span class="math inline">\(\eone = \etwo\)</span> has <strong>no closed-form solution</strong> for normal distributions. We have to search for <span class="math inline">\(\cl\)</span> numerically.</p>
+</div>
+</div>
+</section></section>
+<section>
+<section class="title-slide slide level1 center">
+<h1>Minimax <span class="white">and</span> Bayes</h1>
+
+</section>
+<section class="slide level2 derivation">
+<h2>The risk of a fixed strategy</h2>
+<div class="ask">
+<p>We fix a strategy <span class="math inline">\(\cq\)</span>. How does its risk change when the prior changes?</p>
+</div>
+<div>
+<p><span class="math display">\[
+R(\cq) = \sum_{\ck} \int_{\cx:\, \cq(\cx) \ne \ck} \cpXK(\cx, \ck)\, d\cx
+= \sum_{\ck} \cp(\ck) \underbrace{\int_{\cx:\, \cq(\cx) \ne \ck} \cp(\cx \mid \ck)\, d\cx}_{\epsilon(\ck)}
+\]</span></p>
+</div>
+<div>
+<p>For two classes, with <span class="math inline">\(\cp(\ctwo) = 1 - \cp(\cone)\)</span>: <span class="math display">\[
+R(\cq) = \cp(\cone)\, \eone + \big( 1 - \cp(\cone) \big)\, \etwo
+= \cp(\cone)\, \big( \eone - \etwo \big) + \etwo
+\]</span></p>
+</div>
+<div>
+<div class="alert">
+<p><strong>Linear</strong> in <span class="math inline">\(\cp(\cone)\)</span>, from <span class="math inline">\(\etwo\)</span> at <span class="math inline">\(\cp(\cone) = 0\)</span> to <span class="math inline">\(\eone\)</span> at <span class="math inline">\(\cp(\cone) = 1\)</span>. Worst case: <span class="math inline">\(\max(\eone, \etwo)\)</span></p>
+</div>
+</div>
+</section>
+<section class="slide level2">
+<h2>Minimax as the worst-case Bayes</h2>
+<div class="keep-animation">
+<div class="r-stack fig-stack">
+<p><img data-src="img/risk-00.svg" alt="Risk of the optimal Bayesian strategy as a function of the prior"></p>
+<p><img data-src="img/risk-01.svg" class="fragment" data-fragment-index="1" alt="A strategy designed for prior 0.6 evaluated for all priors is a line touching the curve"></p>
+<p><img data-src="img/risk-02.svg" class="fragment" data-fragment-index="2" alt="The ends of the line are the class errors, marked above the prior 0.6"></p>
+<p><img data-src="img/risk-03.svg" class="fragment" data-fragment-index="3" alt="The same construction for another prior, the points trace the two class errors"></p>
+<p><img data-src="img/risk-04.svg" class="fragment" data-fragment-index="4" alt="The same construction for another prior, the points trace the two class errors"></p>
+<p><img data-src="img/risk-05.svg" class="fragment" data-fragment-index="5" alt="The same construction for another prior, the points trace the two class errors"></p>
+<p><img data-src="img/risk-06.svg" class="fragment" data-fragment-index="6" alt="The same construction for another prior, the points trace the two class errors"></p>
+<p><img data-src="img/risk-07.svg" class="fragment" data-fragment-index="7" alt="The same construction for another prior, the points trace the two class errors"></p>
+<p><img data-src="img/risk-08.svg" class="fragment" data-fragment-index="8" alt="The same construction for another prior, the points trace the two class errors"></p>
+<p><img data-src="img/risk-09.svg" class="fragment" data-fragment-index="9" alt="The same construction for another prior, the points trace the two class errors"></p>
+<p><img data-src="img/risk-10.svg" class="fragment" data-fragment-index="10" alt="The same construction for another prior, the points trace the two class errors"></p>
+<p><img data-src="img/risk-11.svg" class="fragment" data-fragment-index="11" alt="The same construction for another prior, the points trace the two class errors"></p>
+<p><img data-src="img/risk-12.svg" class="fragment" data-fragment-index="12" alt="The same construction for another prior, the points trace the two class errors"></p>
+<p><img data-src="img/risk-13.svg" class="fragment" data-fragment-index="13" alt="The same construction for another prior, the points trace the two class errors"></p>
+<p><img data-src="img/risk-14.svg" class="fragment" data-fragment-index="14" alt="The same construction for another prior, the points trace the two class errors"></p>
+<p><img data-src="img/risk-15.svg" class="fragment" data-fragment-index="15" alt="The same construction for another prior, the points trace the two class errors"></p>
+<p><img data-src="img/risk-16.svg" class="fragment" data-fragment-index="16" alt="The same construction for another prior, the points trace the two class errors"></p>
+<p><img data-src="img/risk-17.svg" class="fragment" data-fragment-index="17" alt="The errors of both classes for every prior and their maximum"></p>
+<p><img data-src="img/risk-18.svg" class="fragment" data-fragment-index="18" alt="The minimax strategy is the Bayesian strategy with a horizontal risk line"></p>
+</div>
+<div class="capstack">
+<div class="caption-step">
+<p>For each prior <span class="math inline">\(\cp(\cone)\)</span>: the risk of <strong>its own</strong> optimal Bayesian strategy (example III)</p>
+</div>
+<div class="caption-step fragment" data-fragment-index="1">
+<p>The strategy designed for <span class="math inline">\(\cp(\cone) = 0.6\)</span>, used everywhere: a line touching the curve</p>
+</div>
+<div class="caption-step fragment" data-fragment-index="2">
+<p>Its ends are <span class="math inline">\(\etwo\)</span> (left) and <span class="math inline">\(\eone\)</span> (right). We mark both above its prior</p>
+</div>
+<div class="caption-step fragment" data-fragment-index="3">
+<p>The same for the strategies of all priors from 0 to 1: the points draw <span class="math inline">\(\eone\)</span> and <span class="math inline">\(\etwo\)</span></p>
+</div>
+<div class="caption-step fragment" data-fragment-index="17">
+<p>The worst case of every Bayesian strategy: <span class="math inline">\(\max(\eone, \etwo)\)</span></p>
+</div>
+<div class="caption-step fragment" data-fragment-index="18">
+<p>Minimax: the Bayesian strategy for <span class="math inline">\(p^*(\cone)\)</span>, its line is horizontal, <span class="math inline">\(\eone = \etwo\)</span></p>
+</div>
+</div>
+</div>
+</section>
+<section class="slide level2 nostretch">
+<h2>Minimax and Bayes: try it</h2>
+<div class="columns">
+<div class="column" style="width:24%;">
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb5" data-startfrom="1006" data-source-offset="0"><pre class="sourceCode numberSource js number-lines code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 1005;"><span id="cb5-1006"><a href="" aria-label="1006"></a>viewof pFix <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">range</span>([<span class="dv">0</span><span class="op">,</span> <span class="dv">1</span>]<span class="op">,</span> {<span class="dt">value</span><span class="op">:</span> <span class="fl">0.6</span><span class="op">,</span> <span class="dt">step</span><span class="op">:</span> <span class="fl">0.01</span><span class="op">,</span> <span class="dt">label</span><span class="op">:</span> <span class="st">"p(1)"</span>})</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-5" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb6" data-startfrom="1010" data-source-offset="0"><pre class="sourceCode numberSource js number-lines code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 1009;"><span id="cb6-1010"><a href="" aria-label="1010"></a><span class="fu">md</span><span class="vs">`λ = **</span><span class="sc">${</span>pFix <span class="op">&gt;</span> <span class="dv">0</span> <span class="op">?</span> ((<span class="dv">1</span> <span class="op">-</span> pFix) <span class="op">/</span> pFix)<span class="op">.</span><span class="fu">toFixed</span>(<span class="dv">2</span>) <span class="op">:</span> <span class="st">"∞"</span><span class="sc">}</span><span class="vs">**</span></span>
+<span id="cb6-1011"><a href="" aria-label="1011"></a></span>
+<span id="cb6-1012"><a href="" aria-label="1012"></a><span class="vs">t₁ = **</span><span class="sc">${</span><span class="bu">Number</span><span class="op">.</span><span class="fu">isFinite</span>(fixS<span class="op">.</span><span class="at">t1</span>) <span class="op">?</span> fixS<span class="op">.</span><span class="at">t1</span><span class="op">.</span><span class="fu">toFixed</span>(<span class="dv">2</span>) <span class="op">:</span> fixS<span class="op">.</span><span class="at">t1</span> <span class="op">&lt;</span> <span class="dv">0</span> <span class="op">?</span> <span class="st">"-∞"</span> <span class="op">:</span> <span class="st">"none"</span><span class="sc">}</span><span class="vs">**</span></span>
+<span id="cb6-1013"><a href="" aria-label="1013"></a></span>
+<span id="cb6-1014"><a href="" aria-label="1014"></a><span class="vs">t₂ = **</span><span class="sc">${</span><span class="bu">Number</span><span class="op">.</span><span class="fu">isFinite</span>(fixS<span class="op">.</span><span class="at">t2</span>) <span class="op">?</span> fixS<span class="op">.</span><span class="at">t2</span><span class="op">.</span><span class="fu">toFixed</span>(<span class="dv">2</span>) <span class="op">:</span> fixS<span class="op">.</span><span class="at">t2</span> <span class="op">&gt;</span> <span class="dv">0</span> <span class="op">?</span> <span class="st">"∞"</span> <span class="op">:</span> <span class="st">"none"</span><span class="sc">}</span><span class="vs">**</span></span>
+<span id="cb6-1015"><a href="" aria-label="1015"></a></span>
+<span id="cb6-1016"><a href="" aria-label="1016"></a><span class="vs">ε(1) = **</span><span class="sc">${</span>fixS<span class="op">.</span><span class="at">e1</span><span class="op">.</span><span class="fu">toFixed</span>(<span class="dv">3</span>)<span class="sc">}</span><span class="vs">**</span></span>
+<span id="cb6-1017"><a href="" aria-label="1017"></a></span>
+<span id="cb6-1018"><a href="" aria-label="1018"></a><span class="vs">ε(2) = **</span><span class="sc">${</span>fixS<span class="op">.</span><span class="at">e2</span><span class="op">.</span><span class="fu">toFixed</span>(<span class="dv">3</span>)<span class="sc">}</span><span class="vs">**</span></span>
+<span id="cb6-1019"><a href="" aria-label="1019"></a></span>
+<span id="cb6-1020"><a href="" aria-label="1020"></a><span class="vs">max = **</span><span class="sc">${</span><span class="bu">Math</span><span class="op">.</span><span class="fu">max</span>(fixS<span class="op">.</span><span class="at">e1</span><span class="op">,</span> fixS<span class="op">.</span><span class="at">e2</span>)<span class="op">.</span><span class="fu">toFixed</span>(<span class="dv">3</span>)<span class="sc">}</span><span class="vs">**`</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-6" data-nodetype="expression">
+
+</div>
+</div>
+</div>
+</div><div class="column" style="width:76%;">
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb7" data-startfrom="1027" data-source-offset="-0"><pre class="sourceCode numberSource js number-lines code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 1026;"><span id="cb7-1027"><a href="" aria-label="1027"></a>g <span class="op">=</span> ({<span class="dt">m1</span><span class="op">:</span> <span class="op">-</span><span class="dv">5</span><span class="op">,</span> <span class="dt">s1</span><span class="op">:</span> <span class="dv">2</span><span class="op">,</span> <span class="dt">m2</span><span class="op">:</span> <span class="dv">1</span><span class="op">,</span> <span class="dt">s2</span><span class="op">:</span> <span class="dv">5</span>})</span>
+<span id="cb7-1028"><a href="" aria-label="1028"></a>erf <span class="op">=</span> x <span class="kw">=&gt;</span> {</span>
+<span id="cb7-1029"><a href="" aria-label="1029"></a>  <span class="kw">const</span> s <span class="op">=</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">sign</span>(x)<span class="op">,</span> a <span class="op">=</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">abs</span>(x)<span class="op">,</span> t <span class="op">=</span> <span class="dv">1</span> <span class="op">/</span> (<span class="dv">1</span> <span class="op">+</span> <span class="fl">0.3275911</span> <span class="op">*</span> a)<span class="op">;</span></span>
+<span id="cb7-1030"><a href="" aria-label="1030"></a>  <span class="cf">return</span> s <span class="op">*</span> (<span class="dv">1</span> <span class="op">-</span> (((((<span class="fl">1.061405429</span> <span class="op">*</span> t <span class="op">-</span> <span class="fl">1.453152027</span>) <span class="op">*</span> t) <span class="op">+</span> <span class="fl">1.421413741</span>) <span class="op">*</span> t <span class="op">-</span> <span class="fl">0.284496736</span>) <span class="op">*</span> t <span class="op">+</span> <span class="fl">0.254829592</span>) <span class="op">*</span> t <span class="op">*</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">exp</span>(<span class="op">-</span>a <span class="op">*</span> a))<span class="op">;</span></span>
+<span id="cb7-1031"><a href="" aria-label="1031"></a>}</span>
+<span id="cb7-1032"><a href="" aria-label="1032"></a>cdf <span class="op">=</span> (x<span class="op">,</span> m<span class="op">,</span> s) <span class="kw">=&gt;</span> <span class="fl">0.5</span> <span class="op">*</span> (<span class="dv">1</span> <span class="op">+</span> <span class="fu">erf</span>((x <span class="op">-</span> m) <span class="op">/</span> (s <span class="op">*</span> <span class="bu">Math</span><span class="op">.</span><span class="cn">SQRT2</span>)))</span>
+<span id="cb7-1033"><a href="" aria-label="1033"></a>bayesStrategy <span class="op">=</span> p1 <span class="kw">=&gt;</span> {</span>
+<span id="cb7-1034"><a href="" aria-label="1034"></a>  <span class="cf">if</span> (p1 <span class="op">&lt;=</span> <span class="dv">0</span>) <span class="cf">return</span> {<span class="dt">t1</span><span class="op">:</span> <span class="kw">NaN</span><span class="op">,</span> <span class="dt">t2</span><span class="op">:</span> <span class="kw">NaN</span><span class="op">,</span> <span class="dt">e1</span><span class="op">:</span> <span class="dv">1</span><span class="op">,</span> <span class="dt">e2</span><span class="op">:</span> <span class="dv">0</span>}<span class="op">;</span></span>
+<span id="cb7-1035"><a href="" aria-label="1035"></a>  <span class="cf">if</span> (p1 <span class="op">&gt;=</span> <span class="dv">1</span>) <span class="cf">return</span> {<span class="dt">t1</span><span class="op">:</span> <span class="op">-</span><span class="kw">Infinity</span><span class="op">,</span> <span class="dt">t2</span><span class="op">:</span> <span class="kw">Infinity</span><span class="op">,</span> <span class="dt">e1</span><span class="op">:</span> <span class="dv">0</span><span class="op">,</span> <span class="dt">e2</span><span class="op">:</span> <span class="dv">1</span>}<span class="op">;</span></span>
+<span id="cb7-1036"><a href="" aria-label="1036"></a>  <span class="kw">const</span> L <span class="op">=</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">log</span>(g<span class="op">.</span><span class="at">s1</span> <span class="op">/</span> g<span class="op">.</span><span class="at">s2</span> <span class="op">*</span> (<span class="dv">1</span> <span class="op">-</span> p1) <span class="op">/</span> p1)<span class="op">;</span></span>
+<span id="cb7-1037"><a href="" aria-label="1037"></a>  <span class="kw">const</span> a <span class="op">=</span> g<span class="op">.</span><span class="at">s1</span> <span class="op">**</span> <span class="dv">2</span> <span class="op">-</span> g<span class="op">.</span><span class="at">s2</span> <span class="op">**</span> <span class="dv">2</span><span class="op">,</span> b <span class="op">=</span> <span class="dv">2</span> <span class="op">*</span> (g<span class="op">.</span><span class="at">s2</span> <span class="op">**</span> <span class="dv">2</span> <span class="op">*</span> g<span class="op">.</span><span class="at">m1</span> <span class="op">-</span> g<span class="op">.</span><span class="at">s1</span> <span class="op">**</span> <span class="dv">2</span> <span class="op">*</span> g<span class="op">.</span><span class="at">m2</span>)<span class="op">;</span></span>
+<span id="cb7-1038"><a href="" aria-label="1038"></a>  <span class="kw">const</span> c <span class="op">=</span> g<span class="op">.</span><span class="at">s1</span> <span class="op">**</span> <span class="dv">2</span> <span class="op">*</span> g<span class="op">.</span><span class="at">m2</span> <span class="op">**</span> <span class="dv">2</span> <span class="op">-</span> g<span class="op">.</span><span class="at">s2</span> <span class="op">**</span> <span class="dv">2</span> <span class="op">*</span> g<span class="op">.</span><span class="at">m1</span> <span class="op">**</span> <span class="dv">2</span> <span class="op">-</span> <span class="dv">2</span> <span class="op">*</span> g<span class="op">.</span><span class="at">s1</span> <span class="op">**</span> <span class="dv">2</span> <span class="op">*</span> g<span class="op">.</span><span class="at">s2</span> <span class="op">**</span> <span class="dv">2</span> <span class="op">*</span> L<span class="op">;</span></span>
+<span id="cb7-1039"><a href="" aria-label="1039"></a>  <span class="kw">const</span> d <span class="op">=</span> b <span class="op">*</span> b <span class="op">-</span> <span class="dv">4</span> <span class="op">*</span> a <span class="op">*</span> c<span class="op">;</span></span>
+<span id="cb7-1040"><a href="" aria-label="1040"></a>  <span class="cf">if</span> (d <span class="op">&lt;=</span> <span class="dv">0</span>) <span class="cf">return</span> {<span class="dt">t1</span><span class="op">:</span> <span class="kw">NaN</span><span class="op">,</span> <span class="dt">t2</span><span class="op">:</span> <span class="kw">NaN</span><span class="op">,</span> <span class="dt">e1</span><span class="op">:</span> <span class="dv">1</span><span class="op">,</span> <span class="dt">e2</span><span class="op">:</span> <span class="dv">0</span>}<span class="op">;</span></span>
+<span id="cb7-1041"><a href="" aria-label="1041"></a>  <span class="kw">const</span> r <span class="op">=</span> [(<span class="op">-</span>b <span class="op">-</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">sqrt</span>(d)) <span class="op">/</span> (<span class="dv">2</span> <span class="op">*</span> a)<span class="op">,</span> (<span class="op">-</span>b <span class="op">+</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">sqrt</span>(d)) <span class="op">/</span> (<span class="dv">2</span> <span class="op">*</span> a)]<span class="op">.</span><span class="fu">sort</span>((u<span class="op">,</span> v) <span class="kw">=&gt;</span> u <span class="op">-</span> v)<span class="op">;</span></span>
+<span id="cb7-1042"><a href="" aria-label="1042"></a>  <span class="cf">return</span> {<span class="dt">t1</span><span class="op">:</span> r[<span class="dv">0</span>]<span class="op">,</span> <span class="dt">t2</span><span class="op">:</span> r[<span class="dv">1</span>]<span class="op">,</span></span>
+<span id="cb7-1043"><a href="" aria-label="1043"></a>          <span class="dt">e1</span><span class="op">:</span> <span class="dv">1</span> <span class="op">-</span> (<span class="fu">cdf</span>(r[<span class="dv">1</span>]<span class="op">,</span> g<span class="op">.</span><span class="at">m1</span><span class="op">,</span> g<span class="op">.</span><span class="at">s1</span>) <span class="op">-</span> <span class="fu">cdf</span>(r[<span class="dv">0</span>]<span class="op">,</span> g<span class="op">.</span><span class="at">m1</span><span class="op">,</span> g<span class="op">.</span><span class="at">s1</span>))<span class="op">,</span></span>
+<span id="cb7-1044"><a href="" aria-label="1044"></a>          <span class="dt">e2</span><span class="op">:</span> <span class="fu">cdf</span>(r[<span class="dv">1</span>]<span class="op">,</span> g<span class="op">.</span><span class="at">m2</span><span class="op">,</span> g<span class="op">.</span><span class="at">s2</span>) <span class="op">-</span> <span class="fu">cdf</span>(r[<span class="dv">0</span>]<span class="op">,</span> g<span class="op">.</span><span class="at">m2</span><span class="op">,</span> g<span class="op">.</span><span class="at">s2</span>)}<span class="op">;</span></span>
+<span id="cb7-1045"><a href="" aria-label="1045"></a>}</span>
+<span id="cb7-1046"><a href="" aria-label="1046"></a>fixS <span class="op">=</span> <span class="fu">bayesStrategy</span>(pFix)</span>
+<span id="cb7-1047"><a href="" aria-label="1047"></a>riskCurve <span class="op">=</span> d3<span class="op">.</span><span class="fu">range</span>(<span class="dv">0</span><span class="op">,</span> <span class="fl">1.0001</span><span class="op">,</span> <span class="fl">0.005</span>)<span class="op">.</span><span class="fu">map</span>(p <span class="kw">=&gt;</span> {</span>
+<span id="cb7-1048"><a href="" aria-label="1048"></a>  <span class="kw">const</span> s <span class="op">=</span> <span class="fu">bayesStrategy</span>(p)<span class="op">;</span></span>
+<span id="cb7-1049"><a href="" aria-label="1049"></a>  <span class="cf">return</span> {p<span class="op">,</span> <span class="dt">e1</span><span class="op">:</span> s<span class="op">.</span><span class="at">e1</span><span class="op">,</span> <span class="dt">e2</span><span class="op">:</span> s<span class="op">.</span><span class="at">e2</span><span class="op">,</span> <span class="dt">bayes</span><span class="op">:</span> p <span class="op">*</span> s<span class="op">.</span><span class="at">e1</span> <span class="op">+</span> (<span class="dv">1</span> <span class="op">-</span> p) <span class="op">*</span> s<span class="op">.</span><span class="at">e2</span><span class="op">,</span> <span class="dt">worst</span><span class="op">:</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">max</span>(s<span class="op">.</span><span class="at">e1</span><span class="op">,</span> s<span class="op">.</span><span class="at">e2</span>)}<span class="op">;</span></span>
+<span id="cb7-1050"><a href="" aria-label="1050"></a>})</span>
+<span id="cb7-1051"><a href="" aria-label="1051"></a>Plot<span class="op">.</span><span class="fu">plot</span>({</span>
+<span id="cb7-1052"><a href="" aria-label="1052"></a>  <span class="dt">width</span><span class="op">:</span> <span class="dv">1350</span><span class="op">,</span> <span class="dt">height</span><span class="op">:</span> <span class="dv">760</span><span class="op">,</span> <span class="dt">marginLeft</span><span class="op">:</span> <span class="dv">70</span><span class="op">,</span> <span class="dt">marginBottom</span><span class="op">:</span> <span class="dv">60</span><span class="op">,</span></span>
+<span id="cb7-1053"><a href="" aria-label="1053"></a>  <span class="dt">style</span><span class="op">:</span> {<span class="dt">fontSize</span><span class="op">:</span> <span class="st">"20px"</span>}<span class="op">,</span></span>
+<span id="cb7-1054"><a href="" aria-label="1054"></a>  <span class="dt">x</span><span class="op">:</span> {<span class="dt">label</span><span class="op">:</span> <span class="st">"prior p(1)"</span><span class="op">,</span> <span class="dt">domain</span><span class="op">:</span> [<span class="dv">0</span><span class="op">,</span> <span class="dv">1</span>]<span class="op">,</span> <span class="dt">ticks</span><span class="op">:</span> <span class="dv">10</span>}<span class="op">,</span></span>
+<span id="cb7-1055"><a href="" aria-label="1055"></a>  <span class="dt">y</span><span class="op">:</span> {<span class="dt">label</span><span class="op">:</span> <span class="st">"risk"</span><span class="op">,</span> <span class="dt">domain</span><span class="op">:</span> [<span class="dv">0</span><span class="op">,</span> <span class="fl">0.52</span>]<span class="op">,</span> <span class="dt">grid</span><span class="op">:</span> <span class="kw">true</span><span class="op">,</span> <span class="dt">ticks</span><span class="op">:</span> <span class="dv">5</span>}<span class="op">,</span></span>
+<span id="cb7-1056"><a href="" aria-label="1056"></a>  <span class="dt">marks</span><span class="op">:</span> [</span>
+<span id="cb7-1057"><a href="" aria-label="1057"></a>    Plot<span class="op">.</span><span class="fu">line</span>(riskCurve<span class="op">.</span><span class="fu">filter</span>(d <span class="kw">=&gt;</span> d<span class="op">.</span><span class="at">worst</span> <span class="op">&lt;=</span> <span class="fl">0.52</span>)<span class="op">,</span> {<span class="dt">x</span><span class="op">:</span> <span class="st">"p"</span><span class="op">,</span> <span class="dt">y</span><span class="op">:</span> <span class="st">"worst"</span><span class="op">,</span> <span class="dt">stroke</span><span class="op">:</span> <span class="st">"#2F7A52"</span><span class="op">,</span> <span class="dt">strokeWidth</span><span class="op">:</span> <span class="dv">13</span><span class="op">,</span> <span class="dt">strokeOpacity</span><span class="op">:</span> <span class="fl">0.3</span>})<span class="op">,</span></span>
+<span id="cb7-1058"><a href="" aria-label="1058"></a>    Plot<span class="op">.</span><span class="fu">line</span>(riskCurve<span class="op">.</span><span class="fu">filter</span>(d <span class="kw">=&gt;</span> d<span class="op">.</span><span class="at">e1</span> <span class="op">&lt;=</span> <span class="fl">0.52</span>)<span class="op">,</span> {<span class="dt">x</span><span class="op">:</span> <span class="st">"p"</span><span class="op">,</span> <span class="dt">y</span><span class="op">:</span> <span class="st">"e1"</span><span class="op">,</span> <span class="dt">stroke</span><span class="op">:</span> <span class="st">"#3C7DD9"</span><span class="op">,</span> <span class="dt">strokeWidth</span><span class="op">:</span> <span class="dv">3</span>})<span class="op">,</span></span>
+<span id="cb7-1059"><a href="" aria-label="1059"></a>    Plot<span class="op">.</span><span class="fu">line</span>(riskCurve<span class="op">.</span><span class="fu">filter</span>(d <span class="kw">=&gt;</span> d<span class="op">.</span><span class="at">e2</span> <span class="op">&lt;=</span> <span class="fl">0.52</span>)<span class="op">,</span> {<span class="dt">x</span><span class="op">:</span> <span class="st">"p"</span><span class="op">,</span> <span class="dt">y</span><span class="op">:</span> <span class="st">"e2"</span><span class="op">,</span> <span class="dt">stroke</span><span class="op">:</span> <span class="st">"#C0392B"</span><span class="op">,</span> <span class="dt">strokeWidth</span><span class="op">:</span> <span class="dv">3</span>})<span class="op">,</span></span>
+<span id="cb7-1060"><a href="" aria-label="1060"></a>    Plot<span class="op">.</span><span class="fu">line</span>(riskCurve<span class="op">,</span> {<span class="dt">x</span><span class="op">:</span> <span class="st">"p"</span><span class="op">,</span> <span class="dt">y</span><span class="op">:</span> <span class="st">"bayes"</span><span class="op">,</span> <span class="dt">stroke</span><span class="op">:</span> <span class="st">"#202729"</span><span class="op">,</span> <span class="dt">strokeWidth</span><span class="op">:</span> <span class="dv">4</span>})<span class="op">,</span></span>
+<span id="cb7-1061"><a href="" aria-label="1061"></a>    Plot<span class="op">.</span><span class="fu">line</span>([{<span class="dt">p</span><span class="op">:</span> <span class="dv">0</span><span class="op">,</span> <span class="dt">y</span><span class="op">:</span> fixS<span class="op">.</span><span class="at">e2</span>}<span class="op">,</span> {<span class="dt">p</span><span class="op">:</span> <span class="dv">1</span><span class="op">,</span> <span class="dt">y</span><span class="op">:</span> fixS<span class="op">.</span><span class="at">e1</span>}]<span class="op">,</span> {<span class="dt">x</span><span class="op">:</span> <span class="st">"p"</span><span class="op">,</span> <span class="dt">y</span><span class="op">:</span> <span class="st">"y"</span><span class="op">,</span> <span class="dt">stroke</span><span class="op">:</span> <span class="st">"#E08A00"</span><span class="op">,</span> <span class="dt">strokeWidth</span><span class="op">:</span> <span class="dv">4</span><span class="op">,</span> <span class="dt">clip</span><span class="op">:</span> <span class="kw">true</span>})<span class="op">,</span></span>
+<span id="cb7-1062"><a href="" aria-label="1062"></a>    Plot<span class="op">.</span><span class="fu">dot</span>([{<span class="dt">p</span><span class="op">:</span> pFix<span class="op">,</span> <span class="dt">y</span><span class="op">:</span> pFix <span class="op">*</span> fixS<span class="op">.</span><span class="at">e1</span> <span class="op">+</span> (<span class="dv">1</span> <span class="op">-</span> pFix) <span class="op">*</span> fixS<span class="op">.</span><span class="at">e2</span>}]<span class="op">,</span> {<span class="dt">x</span><span class="op">:</span> <span class="st">"p"</span><span class="op">,</span> <span class="dt">y</span><span class="op">:</span> <span class="st">"y"</span><span class="op">,</span> <span class="dt">fill</span><span class="op">:</span> <span class="st">"#E08A00"</span><span class="op">,</span> <span class="dt">r</span><span class="op">:</span> <span class="dv">10</span>})<span class="op">,</span></span>
+<span id="cb7-1063"><a href="" aria-label="1063"></a>    Plot<span class="op">.</span><span class="fu">dot</span>([{<span class="dt">p</span><span class="op">:</span> <span class="dv">0</span><span class="op">,</span> <span class="dt">y</span><span class="op">:</span> fixS<span class="op">.</span><span class="at">e2</span><span class="op">,</span> <span class="dt">c</span><span class="op">:</span> <span class="st">"#C0392B"</span>}<span class="op">,</span> {<span class="dt">p</span><span class="op">:</span> pFix<span class="op">,</span> <span class="dt">y</span><span class="op">:</span> fixS<span class="op">.</span><span class="at">e2</span><span class="op">,</span> <span class="dt">c</span><span class="op">:</span> <span class="st">"#C0392B"</span>}<span class="op">,</span> {<span class="dt">p</span><span class="op">:</span> <span class="dv">1</span><span class="op">,</span> <span class="dt">y</span><span class="op">:</span> fixS<span class="op">.</span><span class="at">e1</span><span class="op">,</span> <span class="dt">c</span><span class="op">:</span> <span class="st">"#3C7DD9"</span>}<span class="op">,</span> {<span class="dt">p</span><span class="op">:</span> pFix<span class="op">,</span> <span class="dt">y</span><span class="op">:</span> fixS<span class="op">.</span><span class="at">e1</span><span class="op">,</span> <span class="dt">c</span><span class="op">:</span> <span class="st">"#3C7DD9"</span>}]<span class="op">,</span> {<span class="dt">x</span><span class="op">:</span> <span class="st">"p"</span><span class="op">,</span> <span class="dt">y</span><span class="op">:</span> <span class="st">"y"</span><span class="op">,</span> <span class="dt">fill</span><span class="op">:</span> <span class="st">"c"</span><span class="op">,</span> <span class="dt">r</span><span class="op">:</span> <span class="dv">9</span><span class="op">,</span> <span class="dt">clip</span><span class="op">:</span> <span class="kw">true</span>})<span class="op">,</span></span>
+<span id="cb7-1064"><a href="" aria-label="1064"></a>    Plot<span class="op">.</span><span class="fu">ruleX</span>([pFix]<span class="op">,</span> {<span class="dt">stroke</span><span class="op">:</span> <span class="st">"#8A8F93"</span><span class="op">,</span> <span class="dt">strokeDasharray</span><span class="op">:</span> <span class="st">"3 5"</span><span class="op">,</span> <span class="dt">strokeWidth</span><span class="op">:</span> <span class="dv">2</span>})<span class="op">,</span></span>
+<span id="cb7-1065"><a href="" aria-label="1065"></a>    Plot<span class="op">.</span><span class="fu">ruleY</span>([<span class="dv">0</span>])</span>
+<span id="cb7-1066"><a href="" aria-label="1066"></a>  ]</span>
+<span id="cb7-1067"><a href="" aria-label="1067"></a>})</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<div id="ojs-cell-7-1" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<div id="ojs-cell-7-2" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<div id="ojs-cell-7-3" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<div id="ojs-cell-7-4" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<div id="ojs-cell-7-5" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<div id="ojs-cell-7-6" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<div id="ojs-cell-7-7" data-nodetype="expression">
+
+</div>
+</div>
+</div>
+</div>
+</div></div>
+</section>
+<section class="slide level2 nostretch">
+<h2>The minimax strategy for example III</h2>
+<div class="columns">
+<div class="column" style="width:56%;">
+<p><img data-src="img/gauss-4.svg" style="width: 100%;" alt="The minimax strategy for two normal distributions: both errors equal 0.187"></p>
+</div><div class="column" style="width:44%;">
+<div class="code-small">
+<p><span class="given-label">Search over the prior instead of <span class="math inline">\(\cl\)</span></span></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="" aria-label="1"></a><span class="im">from</span> scipy.optimize <span class="im">import</span> fminbound</span>
+<span id="cb8-2"><a href="" aria-label="2"></a>p1 <span class="op">=</span> fminbound(worst_risk, <span class="dv">0</span>, <span class="dv">1</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div>
+<p><span class="math inline">\(p^*(\cone) = 0.312, \quad \cl^* = 2.20\)</span></p>
+<p><span class="math inline">\(t_1 = -9.20, \quad t_2 = -3.08\)</span></p>
+<p><span class="math inline">\(\eone = \etwo = \mathbf{0.187}\)</span></p>
+</div>
+<div>
+<div class="alert">
+<p>A grid of priors is <strong>too coarse</strong>.</p>
+</div>
+</div>
+</div></div>
+</section>
+<section class="slide level2">
+<h2>Output of the assignment</h2>
+<div class="columns">
+<div class="column" style="width:50%;">
+<div class="card">
+<p><span class="card-title">Part 1: discrete</span></p>
+<ul>
+<li><code>minimax_strategy_discrete</code>: strategy, <span class="math inline">\(i^*\)</span> and the errors for all <span class="math inline">\(N + 1\)</span> thresholds</li>
+<li><code>classify_discrete</code>: labels for test images</li>
+</ul>
+</div>
+</div><div class="column" style="width:50%;">
+<div class="card">
+<p><span class="card-title">Part 2: continuous</span></p>
+<ul>
+<li><code>risk_fix_q_cont</code>: fixed strategy, all priors</li>
+<li><code>worst_risk_cont</code>: worst risk for one prior</li>
+<li><code>minimax_strategy_cont</code>: the result</li>
+</ul>
+</div>
+</div></div>
+<div>
+<div class="alert">
+<p>Copy your Lab 2 functions into <code>minimax.py</code>. Imports do not work in the BRUTE evaluation.</p>
+</div>
+</div>
+</section>
+<section class="slide level2">
+<h2>Take-away for the lab</h2>
+<div class="check">
+<ul>
+<li><strong>Minimax</strong> needs only <span class="math inline">\(\cp(\cx \mid \ck)\)</span>: no priors, no loss</li>
+<li>The strategy is a <strong>threshold on the likelihood ratio</strong> <span class="math inline">\(\cr(\cx)\)</span></li>
+<li><strong>Discrete <span class="math inline">\(\cx\)</span>:</strong> sort by <span class="math inline">\(\cr\)</span>, try all <span class="math inline">\(N + 1\)</span> thresholds, take the smallest maximum</li>
+<li><strong>Continuous <span class="math inline">\(\cx\)</span>:</strong> the optimum is where <span class="math inline">\(\eone = \etwo\)</span></li>
+<li><strong>Normal distributions:</strong> minimax is the Bayesian strategy for the <strong>worst prior</strong></li>
+<li><strong>Next week: test!</strong> Bring a calculator</li>
+</ul>
+</div>
+
+</section></section>
+    </div>
+  <div class="quarto-auto-generated-content" style="display: none;">
+<div class="footer footer-default">
+
+</div>
+</div></div>
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script>
+  <script src="index_files/libs/revealjs/dist/reveal.js"></script>
+  <!-- reveal.js plugins -->
+  <script src="index_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
+  <script src="index_files/libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
+  <script src="index_files/libs/revealjs/plugin/reveal-menu/menu.js"></script>
+  <script src="index_files/libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
+  <script src="index_files/libs/revealjs/plugin/reveal-chalkboard/plugin.js"></script>
+  <script src="index_files/libs/revealjs/plugin/quarto-support/support.js"></script>
+  
+
+  <script src="index_files/libs/revealjs/plugin/notes/notes.js"></script>
+  <script src="index_files/libs/revealjs/plugin/search/search.js"></script>
+  <script src="index_files/libs/revealjs/plugin/zoom/zoom.js"></script>
+  <script src="index_files/libs/revealjs/plugin/math/math.js"></script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://revealjs.com/config/
+      Reveal.initialize({
+'controlsAuto': false,
+'previewLinksAuto': false,
+'pdfSeparateFragments': true,
+'autoAnimateEasing': "ease",
+'autoAnimateDuration': 1,
+'autoAnimateUnmatched': true,
+'jumpToSlide': true,
+'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"<i class=\"fas fa-gear\"></i>","content":"<ul class=\"slide-menu-items\">\n<li class=\"slide-tool-item active\" data-item=\"0\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\"><kbd>f</kbd> Fullscreen</a></li>\n<li class=\"slide-tool-item\" data-item=\"1\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\"><kbd>s</kbd> Speaker View</a></li>\n<li class=\"slide-tool-item\" data-item=\"2\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>o</kbd> Slide Overview</a></li>\n<li class=\"slide-tool-item\" data-item=\"3\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.togglePdfExport(event)\"><kbd>e</kbd> PDF Export Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"4\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleScrollView(event)\"><kbd>r</kbd> Scroll View Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"5\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleChalkboard(event)\"><kbd>b</kbd> Toggle Chalkboard</a></li>\n<li class=\"slide-tool-item\" data-item=\"6\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleNotesCanvas(event)\"><kbd>c</kbd> Toggle Notes Canvas</a></li>\n<li class=\"slide-tool-item\" data-item=\"7\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.downloadDrawings(event)\"><kbd>d</kbd> Download Drawings</a></li>\n<li class=\"slide-tool-item\" data-item=\"8\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\"><kbd>?</kbd> Keyboard Help</a></li>\n</ul>"}],"openButton":true},
+'chalkboard': {"buttons":false},
+'smaller': false,
+ 
+        // Display controls in the bottom right corner
+        controls: false,
+
+        // Help the user learn the controls by providing hints, for example by
+        // bouncing the down arrow when they first encounter a vertical slide
+        controlsTutorial: false,
+
+        // Determines where controls appear, "edges" or "bottom-right"
+        controlsLayout: 'edges',
+
+        // Visibility rule for backwards navigation arrows; "faded", "hidden"
+        // or "visible"
+        controlsBackArrows: 'faded',
+
+        // Display a presentation progress bar
+        progress: true,
+
+        // Display the page number of the current slide
+        slideNumber: 'c',
+
+        // 'all', 'print', or 'speaker'
+        showSlideNumber: 'all',
+
+        // Add the current slide number to the URL hash so that reloading the
+        // page/copying the URL will return you to the same slide
+        hash: true,
+
+        // Start with 1 for the hash rather than 0
+        hashOneBasedIndex: false,
+
+        // Flags if we should monitor the hash and change slides accordingly
+        respondToHashChanges: true,
+
+        // Push each slide change to the browser history
+        history: true,
+
+        // Enable keyboard shortcuts for navigation
+        keyboard: true,
+
+        // Enable the slide overview mode
+        overview: true,
+
+        // Disables the default reveal.js slide layout (scaling and centering)
+        // so that you can use custom CSS layout
+        disableLayout: false,
+
+        // Vertical centering of slides
+        center: false,
+
+        // Enables touch navigation on devices with touch input
+        touch: true,
+
+        // Loop the presentation
+        loop: false,
+
+        // Change the presentation direction to be RTL
+        rtl: false,
+
+        // see https://revealjs.com/vertical-slides/#navigation-mode
+        navigationMode: 'linear',
+
+        // Randomizes the order of slides each time the presentation loads
+        shuffle: false,
+
+        // Turns fragments on and off globally
+        fragments: true,
+
+        // Flags whether to include the current fragment in the URL,
+        // so that reloading brings you to the same fragment position
+        fragmentInURL: false,
+
+        // Flags if the presentation is running in an embedded mode,
+        // i.e. contained within a limited portion of the screen
+        embedded: false,
+
+        // Flags if we should show a help overlay when the questionmark
+        // key is pressed
+        help: true,
+
+        // Flags if it should be possible to pause the presentation (blackout)
+        pause: true,
+
+        // Flags if speaker notes should be visible to all viewers
+        showNotes: false,
+
+        // Global override for autoplaying embedded media (null/true/false)
+        autoPlayMedia: null,
+
+        // Global override for preloading lazy-loaded iframes (null/true/false)
+        preloadIframes: null,
+
+        // Number of milliseconds between automatically proceeding to the
+        // next slide, disabled when set to 0, this value can be overwritten
+        // by using a data-autoslide attribute on your slides
+        autoSlide: 0,
+
+        // Stop auto-sliding after user input
+        autoSlideStoppable: true,
+
+        // Use this method for navigation when auto-sliding
+        autoSlideMethod: null,
+
+        // Specify the average time in seconds that you think you will spend
+        // presenting each slide. This is used to show a pacing timer in the
+        // speaker view
+        defaultTiming: null,
+
+        // Enable slide navigation via mouse wheel
+        mouseWheel: false,
+
+        // The display mode that will be used to show slides
+        display: 'block',
+
+        // Hide cursor if inactive
+        hideInactiveCursor: true,
+
+        // Time before the cursor is hidden (in ms)
+        hideCursorTime: 5000,
+
+        // Opens links in an iframe preview overlay
+        previewLinks: false,
+
+        // Transition style (none/fade/slide/convex/concave/zoom)
+        transition: 'slide',
+
+        // Transition speed (default/fast/slow)
+        transitionSpeed: 'default',
+
+        // Transition style for full page slide backgrounds
+        // (none/fade/slide/convex/concave/zoom)
+        backgroundTransition: 'fade',
+
+        // Number of slides away from the current that are visible
+        viewDistance: 3,
+
+        // Number of slides away from the current that are visible on mobile
+        // devices. It is advisable to set this to a lower number than
+        // viewDistance in order to save resources.
+        mobileViewDistance: 2,
+
+        // The "normal" size of the presentation, aspect ratio will be preserved
+        // when the presentation is scaled to fit different resolutions. Can be
+        // specified using percentage units.
+        width: 1920,
+
+        height: 1080,
+
+        // Factor of the display size that should remain empty around the content
+        margin: 0.1,
+
+        math: {
+          mathjax: 'https://cdn.jsdelivr.net/npm/mathjax@2.7.9/MathJax.js',
+          config: 'TeX-AMS_HTML-full',
+          tex2jax: {
+            inlineMath: [['\\(','\\)']],
+            displayMath: [['\\[','\\]']],
+            balanceBraces: true,
+            processEscapes: false,
+            processRefs: true,
+            processEnvironments: true,
+            preview: 'TeX',
+            skipTags: ['script','noscript','style','textarea','pre','code'],
+            ignoreClass: 'tex2jax_ignore',
+            processClass: 'tex2jax_process'
+          },
+        },
+
+        // reveal.js plugins
+        plugins: [QuartoLineHighlight, PdfExport, RevealMenu, RevealChalkboard, QuartoSupport,
+
+          RevealMath,
+          RevealNotes,
+          RevealSearch,
+          RevealZoom
+        ]
+      });
+    </script>
+    <script>
+    // Titulní slide a sekční slidy (# Nadpis) dostanou tmavé pozadí jako v původních
+    // RPZ prezentacích. Nastavuje se přes data-background-color, aby reveal.js
+    // správně přepnul .has-dark-background (barva textu, schování mátového pruhu).
+    (function () {
+      const DARK = "#202729";
+      function init() {
+        if (!(window.Reveal && Reveal.isReady && Reveal.isReady())) return setTimeout(init, 50);
+        document.querySelectorAll("section.quarto-title-block, section.title-slide.level1").forEach(s => {
+          if (!s.hasAttribute("data-background-color") && !s.hasAttribute("data-background-image")) {
+            s.setAttribute("data-background-color", DARK);
+          }
+        });
+        Reveal.sync();
+      }
+      init();
+    })();
+    </script>
+    <script>
+    // Zvýrazňování prvků podle aktuálního fragmentu.
+    //
+    // Fragment může mít atributy s CSS selektory (hledá se v rámci aktuálního slidu):
+    //   data-hl=".pig"        prvky, které se zvýrazní (třída .hl)
+    //   data-given=".pen-g"   podmínka, zobrazí se normálně (třída .given)
+    // Dokud je aktivní takový fragment, slide má třídu .hl-active a ostatní prvky
+    // se mohou ztlumit (viz CSS prezentace). Fragment bez těchto atributů zvýraznění zruší.
+    (function () {
+      function apply() {
+        const slide = Reveal.getCurrentSlide();
+        if (!slide) return;
+        slide.querySelectorAll(".hl, .given").forEach(el => el.classList.remove("hl", "given"));
+
+        let current = null;
+        let currentIndex = -1;
+        slide.querySelectorAll(".fragment.visible").forEach(f => {
+          const i = Number(f.getAttribute("data-fragment-index"));
+          if (i >= currentIndex) { currentIndex = i; current = f; }
+        });
+
+        const active = current && (current.dataset.hl || current.dataset.given);
+        slide.classList.toggle("hl-active", Boolean(active));
+        if (!active) return;
+
+        const mark = (selector, cls) => {
+          if (selector) slide.querySelectorAll(selector).forEach(el => el.classList.add(cls));
+        };
+        mark(current.dataset.given, "given");
+        mark(current.dataset.hl, "hl");
+      }
+
+      function init() {
+        if (!(window.Reveal && Reveal.isReady && Reveal.isReady())) return setTimeout(init, 50);
+        ["fragmentshown", "fragmenthidden", "slidechanged"].forEach(ev => Reveal.on(ev, apply));
+        apply();
+      }
+      init();
+    })();
+    </script>
+    <script type="ojs-module-contents">
+    eyJjb250ZW50cyI6W3sibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtMSIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6InZpZXdvZiB0dCA9IElucHV0cy5yYW5nZShbMC4wMiwgMC45OF0sIHt2YWx1ZTogMC43LCBzdGVwOiAwLjAxLCBsYWJlbDogXCJ0XCJ9KVxuIn0seyJtZXRob2ROYW1lIjoiaW50ZXJwcmV0IiwiY2VsbE5hbWUiOiJvanMtY2VsbC0yIiwiaW5saW5lIjpmYWxzZSwic291cmNlIjoidHJpRXJyID0gKHtlMTogdHQgKiB0dCwgZTI6ICgxIC0gdHQpICogKDEgLSB0dCksIGxhbTogdHQgLyAoMSAtIHR0KX0pXG5tZGDOuyA9ICoqJHt0cmlFcnIubGFtLnRvRml4ZWQoMil9KipcblxuzrUoMSkgPSAqKiR7dHJpRXJyLmUxLnRvRml4ZWQoMyl9KipcblxuzrUoMikgPSAqKiR7dHJpRXJyLmUyLnRvRml4ZWQoMyl9KipcblxubWF4ID0gKioke01hdGgubWF4KHRyaUVyci5lMSwgdHJpRXJyLmUyKS50b0ZpeGVkKDMpfSoqYFxuIn0seyJtZXRob2ROYW1lIjoiaW50ZXJwcmV0IiwiY2VsbE5hbWUiOiJvanMtY2VsbC0zIiwiaW5saW5lIjpmYWxzZSwic291cmNlIjoidHJpWCA9IGQzLnJhbmdlKC0xLCAxLjAwMDEsIDAuMDEpXG5QbG90LnBsb3Qoe1xuICB3aWR0aDogMTM1MCwgaGVpZ2h0OiA0MzAsIG1hcmdpbkxlZnQ6IDcwLFxuICBzdHlsZToge2ZvbnRTaXplOiBcIjIwcHhcIn0sXG4gIHg6IHtsYWJlbDogXCJ4XCIsIGRvbWFpbjogWy0xLCAxXSwgdGlja3M6IDR9LFxuICB5OiB7bGFiZWw6IFwicCh4IHwgaylcIiwgZG9tYWluOiBbMCwgMS4xXSwgdGlja3M6IDJ9LFxuICBtYXJrczogW1xuICAgIFBsb3QuYXJlYVkodHJpWC5maWx0ZXIoeCA9PiBNYXRoLmFicyh4KSA8PSB0dCArIDFlLTkpLCB7eDogZCA9PiBkLCB5OiBkID0+IE1hdGguYWJzKGQpLCBmaWxsOiBcIiMzQzdERDlcIiwgZmlsbE9wYWNpdHk6IDAuM30pLFxuICAgIFBsb3QuYXJlYVkodHJpWC5maWx0ZXIoeCA9PiB4IDw9IC10dCArIDFlLTkpLCB7eDogZCA9PiBkLCB5OiBkID0+IDEgLSBNYXRoLmFicyhkKSwgZmlsbDogXCIjQzAzOTJCXCIsIGZpbGxPcGFjaXR5OiAwLjN9KSxcbiAgICBQbG90LmFyZWFZKHRyaVguZmlsdGVyKHggPT4geCA+PSB0dCAtIDFlLTkpLCB7eDogZCA9PiBkLCB5OiBkID0+IDEgLSBNYXRoLmFicyhkKSwgZmlsbDogXCIjQzAzOTJCXCIsIGZpbGxPcGFjaXR5OiAwLjN9KSxcbiAgICBQbG90LmxpbmUodHJpWCwge3g6IGQgPT4gZCwgeTogZCA9PiBNYXRoLmFicyhkKSwgc3Ryb2tlOiBcIiMzQzdERDlcIiwgc3Ryb2tlV2lkdGg6IDR9KSxcbiAgICBQbG90LmxpbmUodHJpWCwge3g6IGQgPT4gZCwgeTogZCA9PiAxIC0gTWF0aC5hYnMoZCksIHN0cm9rZTogXCIjQzAzOTJCXCIsIHN0cm9rZVdpZHRoOiA0fSksXG4gICAgUGxvdC5ydWxlWChbLXR0LCB0dF0sIHtzdHJva2U6IFwiIzIwMjcyOVwiLCBzdHJva2VEYXNoYXJyYXk6IFwiOCA2XCIsIHN0cm9rZVdpZHRoOiAyfSksXG4gICAgUGxvdC50ZXh0KFt7eDogLSgxICsgdHQpIC8gMiwgdDogXCIxXCIsIGM6IFwiIzNDN0REOVwifSwge3g6IDAsIHQ6IFwiMlwiLCBjOiBcIiNDMDM5MkJcIn0sIHt4OiAoMSArIHR0KSAvIDIsIHQ6IFwiMVwiLCBjOiBcIiMzQzdERDlcIn1dLFxuICAgICAgICAgICAgICB7eDogXCJ4XCIsIHk6IDEuMDQsIHRleHQ6IFwidFwiLCBmaWxsOiBcImNcIiwgZm9udFNpemU6IDQwLCBmb250V2VpZ2h0OiBcImJvbGRcIn0pLFxuICAgIFBsb3QucnVsZVkoWzBdKVxuICBdXG59KVxuIn0seyJtZXRob2ROYW1lIjoiaW50ZXJwcmV0IiwiY2VsbE5hbWUiOiJvanMtY2VsbC00IiwiaW5saW5lIjpmYWxzZSwic291cmNlIjoidHJpVCA9IGQzLnJhbmdlKDAsIDEuMDAwMSwgMC4wMSlcblBsb3QucGxvdCh7XG4gIHdpZHRoOiAxMzUwLCBoZWlnaHQ6IDMwMCwgbWFyZ2luTGVmdDogNzAsXG4gIHN0eWxlOiB7Zm9udFNpemU6IFwiMjBweFwifSxcbiAgeDoge2xhYmVsOiBcInRcIiwgZG9tYWluOiBbMCwgMV0sIHRpY2tzOiAxMH0sXG4gIHk6IHtsYWJlbDogXCJlcnJvclwiLCBkb21haW46IFswLCAxXSwgZ3JpZDogdHJ1ZSwgdGlja3M6IDR9LFxuICBtYXJrczogW1xuICAgIFBsb3QubGluZSh0cmlULCB7eDogZCA9PiBkLCB5OiBkID0+IE1hdGgubWF4KGQgKiBkLCAoMSAtIGQpICogKDEgLSBkKSksIHN0cm9rZTogXCIjMkY3QTUyXCIsIHN0cm9rZVdpZHRoOiAxMiwgc3Ryb2tlT3BhY2l0eTogMC4zfSksXG4gICAgUGxvdC5saW5lKHRyaVQsIHt4OiBkID0+IGQsIHk6IGQgPT4gZCAqIGQsIHN0cm9rZTogXCIjM0M3REQ5XCIsIHN0cm9rZVdpZHRoOiAzLjV9KSxcbiAgICBQbG90LmxpbmUodHJpVCwge3g6IGQgPT4gZCwgeTogZCA9PiAoMSAtIGQpICogKDEgLSBkKSwgc3Ryb2tlOiBcIiNDMDM5MkJcIiwgc3Ryb2tlV2lkdGg6IDMuNX0pLFxuICAgIFBsb3QucnVsZVgoW3R0XSwge3N0cm9rZTogXCIjMjAyNzI5XCIsIHN0cm9rZURhc2hhcnJheTogXCI4IDZcIiwgc3Ryb2tlV2lkdGg6IDJ9KSxcbiAgICBQbG90LmRvdChbe3k6IHR0ICogdHQsIGM6IFwiIzNDN0REOVwifSwge3k6ICgxIC0gdHQpICogKDEgLSB0dCksIGM6IFwiI0MwMzkyQlwifV0sIHt4OiB0dCwgeTogXCJ5XCIsIGZpbGw6IFwiY1wiLCByOiA5fSksXG4gICAgUGxvdC5ydWxlWShbMF0pXG4gIF1cbn0pXG4ifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJjZWxsTmFtZSI6Im9qcy1jZWxsLTUiLCJpbmxpbmUiOmZhbHNlLCJzb3VyY2UiOiJ2aWV3b2YgcEZpeCA9IElucHV0cy5yYW5nZShbMCwgMV0sIHt2YWx1ZTogMC42LCBzdGVwOiAwLjAxLCBsYWJlbDogXCJwKDEpXCJ9KVxuIn0seyJtZXRob2ROYW1lIjoiaW50ZXJwcmV0IiwiY2VsbE5hbWUiOiJvanMtY2VsbC02IiwiaW5saW5lIjpmYWxzZSwic291cmNlIjoibWRgzrsgPSAqKiR7cEZpeCA+IDAgPyAoKDEgLSBwRml4KSAvIHBGaXgpLnRvRml4ZWQoMikgOiBcIuKInlwifSoqXG5cbnTigoEgPSAqKiR7TnVtYmVyLmlzRmluaXRlKGZpeFMudDEpID8gZml4Uy50MS50b0ZpeGVkKDIpIDogZml4Uy50MSA8IDAgPyBcIi3iiJ5cIiA6IFwibm9uZVwifSoqXG5cbnTigoIgPSAqKiR7TnVtYmVyLmlzRmluaXRlKGZpeFMudDIpID8gZml4Uy50Mi50b0ZpeGVkKDIpIDogZml4Uy50MiA+IDAgPyBcIuKInlwiIDogXCJub25lXCJ9KipcblxuzrUoMSkgPSAqKiR7Zml4Uy5lMS50b0ZpeGVkKDMpfSoqXG5cbs61KDIpID0gKioke2ZpeFMuZTIudG9GaXhlZCgzKX0qKlxuXG5tYXggPSAqKiR7TWF0aC5tYXgoZml4Uy5lMSwgZml4Uy5lMikudG9GaXhlZCgzKX0qKmBcbiJ9LHsibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtNyIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6ImcgPSAoe20xOiAtNSwgczE6IDIsIG0yOiAxLCBzMjogNX0pXG5lcmYgPSB4ID0+IHtcbiAgY29uc3QgcyA9IE1hdGguc2lnbih4KSwgYSA9IE1hdGguYWJzKHgpLCB0ID0gMSAvICgxICsgMC4zMjc1OTExICogYSk7XG4gIHJldHVybiBzICogKDEgLSAoKCgoKDEuMDYxNDA1NDI5ICogdCAtIDEuNDUzMTUyMDI3KSAqIHQpICsgMS40MjE0MTM3NDEpICogdCAtIDAuMjg0NDk2NzM2KSAqIHQgKyAwLjI1NDgyOTU5MikgKiB0ICogTWF0aC5leHAoLWEgKiBhKSk7XG59XG5jZGYgPSAoeCwgbSwgcykgPT4gMC41ICogKDEgKyBlcmYoKHggLSBtKSAvIChzICogTWF0aC5TUVJUMikpKVxuYmF5ZXNTdHJhdGVneSA9IHAxID0+IHtcbiAgaWYgKHAxIDw9IDApIHJldHVybiB7dDE6IE5hTiwgdDI6IE5hTiwgZTE6IDEsIGUyOiAwfTtcbiAgaWYgKHAxID49IDEpIHJldHVybiB7dDE6IC1JbmZpbml0eSwgdDI6IEluZmluaXR5LCBlMTogMCwgZTI6IDF9O1xuICBjb25zdCBMID0gTWF0aC5sb2coZy5zMSAvIGcuczIgKiAoMSAtIHAxKSAvIHAxKTtcbiAgY29uc3QgYSA9IGcuczEgKiogMiAtIGcuczIgKiogMiwgYiA9IDIgKiAoZy5zMiAqKiAyICogZy5tMSAtIGcuczEgKiogMiAqIGcubTIpO1xuICBjb25zdCBjID0gZy5zMSAqKiAyICogZy5tMiAqKiAyIC0gZy5zMiAqKiAyICogZy5tMSAqKiAyIC0gMiAqIGcuczEgKiogMiAqIGcuczIgKiogMiAqIEw7XG4gIGNvbnN0IGQgPSBiICogYiAtIDQgKiBhICogYztcbiAgaWYgKGQgPD0gMCkgcmV0dXJuIHt0MTogTmFOLCB0MjogTmFOLCBlMTogMSwgZTI6IDB9O1xuICBjb25zdCByID0gWygtYiAtIE1hdGguc3FydChkKSkgLyAoMiAqIGEpLCAoLWIgKyBNYXRoLnNxcnQoZCkpIC8gKDIgKiBhKV0uc29ydCgodSwgdikgPT4gdSAtIHYpO1xuICByZXR1cm4ge3QxOiByWzBdLCB0MjogclsxXSxcbiAgICAgICAgICBlMTogMSAtIChjZGYoclsxXSwgZy5tMSwgZy5zMSkgLSBjZGYoclswXSwgZy5tMSwgZy5zMSkpLFxuICAgICAgICAgIGUyOiBjZGYoclsxXSwgZy5tMiwgZy5zMikgLSBjZGYoclswXSwgZy5tMiwgZy5zMil9O1xufVxuZml4UyA9IGJheWVzU3RyYXRlZ3kocEZpeClcbnJpc2tDdXJ2ZSA9IGQzLnJhbmdlKDAsIDEuMDAwMSwgMC4wMDUpLm1hcChwID0+IHtcbiAgY29uc3QgcyA9IGJheWVzU3RyYXRlZ3kocCk7XG4gIHJldHVybiB7cCwgZTE6IHMuZTEsIGUyOiBzLmUyLCBiYXllczogcCAqIHMuZTEgKyAoMSAtIHApICogcy5lMiwgd29yc3Q6IE1hdGgubWF4KHMuZTEsIHMuZTIpfTtcbn0pXG5QbG90LnBsb3Qoe1xuICB3aWR0aDogMTM1MCwgaGVpZ2h0OiA3NjAsIG1hcmdpbkxlZnQ6IDcwLCBtYXJnaW5Cb3R0b206IDYwLFxuICBzdHlsZToge2ZvbnRTaXplOiBcIjIwcHhcIn0sXG4gIHg6IHtsYWJlbDogXCJwcmlvciBwKDEpXCIsIGRvbWFpbjogWzAsIDFdLCB0aWNrczogMTB9LFxuICB5OiB7bGFiZWw6IFwicmlza1wiLCBkb21haW46IFswLCAwLjUyXSwgZ3JpZDogdHJ1ZSwgdGlja3M6IDV9LFxuICBtYXJrczogW1xuICAgIFBsb3QubGluZShyaXNrQ3VydmUuZmlsdGVyKGQgPT4gZC53b3JzdCA8PSAwLjUyKSwge3g6IFwicFwiLCB5OiBcIndvcnN0XCIsIHN0cm9rZTogXCIjMkY3QTUyXCIsIHN0cm9rZVdpZHRoOiAxMywgc3Ryb2tlT3BhY2l0eTogMC4zfSksXG4gICAgUGxvdC5saW5lKHJpc2tDdXJ2ZS5maWx0ZXIoZCA9PiBkLmUxIDw9IDAuNTIpLCB7eDogXCJwXCIsIHk6IFwiZTFcIiwgc3Ryb2tlOiBcIiMzQzdERDlcIiwgc3Ryb2tlV2lkdGg6IDN9KSxcbiAgICBQbG90LmxpbmUocmlza0N1cnZlLmZpbHRlcihkID0+IGQuZTIgPD0gMC41MiksIHt4OiBcInBcIiwgeTogXCJlMlwiLCBzdHJva2U6IFwiI0MwMzkyQlwiLCBzdHJva2VXaWR0aDogM30pLFxuICAgIFBsb3QubGluZShyaXNrQ3VydmUsIHt4OiBcInBcIiwgeTogXCJiYXllc1wiLCBzdHJva2U6IFwiIzIwMjcyOVwiLCBzdHJva2VXaWR0aDogNH0pLFxuICAgIFBsb3QubGluZShbe3A6IDAsIHk6IGZpeFMuZTJ9LCB7cDogMSwgeTogZml4Uy5lMX1dLCB7eDogXCJwXCIsIHk6IFwieVwiLCBzdHJva2U6IFwiI0UwOEEwMFwiLCBzdHJva2VXaWR0aDogNCwgY2xpcDogdHJ1ZX0pLFxuICAgIFBsb3QuZG90KFt7cDogcEZpeCwgeTogcEZpeCAqIGZpeFMuZTEgKyAoMSAtIHBGaXgpICogZml4Uy5lMn1dLCB7eDogXCJwXCIsIHk6IFwieVwiLCBmaWxsOiBcIiNFMDhBMDBcIiwgcjogMTB9KSxcbiAgICBQbG90LmRvdChbe3A6IDAsIHk6IGZpeFMuZTIsIGM6IFwiI0MwMzkyQlwifSwge3A6IHBGaXgsIHk6IGZpeFMuZTIsIGM6IFwiI0MwMzkyQlwifSwge3A6IDEsIHk6IGZpeFMuZTEsIGM6IFwiIzNDN0REOVwifSwge3A6IHBGaXgsIHk6IGZpeFMuZTEsIGM6IFwiIzNDN0REOVwifV0sIHt4OiBcInBcIiwgeTogXCJ5XCIsIGZpbGw6IFwiY1wiLCByOiA5LCBjbGlwOiB0cnVlfSksXG4gICAgUGxvdC5ydWxlWChbcEZpeF0sIHtzdHJva2U6IFwiIzhBOEY5M1wiLCBzdHJva2VEYXNoYXJyYXk6IFwiMyA1XCIsIHN0cm9rZVdpZHRoOiAyfSksXG4gICAgUGxvdC5ydWxlWShbMF0pXG4gIF1cbn0pXG4ifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXRRdWlldCIsInNvdXJjZSI6InNoaW55SW5wdXQoJ3R0JykifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXRRdWlldCIsInNvdXJjZSI6InNoaW55SW5wdXQoJ3BGaXgnKSJ9XX0=
+    </script>
+    <script type="module">
+    if (window.location.protocol === "file:") { alert("The OJS runtime does not work with file:// URLs. Please use a web server to view this document."); }
+    window._ojs.paths.runtimeToDoc = "../../..";
+    window._ojs.paths.runtimeToRoot = "../../../../..";
+    window._ojs.paths.docToRoot = "../..";
+    window._ojs.selfContained = false;
+    window._ojs.runtime.interpretFromScriptTags();
+    </script>
+    <script id="quarto-html-after-body" type="application/javascript">
+      window.document.addEventListener("DOMContentLoaded", function (event) {
+        const tabsets =  window.document.querySelectorAll(".panel-tabset-tabby")
+        tabsets.forEach(function(tabset) {
+          const tabby = new Tabby('#' + tabset.id);
+        });
+        const isCodeAnnotation = (el) => {
+          for (const clz of el.classList) {
+            if (clz.startsWith('code-annotation-')) {                     
+              return true;
+            }
+          }
+          return false;
+        }
+        const onCopySuccess = function(e) {
+          // button target
+          const button = e.trigger;
+          // don't keep focus
+          button.blur();
+          // flash "checked"
+          button.classList.add('code-copy-button-checked');
+          var currentTitle = button.getAttribute("title");
+          button.setAttribute("title", "Copied!");
+          let tooltip;
+          if (window.bootstrap) {
+            button.setAttribute("data-bs-toggle", "tooltip");
+            button.setAttribute("data-bs-placement", "left");
+            button.setAttribute("data-bs-title", "Copied!");
+            tooltip = new bootstrap.Tooltip(button, 
+              { trigger: "manual", 
+                customClass: "code-copy-button-tooltip",
+                offset: [0, -8]});
+            tooltip.show();    
+          }
+          setTimeout(function() {
+            if (tooltip) {
+              tooltip.hide();
+              button.removeAttribute("data-bs-title");
+              button.removeAttribute("data-bs-toggle");
+              button.removeAttribute("data-bs-placement");
+            }
+            button.setAttribute("title", currentTitle);
+            button.classList.remove('code-copy-button-checked');
+          }, 1000);
+          // clear code selection
+          e.clearSelection();
+        }
+        const getTextToCopy = function(trigger) {
+          const outerScaffold = trigger.parentElement.cloneNode(true);
+          const codeEl = outerScaffold.querySelector('code');
+          for (const childEl of codeEl.children) {
+            if (isCodeAnnotation(childEl)) {
+              childEl.remove();
+            }
+          }
+          return codeEl.innerText;
+        }
+        const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+          text: getTextToCopy
+        });
+        clipboard.on('success', onCopySuccess);
+        if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+          const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+            text: getTextToCopy,
+            container: window.document.getElementById('quarto-embedded-source-code-modal')
+          });
+          clipboardModal.on('success', onCopySuccess);
+        }
+          var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+          var mailtoRegex = new RegExp(/^mailto:/);
+            var filterRegex = new RegExp('/' + window.location.host + '/');
+          var isInternal = (href) => {
+              return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+          }
+          // Inspect non-navigation links and adorn them if external
+         var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+          for (var i=0; i<links.length; i++) {
+            const link = links[i];
+            if (!isInternal(link.href)) {
+              // undo the damage that might have been done by quarto-nav.js in the case of
+              // links that we want to consider external
+              if (link.dataset.originalHref !== undefined) {
+                link.href = link.dataset.originalHref;
+              }
+            }
+          }
+        function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+          const config = {
+            allowHTML: true,
+            maxWidth: 500,
+            delay: 100,
+            arrow: false,
+            appendTo: function(el) {
+                return el.closest('section.slide') || el.parentElement;
+            },
+            interactive: true,
+            interactiveBorder: 10,
+            theme: 'light-border',
+            placement: 'bottom-start',
+          };
+          if (contentFn) {
+            config.content = contentFn;
+          }
+          if (onTriggerFn) {
+            config.onTrigger = onTriggerFn;
+          }
+          if (onUntriggerFn) {
+            config.onUntrigger = onUntriggerFn;
+          }
+            config['offset'] = [0,0];
+            config['maxWidth'] = 700;
+          window.tippy(el, config); 
+        }
+        const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+        for (var i=0; i<noterefs.length; i++) {
+          const ref = noterefs[i];
+          tippyHover(ref, function() {
+            // use id or data attribute instead here
+            let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+            try { href = new URL(href).hash; } catch {}
+            const id = href.replace(/^#\/?/, "");
+            const note = window.document.getElementById(id);
+            if (note) {
+              return note.innerHTML;
+            } else {
+              return "";
+            }
+          });
+        }
+        const findCites = (el) => {
+          const parentEl = el.parentElement;
+          if (parentEl) {
+            const cites = parentEl.dataset.cites;
+            if (cites) {
+              return {
+                el,
+                cites: cites.split(' ')
+              };
+            } else {
+              return findCites(el.parentElement)
+            }
+          } else {
+            return undefined;
+          }
+        };
+        var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+        for (var i=0; i<bibliorefs.length; i++) {
+          const ref = bibliorefs[i];
+          const citeInfo = findCites(ref);
+          if (citeInfo) {
+            tippyHover(citeInfo.el, function() {
+              var popup = window.document.createElement('div');
+              citeInfo.cites.forEach(function(cite) {
+                var citeDiv = window.document.createElement('div');
+                citeDiv.classList.add('hanging-indent');
+                citeDiv.classList.add('csl-entry');
+                var biblioDiv = window.document.getElementById('ref-' + cite);
+                if (biblioDiv) {
+                  citeDiv.innerHTML = biblioDiv.innerHTML;
+                }
+                popup.appendChild(citeDiv);
+              });
+              return popup.innerHTML;
+            });
+          }
+        }
+      });
+      </script>
+    
+
+</body></html>

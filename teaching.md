@@ -40,6 +40,19 @@ Lecturer: prof. Ing. Jiří Matas, Ph.D.<br>
     </div>
 </div>
 
+<div class="slide-deck">
+    <a href="/teaching/rpz/03-minimax/"><img src="/images/teaching/rpz-03-minimax.jpg" alt="First slide of Lab 3: 03 - Minimax, Pattern Recognition and Machine Learning" width="320"></a>
+    <div>
+        <b>Lab 3: Non-Bayesian Tasks, Minimax</b><br>
+        The minimax task on a discrete and three continuous examples, the likelihood ratio and its threshold, and minimax as the Bayesian strategy for the worst-case prior.<br>
+        <a href="/teaching/rpz/03-minimax/"><div class="color-button">slides</div></a>
+        <a href="/teaching/rpz/03-minimax/rpz-03-minimax.pdf"><div class="color-button">pdf</div></a><br>
+        Older slides explaining the minimax solution as the worst case of the Bayesian strategy:<br>
+        <a href="https://docs.google.com/presentation/d/1g3sK-u6TR5Pbvwgfswgh4ThPouxFTiXCEATfetk5WhM/edit?usp=sharing"><div class="color-button">older slides (Google Slides)</div></a><br>
+        <b style="color: #c0392b;">The older slides are animated: open them in presentation mode (Slideshow), otherwise they are not displayed correctly.</b>
+    </div>
+</div>
+
 <h2>Past Courses</h2>
 <ul>
     <li>

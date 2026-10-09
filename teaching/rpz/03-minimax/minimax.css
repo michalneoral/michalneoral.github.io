@@ -1,0 +1,30 @@
+/* Styly specifické pro prezentaci 03 - Minimax.
+   Obecné komponenty (karty, tabulky .gt, odvození, krokové grafy, ...) jsou v theme/rpz.scss. */
+
+/* Krokové grafy: výška tak, aby se pod ně vešel popisek */
+.reveal .fig-stack img { width: auto; max-width: 100%; height: 720px; }
+
+/* Tabulka chyb pro všech 13 prahů a graf pod ní */
+.reveal .gt.errtab table { font-size: 0.72em; width: 100%; margin: 0 0 0.3em; }
+.reveal .gt.errtab table td, .reveal .gt.errtab table th { padding: 0.2em 0.3em; }
+.reveal .err-stack img { width: 100%; }
+/* Hodnota, která se při odkrytí jen zvýrazní (nejmenší maximum); bez fragmentů je zvýrazněná hned */
+.reveal .fragment.mark-best { opacity: 1; visibility: inherit; }
+.reveal .mark-best.visible,
+.reveal .mark-best:not(.fragment) { padding: 0 0.4em; border-radius: 8px; background: #C9F0D4; color: #1E6B3E; font-weight: 700; }
+
+/* Tabulky zadání 3 x 4: záhlaví na jeden řádek */
+.reveal .given-row .gt table { font-size: 0.9em; }
+.reveal .gt table th { white-space: nowrap; }
+
+/* Karty nebayesovských úloh: vzorec uprostřed */
+.reveal .cards .card .MathJax_Display { margin: 0.3em 0 !important; }
+
+/* Krátký kód v úzkém sloupci */
+.reveal .code-small pre code { font-size: 0.95em; }
+
+/* Blok, jehož animace zůstává i ve webové verzi (viz tools/web.lua) */
+.reveal .keep-animation { display: contents; }
+
+/* Graf vedle odvození: vidět celou dobu, kroky se překrývají */
+.reveal .side-stack img { width: 100%; }
