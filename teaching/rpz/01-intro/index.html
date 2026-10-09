@@ -102,7 +102,7 @@
     code span.vs { color: #032f62; } /* VerbatimString */
     code span.wa { color: #ff5555; } /* Warning */
   </style>
-  <link rel="stylesheet" href="index_files/libs/revealjs/dist/theme/quarto-ee5f16ea4037ba2af5b940526b7a1645.css">
+  <link rel="stylesheet" href="index_files/libs/revealjs/dist/theme/quarto-c25f51df9efc0ed011c530767492aed3.css">
   <link rel="stylesheet" href="../../theme/fonts/fonts.css">
   <link rel="stylesheet" href="intro.css">
   <link href="index_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
@@ -230,7 +230,20 @@
         muA: "{\\color{#3C7DD9}{\\mu_A}}",
         muC: "{\\color{#C0392B}{\\mu_C}}",
         sA: "{\\color{#3C7DD9}{\\sigma_A}}",
-        sC: "{\\color{#C0392B}{\\sigma_C}}"
+        sC: "{\\color{#C0392B}{\\sigma_C}}",
+        // Minimax (03): třídy 1/2 a F/M, likelihood ratio r a jeho práh lambda, chyby tříd
+        cone: "{\\color{#3C7DD9}{1}}",
+        ctwo: "{\\color{#C0392B}{2}}",
+        cF: "{\\color{#3C7DD9}{F}}",
+        cM: "{\\color{#C0392B}{M}}",
+        cr: "{\\color{#7A8B00}{r}}",
+        cl: "{\\color{#7A8B00}{\\lambda}}",
+        eone: "{\\epsilon({\\color{#3C7DD9}{1}})}",
+        etwo: "{\\epsilon({\\color{#C0392B}{2}})}",
+        mone: "{\\color{#3C7DD9}{\\mu_1}}",
+        mtwo: "{\\color{#C0392B}{\\mu_2}}",
+        sone: "{\\color{#3C7DD9}{\\sigma_1}}",
+        stwo: "{\\color{#C0392B}{\\sigma_2}}"
       }
     }
   });
@@ -265,7 +278,7 @@ Michal Neoral
 <section class="slide level2" data-auto-animate="true">
 <h2 data-id="quarto-animate-title">What you will learn</h2>
 <div class="cards">
-<div class="card fragment fade-up">
+<div class="card">
 <p><span class="tag">Part 1</span></p>
 <p><span class="card-title">Decision making</span></p>
 <ul>
@@ -274,7 +287,7 @@ Michal Neoral
 </ul>
 <p><span class="muted">Probabilities are <strong>given</strong></span></p>
 </div>
-<div class="card fragment fade-up">
+<div class="card">
 <p><span class="tag">Part 2</span></p>
 <p><span class="card-title">Parameter estimation</span></p>
 <ul>
@@ -283,7 +296,7 @@ Michal Neoral
 </ul>
 <p><span class="muted">Probabilities are <strong>estimated</strong></span></p>
 </div>
-<div class="card fragment fade-up">
+<div class="card">
 <p><span class="tag">Part 3</span></p>
 <p><span class="card-title">Classifiers and learning</span></p>
 <ul>
@@ -296,7 +309,7 @@ Michal Neoral
 <p><span class="muted">Many <strong>different principles</strong></span></p>
 </div>
 </div>
-<div class="fragment small muted">
+<div class="small muted">
 <p>There is a lot. Do not memorize it, understand how the methods compare and relate.</p>
 </div>
 </section>
@@ -310,13 +323,13 @@ Michal Neoral
 <div class="columns">
 <div class="column" style="width:50%;">
 <ul>
-<li class="fragment" data-fragment-index="1"><strong>Weekly assignment</strong>: implement a method from the lecture</li>
-<li class="fragment" data-fragment-index="2">Labs are mostly <strong>exercises</strong> at the whiteboard</li>
-<li class="fragment" data-fragment-index="3"><strong>Three tests</strong> during the semester, bring a calculator!</li>
-<li class="fragment" data-fragment-index="4">It is a <strong>difficult class</strong>!</li>
+<li class=""><strong>Weekly assignment</strong>: implement a method from the lecture</li>
+<li class="">Labs are mostly <strong>exercises</strong> at the whiteboard</li>
+<li class=""><strong>Three tests</strong> during the semester, bring a calculator!</li>
+<li class="">It is a <strong>difficult class</strong>!</li>
 </ul>
 </div><div class="column" style="width:50%;">
-<div class="fragment fade-left" data-fragment-index="3" data-hl="tr.test">
+<div class="" data-hl="tr.test">
 
 <table class="plan caption-top">
 <caption>Lab plan 2026/27</caption>
@@ -401,7 +414,7 @@ Michal Neoral
 <h2>Expectations</h2>
 <div class="columns">
 <div class="column" style="width:50%;">
-<div class="fragment fade-right">
+<div>
 <p><span class="card-title">Time</span></p>
 <ul>
 <li><strong>6 credits ≈ 156 hours</strong> in the semester</li>
@@ -411,7 +424,7 @@ Michal Neoral
 <p><span class="red">Plan enough time for the assignments!</span></p>
 </div>
 </div><div class="column" style="width:50%;">
-<div class="fragment fade-left">
+<div>
 <p><span class="card-title">Skills</span></p>
 <ul>
 <li><strong>Python</strong>: NumPy, Jupyter notebooks</li>
@@ -428,39 +441,39 @@ Michal Neoral
 <section class="slide level2">
 <h2>Credit requirements (<em>zápočet</em>)</h2>
 <div class="cards two">
-<div class="card fragment fade-up">
+<div class="card">
 <p><span class="card-title">All 11 assignments</span></p>
 <p>Each one must <strong>pass the BRUTE evaluation</strong></p>
 <p>Final deadline: <span class="red"><strong>10 January 2027</strong></span></p>
 </div>
-<div class="card fragment fade-up">
+<div class="card">
 <p><span class="card-title">All 3 tests</span></p>
 <p>Attend the short written tests at the beginning of the labs on</p>
 <p>16 October, 13 November and 11 December</p>
 </div>
 </div>
-<div class="fragment alert">
+<div class="alert">
 <p><strong>Missing a test for a serious reason?</strong> Contact your TA to arrange a make-up test.</p>
 </div>
 </section>
 <section class="slide level2">
 <h2>Points for an assignment</h2>
 <div class="steps">
-<div class="step s1 fragment grow-up">
+<div class="step s1 grow-up">
 <p>1.3 pts <small>within 2 weeks</small></p>
 </div>
-<div class="step s2 fragment grow-up">
+<div class="step s2 grow-up">
 <p>1 pt <small>after 2 weeks, until the final deadline</small></p>
 </div>
-<div class="step s3 fragment grow-up">
+<div class="step s3 grow-up">
 <p>no credit <small>after 10 January</small></p>
 </div>
 </div>
 <div class="steps-axis"><span>first 2 weeks</span><span>until 10 January 2027</span><span>BRUTE closed</span></div>
-<div class="fragment small">
+<div class="small">
 <p>The introductory assignment (this week) is worth <strong>1 point</strong>, so 1 + 10 × 1.3 = <strong>14 points</strong> in total.</p>
 </div>
-<div class="fragment small">
+<div class="small">
 <p><strong>Bonus tasks:</strong> up to <strong>+0.8 pts</strong> each. Show them at the lab, no deadline (until the day before the exam).</p>
 </div>
 </section>
@@ -490,11 +503,11 @@ Michal Neoral
   <div class="group76" style="flex: 0 0 76%">
     <div class="seg tests" data-id="tests" style="flex: 0 0 47.3684%">3 tests × 12<small>36 pts</small></div>
     <div class="seg written" data-id="written" style="flex: 0 0 52.6316%">Written exam<small>40 pts</small></div>
-    <div class="frame76 fragment" data-fragment-index="2"><span>76 %</span></div>
+    <div class="frame76"><span>76 %</span></div>
   </div>
   <div class="seg oral" data-id="oral" style="flex: 0 0 10%">Oral<small>10</small></div>
 </div>
-<div class="bar fragment fade-up" data-fragment-index="1" style="height: 90px; margin-top: 0;">
+<div class="bar" style="height: 90px; margin-top: 0;">
 <div class="seg bonus" style="flex: 0 0 14%;">
 <p>+ bonus</p>
 </div>
@@ -502,7 +515,7 @@ Michal Neoral
 <p>Bonus points can push the lab score <strong>above 50</strong> or compensate for points lost in the tests</p>
 </div>
 </div>
-<div class="fragment" data-fragment-index="2">
+<div>
 <p><strong>76 %</strong> of the grade comes from written work: tests + written exam, i.e. "math" and "problem solving"</p>
 </div>
 </section>
@@ -528,7 +541,7 @@ Michal Neoral
 <p>A <small>90+</small></p>
 </div>
 </div>
-<div class="fragment">
+<div>
 <ul>
 <li>A <strong>minimum number of points</strong> from the written exam is required to pass</li>
 <li>The oral exam can move your grade in <strong>both directions</strong></li>
@@ -539,7 +552,7 @@ Michal Neoral
 <section class="slide level2">
 <h2>Support</h2>
 <div class="cards">
-<div class="card fragment fade-up">
+<div class="card">
 <p><span class="card-title">CourseWare</span></p>
 <ul>
 <li>Lab instructions</li>
@@ -547,7 +560,7 @@ Michal Neoral
 <li><strong>BRUTE</strong> upload system</li>
 </ul>
 </div>
-<div class="card fragment fade-up">
+<div class="card">
 <p><span class="card-title">Forum</span></p>
 <p>The preferred channel, <strong>all TAs answer there</strong>.</p>
 <ul>
@@ -556,7 +569,7 @@ Michal Neoral
 <li>search first</li>
 </ul>
 </div>
-<div class="card fragment fade-up">
+<div class="card">
 <p><span class="card-title">E-mail your TA</span></p>
 <p>Only <strong>personal</strong> matters:</p>
 <ul>
@@ -566,14 +579,14 @@ Michal Neoral
 <p><span class="strong-accent">neoramic@fel.cvut.cz</span></p>
 </div>
 </div>
-<div class="fragment alert red">
+<div class="alert red">
 <p>Never e-mail your code asking "what is wrong?". Ask at the forum, TAs see your code.</p>
 </div>
 </section>
 <section class="slide level2">
 <h2>Cooperation and plagiarism</h2>
 <div class="cards two">
-<div class="card ok fragment fade-right">
+<div class="card ok">
 <p><span class="card-title">OK</span></p>
 <ul>
 <li>Study together, use the <strong>Exercise book</strong> (problems from previous tests)</li>
@@ -581,7 +594,7 @@ Michal Neoral
 <li>Discuss implementation ideas</li>
 </ul>
 </div>
-<div class="card warn fragment fade-left">
+<div class="card warn">
 <p><span class="card-title">Not OK</span></p>
 <ul>
 <li>Using a piece of implementation or derivation found anywhere
@@ -592,7 +605,7 @@ Michal Neoral
 </ul>
 </div>
 </div>
-<div class="fragment verdict">
+<div class="verdict">
 <p>Plagiarism = <strong>no zápočet</strong></p>
 </div>
 </section>
@@ -601,20 +614,20 @@ Michal Neoral
 <div class="columns">
 <div class="column" style="width:55%;">
 <ul>
-<li class="fragment">AI tools are <strong>generally allowed</strong>, unless stated otherwise</li>
-<li class="fragment"><strong>You are the author</strong>, including the mistakes AI makes</li>
-<li class="fragment">Understand <strong>every line</strong>, we may ask you to explain it</li>
-<li class="fragment">Copying longer AI-generated parts counts as <strong>plagiarism</strong></li>
-<li class="fragment">Be open about how you used AI</li>
+<li>AI tools are <strong>generally allowed</strong>, unless stated otherwise</li>
+<li><strong>You are the author</strong>, including the mistakes AI makes</li>
+<li>Understand <strong>every line</strong>, we may ask you to explain it</li>
+<li>Copying longer AI-generated parts counts as <strong>plagiarism</strong></li>
+<li>Be open about how you used AI</li>
 </ul>
 </div><div class="column" style="width:45%;">
-<div class="fragment fade-left">
+<div>
 <div class="card ok">
 <p><span class="card-title">Best practice</span></p>
 <p>Use AI to learn the syntax or an idea, then <strong>implement the solution again from your head</strong> (e.g. after 24 hours).</p>
 </div>
 </div>
-<div class="fragment fade-left" style="margin-top: 30px;">
+<div style="margin-top: 30px;">
 <div class="card ok">
 <p><span class="card-title">Our goal</span></p>
 <p>We want you to learn, not to paste the assignment into a chat.</p>
@@ -627,14 +640,14 @@ Michal Neoral
 <h2>Lab 1: assignment</h2>
 <div class="check">
 <ul>
-<li class="fragment"><strong>Install</strong> your IDE (PyCharm, VS Code, Vim, ...)</li>
-<li class="fragment">Verify access to the <strong>forum</strong>, <strong>git templates</strong> and <strong>BRUTE</strong></li>
-<li class="fragment">Download the <strong>git template</strong> for the first lab</li>
-<li class="fragment">Verify that you can <strong>upload to BRUTE</strong> and get the results back</li>
-<li class="fragment">Get familiar with <strong>Python</strong> and <strong>NumPy</strong></li>
+<li><strong>Install</strong> your IDE (PyCharm, VS Code, Vim, ...)</li>
+<li>Verify access to the <strong>forum</strong>, <strong>git templates</strong> and <strong>BRUTE</strong></li>
+<li>Download the <strong>git template</strong> for the first lab</li>
+<li>Verify that you can <strong>upload to BRUTE</strong> and get the results back</li>
+<li>Get familiar with <strong>Python</strong> and <strong>NumPy</strong></li>
 </ul>
 </div>
-<div class="fragment red">
+<div class="red">
 <p>Do NOT forget: there is homework already from this first lab!</p>
 </div>
 </section></section>
@@ -646,28 +659,28 @@ Michal Neoral
 <section class="slide level2">
 <h2>Probability</h2>
 <div class="formula-grid">
-<div class="fragment" data-fragment-index="1">
+<div>
 <p><span class="fg-label">A1: Non-negativity</span> <span class="math inline">\(P(A) \ge 0\)</span></p>
 </div>
-<div class="fragment" data-fragment-index="2">
+<div>
 <p><span class="fg-label">A2: Normalization</span> <span class="math inline">\(P(\Omega) = 1\)</span></p>
 </div>
-<div class="fragment" data-fragment-index="3">
+<div>
 <p><span class="fg-label">A3: Additivity</span> <span class="math inline">\(P(A \cup B) = P(A) + P(B) \;\text{ if }\; A \cap B = \emptyset\)</span></p>
 </div>
-<div class="fragment" data-fragment-index="4" style="margin-top: 0.9em;">
+<div style="margin-top: 0.9em;">
 <p><span class="fg-label">In general:</span> <span class="math inline">\(P(A \cup B) = P(A) + P(B) - P(A \cap B)\)</span></p>
 </div>
-<div class="fragment" data-fragment-index="5" style="margin-top: 0.9em;">
+<div style="margin-top: 0.9em;">
 <p><span class="fg-label"></span> <span class="math inline">\(P(A \cap B) = \; ?\)</span></p>
 </div>
 </div>
-<svg class="venn venn-corner fragment" data-fragment-index="4" viewbox="0 0 400 240" role="img" aria-label="Venn diagram of events A and B">
+<svg class="venn venn-corner" viewbox="0 0 400 240" role="img" aria-label="Venn diagram of events A and B">
   <rect x="4" y="4" width="392" height="232" rx="8" fill="none" stroke="#56666F" stroke-width="2"></rect>
   <text x="372" y="34" fill="#56666F" style="font-size:22px">Ω</text>
   <circle cx="150" cy="125" r="85" fill="#E8665D" fill-opacity="0.75"></circle>
   <circle cx="250" cy="125" r="85" fill="#4DB6B0" fill-opacity="0.75"></circle>
-  <path class="fragment" data-fragment-index="4" d="M200,56.3 A85,85 0 0,1 200,193.7 A85,85 0 0,1 200,56.3 Z" fill="#202729" fill-opacity="0.55" stroke="#FFC400" stroke-width="4"></path>
+  <path class="" d="M200,56.3 A85,85 0 0,1 200,193.7 A85,85 0 0,1 200,56.3 Z" fill="#202729" fill-opacity="0.55" stroke="#FFC400" stroke-width="4"></path>
   <text x="105" y="134" fill="#FFFFFF">A</text>
   <text x="275" y="134" fill="#FFFFFF">B</text>
 </svg>
@@ -677,14 +690,14 @@ Michal Neoral
 <div class="columns">
 <div class="column" style="width:44%;">
 <div class="probs">
-<p class="fragment" data-fragment-index="1">P(<img class="ico" src="img/pig.png" alt="pig">) = <span class="qmark">?</span><span class="fragment ans" data-fragment-index="2" data-hl=".pig">5/10 = ½</span></p>
-<p class="fragment" data-fragment-index="3">P(<img class="ico" src="img/sheep.png" alt="sheep">) = <span class="qmark">?</span><span class="fragment ans" data-fragment-index="4" data-hl=".sheep">5/10 = ½</span></p>
-<p class="fragment" data-fragment-index="5">P(<span class="tok-g">[ ]</span>) = <span class="qmark">?</span><span class="fragment ans" data-fragment-index="6" data-hl=".pen-g, .pen-g .animal">4/10 = ⅖</span></p>
-<p class="fragment" data-fragment-index="7">P(<span class="tok-b">[ ]</span>) = <span class="qmark">?</span><span class="fragment ans" data-fragment-index="8" data-hl=".pen-b, .pen-b .animal">6/10 = ⅗</span></p>
-<p class="fragment" data-fragment-index="9">P(<img class="ico" src="img/pig.png" alt="pig"> | <span class="tok-g">[ ]</span>) = <span class="qmark">?</span><span class="fragment ans" data-fragment-index="10" data-given=".pen-g, .pen-g .animal" data-hl=".pen-g .pig">3/4</span></p>
-<p class="fragment" data-fragment-index="11">P(<img class="ico" src="img/sheep.png" alt="sheep"> | <span class="tok-b">[ ]</span>) = <span class="qmark">?</span><span class="fragment ans" data-fragment-index="12" data-given=".pen-b, .pen-b .animal" data-hl=".pen-b .sheep">4/6 = ⅔</span></p>
-<p class="fragment" data-fragment-index="13">P(<span class="tok-g">[ ]</span> | <img class="ico" src="img/pig.png" alt="pig">) = <span class="qmark">?</span><span class="fragment ans" data-fragment-index="14" data-given=".pig" data-hl=".pen-g .pig, .pen-g">3/5</span></p>
-<p class="fragment" data-fragment-index="15">P(<span class="tok-b">[ ]</span> | <img class="ico" src="img/sheep.png" alt="sheep">) = <span class="qmark">?</span><span class="fragment ans" data-fragment-index="16" data-given=".sheep" data-hl=".pen-b .sheep, .pen-b">4/5</span></p>
+<p class="">P(<img class="ico" src="img/pig.png" alt="pig">) = <span class="qmark">?</span><span class="ans" data-hl=".pig">5/10 = ½</span></p>
+<p class="">P(<img class="ico" src="img/sheep.png" alt="sheep">) = <span class="qmark">?</span><span class="ans" data-hl=".sheep">5/10 = ½</span></p>
+<p class="">P(<span class="tok-g">[ ]</span>) = <span class="qmark">?</span><span class="ans" data-hl=".pen-g, .pen-g .animal">4/10 = ⅖</span></p>
+<p class="">P(<span class="tok-b">[ ]</span>) = <span class="qmark">?</span><span class="ans" data-hl=".pen-b, .pen-b .animal">6/10 = ⅗</span></p>
+<p class="">P(<img class="ico" src="img/pig.png" alt="pig"> | <span class="tok-g">[ ]</span>) = <span class="qmark">?</span><span class="ans" data-given=".pen-g, .pen-g .animal" data-hl=".pen-g .pig">3/4</span></p>
+<p class="">P(<img class="ico" src="img/sheep.png" alt="sheep"> | <span class="tok-b">[ ]</span>) = <span class="qmark">?</span><span class="ans" data-given=".pen-b, .pen-b .animal" data-hl=".pen-b .sheep">4/6 = ⅔</span></p>
+<p class="">P(<span class="tok-g">[ ]</span> | <img class="ico" src="img/pig.png" alt="pig">) = <span class="qmark">?</span><span class="ans" data-given=".pig" data-hl=".pen-g .pig, .pen-g">3/5</span></p>
+<p class="">P(<span class="tok-b">[ ]</span> | <img class="ico" src="img/sheep.png" alt="sheep">) = <span class="qmark">?</span><span class="ans" data-given=".sheep" data-hl=".pen-b .sheep, .pen-b">4/5</span></p>
 </div>
 </div><div class="column" style="width:56%;">
 <div class="farm">
@@ -711,25 +724,25 @@ Michal Neoral
 </div>
 </div></div>
 <div class="qstack">
-<div class="question fragment" data-fragment-index="1"><span>The wolf picks one animal at random. What is the probability that it is a <b>pig</b>?</span></div>
-<div class="question fragment" data-fragment-index="3"><span>The wolf picks one animal at random. What is the probability that it is a <b>sheep</b>?</span></div>
-<div class="question fragment" data-fragment-index="5"><span>What is the probability that the wolf's lunch comes from the <b class="tok-g">green</b> pen?</span></div>
-<div class="question fragment" data-fragment-index="7"><span>What is the probability that the wolf's lunch comes from the <b class="tok-b">brown</b> pen?</span></div>
-<div class="question fragment" data-fragment-index="9" data-given=".pen-g, .pen-g .animal"><span>The wolf is hunting in the <b class="tok-g">green</b> pen. What is the probability that he catches a <b>pig</b>?</span></div>
-<div class="question fragment" data-fragment-index="11" data-given=".pen-b, .pen-b .animal"><span>The wolf is hunting in the <b class="tok-b">brown</b> pen. What is the probability that he catches a <b>sheep</b>?</span></div>
-<div class="question fragment" data-fragment-index="13" data-given=".pig"><span>The wolf ate a <b>pig</b>. What is the probability that it came from the <b class="tok-g">green</b> pen?</span></div>
-<div class="question fragment" data-fragment-index="15" data-given=".sheep"><span>The wolf ate a <b>sheep</b>. What is the probability that it came from the <b class="tok-b">brown</b> pen?</span></div>
+<div class="question"><span>The wolf picks one animal at random. What is the probability that it is a <b>pig</b>?</span></div>
+<div class="question"><span>The wolf picks one animal at random. What is the probability that it is a <b>sheep</b>?</span></div>
+<div class="question"><span>What is the probability that the wolf's lunch comes from the <b class="tok-g">green</b> pen?</span></div>
+<div class="question"><span>What is the probability that the wolf's lunch comes from the <b class="tok-b">brown</b> pen?</span></div>
+<div class="question" data-given=".pen-g, .pen-g .animal"><span>The wolf is hunting in the <b class="tok-g">green</b> pen. What is the probability that he catches a <b>pig</b>?</span></div>
+<div class="question" data-given=".pen-b, .pen-b .animal"><span>The wolf is hunting in the <b class="tok-b">brown</b> pen. What is the probability that he catches a <b>sheep</b>?</span></div>
+<div class="question" data-given=".pig"><span>The wolf ate a <b>pig</b>. What is the probability that it came from the <b class="tok-g">green</b> pen?</span></div>
+<div class="question" data-given=".sheep"><span>The wolf ate a <b>sheep</b>. What is the probability that it came from the <b class="tok-b">brown</b> pen?</span></div>
 </div>
 </section>
 <section class="slide level2">
 <h2>Total probability</h2>
-<div class="fragment">
+<div>
 <p><strong>Product rule</strong> <span class="math display">\[P(A \cap B) = P(A, B) = P(A \mid B)\,P(B) = P(B \mid A)\,P(A)\]</span></p>
 </div>
-<div class="fragment">
+<div>
 <p><strong>Sum rule</strong>, also called <span class="green">marginalization</span> <span class="math display">\[P(A) = P(A, B) + P(A, B^c)\]</span> <span class="small muted"><span class="math inline">\(B^c\)</span> is the <strong>complement</strong> of <span class="math inline">\(B\)</span>: all outcomes in which <span class="math inline">\(B\)</span> does not occur, <span class="math inline">\(P(B^c) = 1 - P(B)\)</span></span></p>
 </div>
-<div class="fragment">
+<div>
 <p><strong>Total probability</strong> <span class="math display">\[P(A) = \sum_i P(A, B_i) = \sum_i P(A \mid B_i)\,P(B_i)\]</span> <span class="small muted"><span class="math inline">\(B_i\)</span> are mutually exclusive and jointly exhaustive (exactly one of them occurs)</span></p>
 </div>
 </section>
@@ -738,10 +751,10 @@ Michal Neoral
 <div class="columns">
 <div class="column" style="width:60%;">
 <div class="calc">
-<p class="fragment" data-fragment-index="1">P(<img class="ico" src="img/pig.png" alt="pig">, <span class="tok-g">[ ]</span>) = <span class="qmark">?</span><span class="fragment ans" data-fragment-index="2" data-given=".pen-g, .pen-g .animal" data-hl=".pen-g .pig">P(<img class="ico" src="img/pig.png" alt="pig"> | <span class="tok-g">[ ]</span>) P(<span class="tok-g">[ ]</span>) = ¾ · ⅖ = <b>0.3</b></span></p>
-<p class="fragment" data-fragment-index="3">P(<span class="tok-g">[ ]</span> | <img class="ico" src="img/pig.png" alt="pig">) P(<img class="ico" src="img/pig.png" alt="pig">) = <span class="qmark">?</span><span class="fragment ans" data-fragment-index="4" data-given=".pig" data-hl=".pen-g .pig, .pen-g">⅗ · ½ = <b>0.3</b></span></p>
-<p class="fragment" data-fragment-index="5">P(<img class="ico" src="img/pig.png" alt="pig">, <span class="tok-b">[ ]</span>) = <span class="qmark">?</span><span class="fragment ans" data-fragment-index="6" data-given=".pen-b, .pen-b .animal" data-hl=".pen-b .pig">P(<img class="ico" src="img/pig.png" alt="pig"> | <span class="tok-b">[ ]</span>) P(<span class="tok-b">[ ]</span>) = 2/6 · ⅗ = <b>0.2</b></span></p>
-<p class="fragment" data-fragment-index="7">P(<img class="ico" src="img/pig.png" alt="pig">) = <span class="qmark">?</span><span class="fragment ans" data-fragment-index="8" data-hl=".pig">P(<img class="ico" src="img/pig.png" alt="pig">, <span class="tok-g">[ ]</span>) + P(<img class="ico" src="img/pig.png" alt="pig">, <span class="tok-b">[ ]</span>) = 0.3 + 0.2 = <b>0.5</b></span></p>
+<p class="">P(<img class="ico" src="img/pig.png" alt="pig">, <span class="tok-g">[ ]</span>) = <span class="qmark">?</span><span class="ans" data-given=".pen-g, .pen-g .animal" data-hl=".pen-g .pig">P(<img class="ico" src="img/pig.png" alt="pig"> | <span class="tok-g">[ ]</span>) P(<span class="tok-g">[ ]</span>) = ¾ · ⅖ = <b>0.3</b></span></p>
+<p class="">P(<span class="tok-g">[ ]</span> | <img class="ico" src="img/pig.png" alt="pig">) P(<img class="ico" src="img/pig.png" alt="pig">) = <span class="qmark">?</span><span class="ans" data-given=".pig" data-hl=".pen-g .pig, .pen-g">⅗ · ½ = <b>0.3</b></span></p>
+<p class="">P(<img class="ico" src="img/pig.png" alt="pig">, <span class="tok-b">[ ]</span>) = <span class="qmark">?</span><span class="ans" data-given=".pen-b, .pen-b .animal" data-hl=".pen-b .pig">P(<img class="ico" src="img/pig.png" alt="pig"> | <span class="tok-b">[ ]</span>) P(<span class="tok-b">[ ]</span>) = 2/6 · ⅗ = <b>0.2</b></span></p>
+<p class="">P(<img class="ico" src="img/pig.png" alt="pig">) = <span class="qmark">?</span><span class="ans" data-hl=".pig">P(<img class="ico" src="img/pig.png" alt="pig">, <span class="tok-g">[ ]</span>) + P(<img class="ico" src="img/pig.png" alt="pig">, <span class="tok-b">[ ]</span>) = 0.3 + 0.2 = <b>0.5</b></span></p>
 </div>
 </div><div class="column" style="width:40%;">
 <div class="farm compact">
@@ -765,10 +778,10 @@ Michal Neoral
 </div>
 </div></div>
 <div class="qstack">
-<div class="question fragment" data-fragment-index="1"><span>What is the probability that the wolf eats a <b>pig</b> from the <b class="tok-g">green</b> pen?</span></div>
-<div class="question fragment" data-fragment-index="3" data-given=".pig"><span>Do we get the same number the other way round, starting from all the <b>pigs</b>?</span></div>
-<div class="question fragment" data-fragment-index="5"><span>What is the probability that the wolf eats a <b>pig</b> from the <b class="tok-b">brown</b> pen?</span></div>
-<div class="question fragment" data-fragment-index="7"><span>We know both joint probabilities. What is the probability that the wolf eats a <b>pig</b> at all?</span></div>
+<div class="question"><span>What is the probability that the wolf eats a <b>pig</b> from the <b class="tok-g">green</b> pen?</span></div>
+<div class="question" data-given=".pig"><span>Do we get the same number the other way round, starting from all the <b>pigs</b>?</span></div>
+<div class="question"><span>What is the probability that the wolf eats a <b>pig</b> from the <b class="tok-b">brown</b> pen?</span></div>
+<div class="question"><span>We know both joint probabilities. What is the probability that the wolf eats a <b>pig</b> at all?</span></div>
 </div>
 </section>
 <section class="slide level2">
@@ -785,20 +798,20 @@ Michal Neoral
 </div>
 </div></div>
 <div class="bayes-legend">
-<div class="bl-post fragment fade-up">
+<div class="bl-post">
 <p><strong>posterior</strong> <span class="math inline">\(P(H \mid E)\)</span> belief in <span class="math inline">\(H\)</span> after seeing the evidence <span class="ex">rain, given a cloudy morning</span></p>
 </div>
-<div class="bl-prior fragment fade-up">
+<div class="bl-prior">
 <p><strong>prior</strong> <span class="math inline">\(P(H)\)</span> belief in <span class="math inline">\(H\)</span> before any evidence <span class="ex">how often it rains</span></p>
 </div>
-<div class="bl-like fragment fade-up">
+<div class="bl-like">
 <p><strong>likelihood</strong> <span class="math inline">\(P(E \mid H)\)</span> how well <span class="math inline">\(H\)</span> explains the evidence, <em>not</em> a probability of <span class="math inline">\(H\)</span>! <span class="ex">cloudy morning, given rain</span></p>
 </div>
-<div class="bl-marg fragment fade-up">
+<div class="bl-marg">
 <p><strong>marginal</strong> <span class="math inline">\(P(E)\)</span> total probability of the evidence, often hard to compute <span class="ex">how often it is cloudy</span></p>
 </div>
 </div>
-<div class="fragment fade-up" style="margin-top: 0.5em;">
+<div style="margin-top: 0.5em;">
 <p><strong>Later in RPZ:</strong> <span class="math inline">\(\theta\)</span> = model parameters, <span class="math inline">\(D\)</span> = data: <span class="math inline">\(\quad P(\theta \mid D) = P(D \mid \theta)\,P(\theta) \,/\, P(D) \;\propto\; P(D \mid \theta)\,P(\theta)\)</span></p>
 <p><span class="small">In words: the posterior of the parameters given the data is proportional to the likelihood of the data times the prior of the parameters. <span class="math inline">\(P(D)\)</span> does not depend on <span class="math inline">\(\theta\)</span>, so we can drop it when comparing parameters.</span></p>
 </div>
@@ -806,10 +819,10 @@ Michal Neoral
 <section class="slide level2">
 <h2>Example: mammogram</h2>
 <p>In a study, physicians were asked about a woman with an initial <strong>1 % risk of cancer</strong> (a malignant tumor) whose <strong>mammogram came back positive</strong>.</p>
-<div class="fragment">
+<div>
 <p>A mammogram correctly classifies about <strong>80 % of malignant</strong> tumors (positive result) and <strong>90 % of benign</strong> tumors (negative result).</p>
 </div>
-<div class="fragment lead">
+<div class="lead">
 <p>95 of 100 physicians estimated the probability of cancer at about <strong>75 %</strong>.</p>
 <p>Do you agree?</p>
 </div>
@@ -822,7 +835,7 @@ Michal Neoral
 <p><span class="small"><span class="math inline">\(M\)</span>: malignant, <span class="math inline">\(B = M^c\)</span>: benign</span><br>
 <span class="small"><span class="math inline">\(+\)</span>: positive result</span></p>
 <p><span class="small">Known: <span class="math inline">\(P(M) = 0.01\)</span>, <span class="math inline">\(P(+ \mid M) = 0.8\)</span>, <span class="math inline">\(P(- \mid B) = 0.9\)</span></span></p>
-<div class="fragment" data-fragment-index="1">
+<div>
 <p><span class="small"><span class="math inline">\(\Rightarrow P(+ \mid B) = 0.1\)</span></span></p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb1" data-startfrom="774" data-source-offset="-0"><pre class="sourceCode numberSource js number-lines code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 773;"><span id="cb1-774"><a href="" aria-label="774"></a>viewof prior <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">range</span>([<span class="fl">0.001</span><span class="op">,</span> <span class="fl">0.2</span>]<span class="op">,</span> {<span class="dt">value</span><span class="op">:</span> <span class="fl">0.01</span><span class="op">,</span> <span class="dt">step</span><span class="op">:</span> <span class="fl">0.001</span><span class="op">,</span> <span class="dt">label</span><span class="op">:</span> <span class="st">"P(M)"</span>})</span>
@@ -886,7 +899,7 @@ Michal Neoral
 </div>
 </div>
 </div>
-<div class="fragment" data-fragment-index="1">
+<div>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb4" data-startfrom="801" data-source-offset="-0"><pre class="sourceCode numberSource js number-lines code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 800;"><span id="cb4-801"><a href="" aria-label="801"></a>counts <span class="op">=</span> {</span>
 <span id="cb4-802"><a href="" aria-label="802"></a>  <span class="kw">const</span> sick <span class="op">=</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">round</span>(<span class="dv">1000</span> <span class="op">*</span> prior)<span class="op">;</span></span>
@@ -934,7 +947,7 @@ Michal Neoral
 </div>
 </div>
 </div>
-<div class="fragment" data-fragment-index="1">
+<div>
 <div class="waffle-legend">
   <span style="--c:#E8322C">malignant, positive</span>
   <span style="--c:#F4A9A5">malignant, negative</span>
@@ -943,7 +956,7 @@ Michal Neoral
 </div>
 </div>
 </div></div>
-<div class="fragment small" data-fragment-index="2">
+<div class="small">
 <p><span class="math inline">\(P(M \mid +) = \dfrac{P(+ \mid M)\,P(M)}{P(+ \mid M)\,P(M) + P(+ \mid B)\,P(B)} = \dfrac{0.8 \cdot 0.01}{0.8 \cdot 0.01 + 0.1 \cdot 0.99} \approx 0.075\)</span>, the prior matters!</p>
 </div>
 </section>
@@ -956,7 +969,7 @@ Michal Neoral
 <div class="card3"><div class="faces"><div class="hl-item face red"></div><div class="hl-item face black"></div></div><div class="label">RB: one side red, one black</div></div>
 </div>
 <p>The cards are mixed in a hat, one is drawn at random and put on the ground.</p>
-<div class="fragment lead">
+<div class="lead">
 <p>If the <strong>upper</strong> side of the chosen card is <strong>red</strong>, what is the probability that the <strong>other</strong> side is <strong>black</strong>?</p>
 </div>
 <p><span class="small muted">Source: M. Merling, <em>Practice questions on Bayes's formula</em>, UPenn Math 107</span></p>
@@ -968,16 +981,16 @@ Michal Neoral
 <div class="card3"><div class="faces"><div class="hl-item face black"></div><div class="hl-item face black"></div></div><div class="label">BB</div></div>
 <div class="card3 card-rb"><div class="faces"><div class="hl-item face red"></div><div class="hl-item face black"></div></div><div class="label">RB</div></div>
 </div>
-<div class="fragment" data-hl=".face">
+<div data-hl=".face">
 <p>All <strong>6 sides</strong> are equally likely to be on top.</p>
 </div>
-<div class="fragment" data-hl=".face.red">
+<div data-hl=".face.red">
 <p>We see red, so only the <strong>3 red sides</strong> remain possible.</p>
 </div>
-<div class="fragment" data-given=".face.red" data-hl=".card-rb .face.red">
+<div data-given=".face.red" data-hl=".card-rb .face.red">
 <p>Only <strong>one</strong> of them has black on the other side: <span class="math inline">\(P = \frac{1}{3}\)</span>, not <span class="math inline">\(\frac{1}{2}\)</span>!</p>
 </div>
-<div class="fragment small">
+<div class="small">
 <p>Formally, with <span class="math inline">\(R\)</span> = "the upper side is red": <span class="math display">\[
 P(RB \mid R) = \frac{P(R \mid RB)\,P(RB)}{P(R \mid RR)\,P(RR) + P(R \mid RB)\,P(RB) + P(R \mid BB)\,P(BB)}
 = \frac{\frac12 \cdot \frac13}{1 \cdot \frac13 + \frac12 \cdot \frac13 + 0 \cdot \frac13} = \frac13
@@ -1036,7 +1049,7 @@ P(RB \mid R) = \frac{P(R \mid RB)\,P(RB)}{P(R \mid RR)\,P(RR) + P(R \mid RB)\,P(
       Reveal.initialize({
 'controlsAuto': false,
 'previewLinksAuto': false,
-'pdfSeparateFragments': false,
+'pdfSeparateFragments': true,
 'autoAnimateEasing': "ease",
 'autoAnimateDuration': 1,
 'autoAnimateUnmatched': true,
@@ -1110,7 +1123,7 @@ P(RB \mid R) = \frac{P(R \mid RB)\,P(RB)}{P(R \mid RR)\,P(RR) + P(R \mid RB)\,P(
         shuffle: false,
 
         // Turns fragments on and off globally
-        fragments: false,
+        fragments: true,
 
         // Flags whether to include the current fragment in the URL,
         // so that reloading brings you to the same fragment position

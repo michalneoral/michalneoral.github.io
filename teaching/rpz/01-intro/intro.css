@@ -201,12 +201,6 @@
 .reveal .bl-like strong, .reveal .bl-like b  { color: #B58800; }
 .reveal .bl-marg strong, .reveal .bl-marg b  { color: #4E8F3A; }
 
-/* ---------- Konec ---------- */
-.reveal section.the-end h2 {
-  color: #FFFFFF;
-  text-shadow: 0 4.5px 18px rgba(0, 0, 0, 0.6);
-}
-
 /* ---------- Opravy ---------- */
 .reveal .seg small,
 .reveal .step small,

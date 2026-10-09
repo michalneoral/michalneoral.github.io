@@ -102,7 +102,7 @@
     code span.vs { color: #032f62; } /* VerbatimString */
     code span.wa { color: #ff5555; } /* Warning */
   </style>
-  <link rel="stylesheet" href="index_files/libs/revealjs/dist/theme/quarto-ee5f16ea4037ba2af5b940526b7a1645.css">
+  <link rel="stylesheet" href="index_files/libs/revealjs/dist/theme/quarto-c25f51df9efc0ed011c530767492aed3.css">
   <link rel="stylesheet" href="../../theme/fonts/fonts.css">
   <link rel="stylesheet" href="bayes.css">
   <link href="index_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
@@ -230,7 +230,20 @@
         muA: "{\\color{#3C7DD9}{\\mu_A}}",
         muC: "{\\color{#C0392B}{\\mu_C}}",
         sA: "{\\color{#3C7DD9}{\\sigma_A}}",
-        sC: "{\\color{#C0392B}{\\sigma_C}}"
+        sC: "{\\color{#C0392B}{\\sigma_C}}",
+        // Minimax (03): třídy 1/2 a F/M, likelihood ratio r a jeho práh lambda, chyby tříd
+        cone: "{\\color{#3C7DD9}{1}}",
+        ctwo: "{\\color{#C0392B}{2}}",
+        cF: "{\\color{#3C7DD9}{F}}",
+        cM: "{\\color{#C0392B}{M}}",
+        cr: "{\\color{#7A8B00}{r}}",
+        cl: "{\\color{#7A8B00}{\\lambda}}",
+        eone: "{\\epsilon({\\color{#3C7DD9}{1}})}",
+        etwo: "{\\epsilon({\\color{#C0392B}{2}})}",
+        mone: "{\\color{#3C7DD9}{\\mu_1}}",
+        mtwo: "{\\color{#C0392B}{\\mu_2}}",
+        sone: "{\\color{#3C7DD9}{\\sigma_1}}",
+        stwo: "{\\color{#C0392B}{\\sigma_2}}"
       }
     }
   });
@@ -268,17 +281,17 @@ Michal Neoral
 <div class="column" style="width:45%;">
 <p><img data-src="img/plates.jpg" style="max-height: 760px;" alt="Table of Czech regions and their licence plate codes"></p>
 </div><div class="column" style="width:55%;">
-<div class="fragment" data-fragment-index="1">
+<div>
 <div class="map-wrap">
   <img src="img/cz-regions.png" alt="Map of Czech regions">
   <svg viewbox="0 0 100 57.7" preserveaspectratio="none" aria-hidden="true">
-    <circle class="fragment" data-fragment-index="2" cx="35.3" cy="22.4" r="3.2" fill="#3C7DD9" fill-opacity="0.55"></circle>
-    <circle class="fragment" data-fragment-index="2" cx="35.2" cy="46.3" r="6.5" fill="#C0392B" fill-opacity="0.45"></circle>
+    <circle class="" cx="35.3" cy="22.4" r="3.2" fill="#3C7DD9" fill-opacity="0.55"></circle>
+    <circle class="" cx="35.2" cy="46.3" r="6.5" fill="#C0392B" fill-opacity="0.45"></circle>
   </svg>
 </div>
 <p>The second letter of an older plate tells the <strong>region</strong> (kraj).</p>
 </div>
-<div class="fragment" data-fragment-index="2">
+<div>
 <div class="alert">
 <p>Our simplification: recognize only the letters <strong>A</strong> (Praha) and <strong>C</strong> (Jihočeský kraj).</p>
 </div>
@@ -289,14 +302,14 @@ Michal Neoral
 <h2>The data and the features</h2>
 <div class="columns">
 <div class="column" style="width:46%;">
-<div class="pix-stack"><div class="pixgrid back2"><i style="background:rgb(0,0,0)"></i><i style="background:rgb(0,0,0)"></i><i style="background:rgb(0,0,0)"></i><i style="background:rgb(2,2,2)"></i><i style="background:rgb(55,55,55)"></i><i style="background:rgb(91,91,91)"></i><i style="background:rgb(87,87,87)"></i><i style="background:rgb(38,38,38)"></i><i style="background:rgb(0,0,0)"></i><i style="background:rgb(0,0,0)"></i><i style="background:rgb(0,0,0)"></i><i style="background:rgb(0,0,0)"></i><i style="background:rgb(48,48,48)"></i><i style="background:rgb(214,214,214)"></i><i style="background:rgb(255,255,255)"></i><i style="background:rgb(255,255,255)"></i><i style="background:rgb(255,255,255)"></i><i style="background:rgb(255,255,255)"></i><i style="background:rgb(114,114,114)"></i><i style="background:rgb(0,0,0)"></i><i style="background:rgb(0,0,0)"></i><i style="background:rgb(19,19,19)"></i><i style="background:rgb(233,233,233)"></i><i style="background:rgb(255,255,255)"></i><i style="background:rgb(185,185,185)"></i><i style="background:rgb(69,69,69)"></i><i style="background:rgb(59,59,59)"></i><i style="background:rgb(120,120,120)"></i><i style="background:rgb(109,109,109)"></i><i style="background:rgb(0,0,0)"></i><i style="background:rgb(0,0,0)"></i><i style="background:rgb(115,115,115)"></i><i style="background:rgb(255,255,255)"></i><i style="background:rgb(224,224,224)"></i><i style="background:rgb(7,7,7)"></i><i style="background:rgb(0,0,0)"></i><i style="background:rgb(0,0,0)"></i><i style="background:rgb(0,0,0)"></i><i style="background:rgb(0,0,0)"></i><i style="background:rgb(0,0,0)"></i><i style="background:rgb(0,0,0)"></i><i style="background:rgb(162,162,162)"></i><i style="background:rgb(255,255,255)"></i><i style="background:rgb(159,159,159)"></i><i style="background:rgb(0,0,0)"></i><i style="background:rgb(0,0,0)"></i><i style="background:rgb(0,0,0)"></i><i style="background:rgb(0,0,0)"></i><i style="background:rgb(0,0,0)"></i><i style="background:rgb(0,0,0)"></i><i style="background:rgb(0,0,0)"></i><i style="background:rgb(162,162,162)"></i><i style="background:rgb(255,255,255)"></i><i style="background:rgb(159,159,159)"></i><i style="background:rgb(0,0,0)"></i><i style="background:rgb(0,0,0)"></i><i style="background:rgb(0,0,0)"></i><i style="background:rgb(0,0,0)"></i><i style="background:rgb(0,0,0)"></i><i style="background:rgb(0,0,0)"></i><i style="background:rgb(0,0,0)"></i><i style="background:rgb(114,114,114)"></i><i style="background:rgb(255,255,255)"></i><i style="background:rgb(225,225,225)"></i><i style="background:rgb(7,7,7)"></i><i style="background:rgb(0,0,0)"></i><i style="background:rgb(0,0,0)"></i><i style="background:rgb(0,0,0)"></i><i style="background:rgb(0,0,0)"></i><i style="background:rgb(0,0,0)"></i><i style="background:rgb(0,0,0)"></i><i style="background:rgb(19,19,19)"></i><i style="background:rgb(232,232,232)"></i><i style="background:rgb(255,255,255)"></i><i style="background:rgb(186,186,186)"></i><i style="background:rgb(71,71,71)"></i><i style="background:rgb(62,62,62)"></i><i style="background:rgb(122,122,122)"></i><i style="background:rgb(110,110,110)"></i><i style="background:rgb(0,0,0)"></i><i style="background:rgb(0,0,0)"></i><i style="background:rgb(0,0,0)"></i><i style="background:rgb(47,47,47)"></i><i style="background:rgb(212,212,212)"></i><i style="background:rgb(255,255,255)"></i><i style="background:rgb(255,255,255)"></i><i style="background:rgb(255,255,255)"></i><i style="background:rgb(255,255,255)"></i><i style="background:rgb(112,112,112)"></i><i style="background:rgb(0,0,0)"></i><i style="background:rgb(0,0,0)"></i><i style="background:rgb(0,0,0)"></i><i style="background:rgb(0,0,0)"></i><i style="background:rgb(2,2,2)"></i><i style="background:rgb(53,53,53)"></i><i style="background:rgb(90,90,90)"></i><i style="background:rgb(85,85,85)"></i><i style="background:rgb(36,36,36)"></i><i style="background:rgb(0,0,0)"></i><i style="background:rgb(0,0,0)"></i></div><div class="pixgrid back1"><i style="background:rgb(0,0,0)"></i><i style="background:rgb(0,0,0)"></i><i style="background:rgb(0,0,0)"></i><i style="background:rgb(2,2,2)"></i><i style="background:rgb(55,55,55)"></i><i style="background:rgb(91,91,91)"></i><i style="background:rgb(87,87,87)"></i><i style="background:rgb(38,38,38)"></i><i style="background:rgb(0,0,0)"></i><i style="background:rgb(0,0,0)"></i><i style="background:rgb(0,0,0)"></i><i style="background:rgb(0,0,0)"></i><i style="background:rgb(48,48,48)"></i><i style="background:rgb(214,214,214)"></i><i style="background:rgb(255,255,255)"></i><i style="background:rgb(255,255,255)"></i><i style="background:rgb(255,255,255)"></i><i style="background:rgb(255,255,255)"></i><i style="background:rgb(114,114,114)"></i><i style="background:rgb(0,0,0)"></i><i style="background:rgb(0,0,0)"></i><i style="background:rgb(19,19,19)"></i><i style="background:rgb(233,233,233)"></i><i style="background:rgb(255,255,255)"></i><i style="background:rgb(185,185,185)"></i><i style="background:rgb(69,69,69)"></i><i style="background:rgb(59,59,59)"></i><i style="background:rgb(120,120,120)"></i><i style="background:rgb(109,109,109)"></i><i style="background:rgb(0,0,0)"></i><i style="background:rgb(0,0,0)"></i><i style="background:rgb(115,115,115)"></i><i style="background:rgb(255,255,255)"></i><i style="background:rgb(224,224,224)"></i><i style="background:rgb(7,7,7)"></i><i style="background:rgb(0,0,0)"></i><i style="background:rgb(0,0,0)"></i><i style="background:rgb(0,0,0)"></i><i style="background:rgb(0,0,0)"></i><i style="background:rgb(0,0,0)"></i><i style="background:rgb(0,0,0)"></i><i style="background:rgb(162,162,162)"></i><i style="background:rgb(255,255,255)"></i><i style="background:rgb(159,159,159)"></i><i style="background:rgb(0,0,0)"></i><i style="background:rgb(0,0,0)"></i><i style="background:rgb(0,0,0)"></i><i style="background:rgb(0,0,0)"></i><i style="background:rgb(0,0,0)"></i><i style="background:rgb(0,0,0)"></i><i style="background:rgb(0,0,0)"></i><i style="background:rgb(162,162,162)"></i><i style="background:rgb(255,255,255)"></i><i style="background:rgb(159,159,159)"></i><i style="background:rgb(0,0,0)"></i><i style="background:rgb(0,0,0)"></i><i style="background:rgb(0,0,0)"></i><i style="background:rgb(0,0,0)"></i><i style="background:rgb(0,0,0)"></i><i style="background:rgb(0,0,0)"></i><i style="background:rgb(0,0,0)"></i><i style="background:rgb(114,114,114)"></i><i style="background:rgb(255,255,255)"></i><i style="background:rgb(225,225,225)"></i><i style="background:rgb(7,7,7)"></i><i style="background:rgb(0,0,0)"></i><i style="background:rgb(0,0,0)"></i><i style="background:rgb(0,0,0)"></i><i style="background:rgb(0,0,0)"></i><i style="background:rgb(0,0,0)"></i><i style="background:rgb(0,0,0)"></i><i style="background:rgb(19,19,19)"></i><i style="background:rgb(232,232,232)"></i><i style="background:rgb(255,255,255)"></i><i style="background:rgb(186,186,186)"></i><i style="background:rgb(71,71,71)"></i><i style="background:rgb(62,62,62)"></i><i style="background:rgb(122,122,122)"></i><i style="background:rgb(110,110,110)"></i><i style="background:rgb(0,0,0)"></i><i style="background:rgb(0,0,0)"></i><i style="background:rgb(0,0,0)"></i><i style="background:rgb(47,47,47)"></i><i style="background:rgb(212,212,212)"></i><i style="background:rgb(255,255,255)"></i><i style="background:rgb(255,255,255)"></i><i style="background:rgb(255,255,255)"></i><i style="background:rgb(255,255,255)"></i><i style="background:rgb(112,112,112)"></i><i style="background:rgb(0,0,0)"></i><i style="background:rgb(0,0,0)"></i><i style="background:rgb(0,0,0)"></i><i style="background:rgb(0,0,0)"></i><i style="background:rgb(2,2,2)"></i><i style="background:rgb(53,53,53)"></i><i style="background:rgb(90,90,90)"></i><i style="background:rgb(85,85,85)"></i><i style="background:rgb(36,36,36)"></i><i style="background:rgb(0,0,0)"></i><i style="background:rgb(0,0,0)"></i></div><div class="pixgrid front"><i style="background:rgb(0,0,0)"></i><i style="background:rgb(0,0,0)"></i><i style="background:rgb(0,0,0)"></i><i style="background:rgb(42,42,42)"></i><i style="background:rgb(99,99,99)"></i><i style="background:rgb(99,99,99)"></i><i style="background:rgb(42,42,42)"></i><i style="background:rgb(0,0,0)"></i><i style="background:rgb(0,0,0)"></i><i style="background:rgb(0,0,0)"></i><i style="background:rgb(0,0,0)"></i><i style="background:rgb(0,0,0)"></i><i style="background:rgb(0,0,0)"></i><i style="background:rgb(173,173,173)"></i><i style="background:rgb(255,255,255)"></i><i style="background:rgb(255,255,255)"></i><i style="background:rgb(174,174,174)"></i><i style="background:rgb(0,0,0)"></i><i style="background:rgb(0,0,0)"></i><i style="background:rgb(0,0,0)"></i><i style="background:rgb(0,0,0)"></i><i style="background:rgb(0,0,0)"></i><i style="background:rgb(19,19,19)"></i><i style="background:rgb(249,249,249)"></i><i style="background:rgb(251,251,251)"></i><i style="background:rgb(250,250,250)"></i><i style="background:rgb(249,249,249)"></i><i style="background:rgb(20,20,20)"></i><i style="background:rgb(0,0,0)"></i><i style="background:rgb(0,0,0)"></i><i style="background:rgb(0,0,0)"></i><i style="background:rgb(0,0,0)"></i><i style="background:rgb(107,107,107)"></i><i style="background:rgb(255,255,255)"></i><i style="background:rgb(183,183,183)"></i><i style="background:rgb(181,181,181)"></i><i style="background:rgb(255,255,255)"></i><i style="background:rgb(108,108,108)"></i><i style="background:rgb(0,0,0)"></i><i style="background:rgb(0,0,0)"></i><i style="background:rgb(0,0,0)"></i><i style="background:rgb(0,0,0)"></i><i style="background:rgb(201,201,201)"></i><i style="background:rgb(255,255,255)"></i><i style="background:rgb(95,95,95)"></i><i style="background:rgb(93,93,93)"></i><i style="background:rgb(255,255,255)"></i><i style="background:rgb(203,203,203)"></i><i style="background:rgb(0,0,0)"></i><i style="background:rgb(0,0,0)"></i><i style="background:rgb(0,0,0)"></i><i style="background:rgb(41,41,41)"></i><i style="background:rgb(255,255,255)"></i><i style="background:rgb(247,247,247)"></i><i style="background:rgb(15,15,15)"></i><i style="background:rgb(14,14,14)"></i><i style="background:rgb(247,247,247)"></i><i style="background:rgb(255,255,255)"></i><i style="background:rgb(42,42,42)"></i><i style="background:rgb(0,0,0)"></i><i style="background:rgb(0,0,0)"></i><i style="background:rgb(135,135,135)"></i><i style="background:rgb(255,255,255)"></i><i style="background:rgb(248,248,248)"></i><i style="background:rgb(214,214,214)"></i><i style="background:rgb(214,214,214)"></i><i style="background:rgb(248,248,248)"></i><i style="background:rgb(255,255,255)"></i><i style="background:rgb(137,137,137)"></i><i style="background:rgb(0,0,0)"></i><i style="background:rgb(3,3,3)"></i><i style="background:rgb(227,227,227)"></i><i style="background:rgb(255,255,255)"></i><i style="background:rgb(212,212,212)"></i><i style="background:rgb(201,201,201)"></i><i style="background:rgb(201,201,201)"></i><i style="background:rgb(211,211,211)"></i><i style="background:rgb(255,255,255)"></i><i style="background:rgb(228,228,228)"></i><i style="background:rgb(3,3,3)"></i><i style="background:rgb(69,69,69)"></i><i style="background:rgb(255,255,255)"></i><i style="background:rgb(242,242,242)"></i><i style="background:rgb(10,10,10)"></i><i style="background:rgb(0,0,0)"></i><i style="background:rgb(0,0,0)"></i><i style="background:rgb(8,8,8)"></i><i style="background:rgb(241,241,241)"></i><i style="background:rgb(255,255,255)"></i><i style="background:rgb(71,71,71)"></i><i style="background:rgb(53,53,53)"></i><i style="background:rgb(99,99,99)"></i><i style="background:rgb(74,74,74)"></i><i style="background:rgb(0,0,0)"></i><i style="background:rgb(0,0,0)"></i><i style="background:rgb(0,0,0)"></i><i style="background:rgb(0,0,0)"></i><i style="background:rgb(73,73,73)"></i><i style="background:rgb(99,99,99)"></i><i style="background:rgb(53,53,53)"></i><div class="half left fragment" data-fragment-index="2"><span>L</span></div><div class="half right fragment" data-fragment-index="2"><span>R</span></div></div></div><div class="stack-label">N images of 10 × 10 pixels</div>
+<div class="pix-stack"><div class="pixgrid back2"><i style="background:rgb(0,0,0)"></i><i style="background:rgb(0,0,0)"></i><i style="background:rgb(0,0,0)"></i><i style="background:rgb(2,2,2)"></i><i style="background:rgb(55,55,55)"></i><i style="background:rgb(91,91,91)"></i><i style="background:rgb(87,87,87)"></i><i style="background:rgb(38,38,38)"></i><i style="background:rgb(0,0,0)"></i><i style="background:rgb(0,0,0)"></i><i style="background:rgb(0,0,0)"></i><i style="background:rgb(0,0,0)"></i><i style="background:rgb(48,48,48)"></i><i style="background:rgb(214,214,214)"></i><i style="background:rgb(255,255,255)"></i><i style="background:rgb(255,255,255)"></i><i style="background:rgb(255,255,255)"></i><i style="background:rgb(255,255,255)"></i><i style="background:rgb(114,114,114)"></i><i style="background:rgb(0,0,0)"></i><i style="background:rgb(0,0,0)"></i><i style="background:rgb(19,19,19)"></i><i style="background:rgb(233,233,233)"></i><i style="background:rgb(255,255,255)"></i><i style="background:rgb(185,185,185)"></i><i style="background:rgb(69,69,69)"></i><i style="background:rgb(59,59,59)"></i><i style="background:rgb(120,120,120)"></i><i style="background:rgb(109,109,109)"></i><i style="background:rgb(0,0,0)"></i><i style="background:rgb(0,0,0)"></i><i style="background:rgb(115,115,115)"></i><i style="background:rgb(255,255,255)"></i><i style="background:rgb(224,224,224)"></i><i style="background:rgb(7,7,7)"></i><i style="background:rgb(0,0,0)"></i><i style="background:rgb(0,0,0)"></i><i style="background:rgb(0,0,0)"></i><i style="background:rgb(0,0,0)"></i><i style="background:rgb(0,0,0)"></i><i style="background:rgb(0,0,0)"></i><i style="background:rgb(162,162,162)"></i><i style="background:rgb(255,255,255)"></i><i style="background:rgb(159,159,159)"></i><i style="background:rgb(0,0,0)"></i><i style="background:rgb(0,0,0)"></i><i style="background:rgb(0,0,0)"></i><i style="background:rgb(0,0,0)"></i><i style="background:rgb(0,0,0)"></i><i style="background:rgb(0,0,0)"></i><i style="background:rgb(0,0,0)"></i><i style="background:rgb(162,162,162)"></i><i style="background:rgb(255,255,255)"></i><i style="background:rgb(159,159,159)"></i><i style="background:rgb(0,0,0)"></i><i style="background:rgb(0,0,0)"></i><i style="background:rgb(0,0,0)"></i><i style="background:rgb(0,0,0)"></i><i style="background:rgb(0,0,0)"></i><i style="background:rgb(0,0,0)"></i><i style="background:rgb(0,0,0)"></i><i style="background:rgb(114,114,114)"></i><i style="background:rgb(255,255,255)"></i><i style="background:rgb(225,225,225)"></i><i style="background:rgb(7,7,7)"></i><i style="background:rgb(0,0,0)"></i><i style="background:rgb(0,0,0)"></i><i style="background:rgb(0,0,0)"></i><i style="background:rgb(0,0,0)"></i><i style="background:rgb(0,0,0)"></i><i style="background:rgb(0,0,0)"></i><i style="background:rgb(19,19,19)"></i><i style="background:rgb(232,232,232)"></i><i style="background:rgb(255,255,255)"></i><i style="background:rgb(186,186,186)"></i><i style="background:rgb(71,71,71)"></i><i style="background:rgb(62,62,62)"></i><i style="background:rgb(122,122,122)"></i><i style="background:rgb(110,110,110)"></i><i style="background:rgb(0,0,0)"></i><i style="background:rgb(0,0,0)"></i><i style="background:rgb(0,0,0)"></i><i style="background:rgb(47,47,47)"></i><i style="background:rgb(212,212,212)"></i><i style="background:rgb(255,255,255)"></i><i style="background:rgb(255,255,255)"></i><i style="background:rgb(255,255,255)"></i><i style="background:rgb(255,255,255)"></i><i style="background:rgb(112,112,112)"></i><i style="background:rgb(0,0,0)"></i><i style="background:rgb(0,0,0)"></i><i style="background:rgb(0,0,0)"></i><i style="background:rgb(0,0,0)"></i><i style="background:rgb(2,2,2)"></i><i style="background:rgb(53,53,53)"></i><i style="background:rgb(90,90,90)"></i><i style="background:rgb(85,85,85)"></i><i style="background:rgb(36,36,36)"></i><i style="background:rgb(0,0,0)"></i><i style="background:rgb(0,0,0)"></i></div><div class="pixgrid back1"><i style="background:rgb(0,0,0)"></i><i style="background:rgb(0,0,0)"></i><i style="background:rgb(0,0,0)"></i><i style="background:rgb(2,2,2)"></i><i style="background:rgb(55,55,55)"></i><i style="background:rgb(91,91,91)"></i><i style="background:rgb(87,87,87)"></i><i style="background:rgb(38,38,38)"></i><i style="background:rgb(0,0,0)"></i><i style="background:rgb(0,0,0)"></i><i style="background:rgb(0,0,0)"></i><i style="background:rgb(0,0,0)"></i><i style="background:rgb(48,48,48)"></i><i style="background:rgb(214,214,214)"></i><i style="background:rgb(255,255,255)"></i><i style="background:rgb(255,255,255)"></i><i style="background:rgb(255,255,255)"></i><i style="background:rgb(255,255,255)"></i><i style="background:rgb(114,114,114)"></i><i style="background:rgb(0,0,0)"></i><i style="background:rgb(0,0,0)"></i><i style="background:rgb(19,19,19)"></i><i style="background:rgb(233,233,233)"></i><i style="background:rgb(255,255,255)"></i><i style="background:rgb(185,185,185)"></i><i style="background:rgb(69,69,69)"></i><i style="background:rgb(59,59,59)"></i><i style="background:rgb(120,120,120)"></i><i style="background:rgb(109,109,109)"></i><i style="background:rgb(0,0,0)"></i><i style="background:rgb(0,0,0)"></i><i style="background:rgb(115,115,115)"></i><i style="background:rgb(255,255,255)"></i><i style="background:rgb(224,224,224)"></i><i style="background:rgb(7,7,7)"></i><i style="background:rgb(0,0,0)"></i><i style="background:rgb(0,0,0)"></i><i style="background:rgb(0,0,0)"></i><i style="background:rgb(0,0,0)"></i><i style="background:rgb(0,0,0)"></i><i style="background:rgb(0,0,0)"></i><i style="background:rgb(162,162,162)"></i><i style="background:rgb(255,255,255)"></i><i style="background:rgb(159,159,159)"></i><i style="background:rgb(0,0,0)"></i><i style="background:rgb(0,0,0)"></i><i style="background:rgb(0,0,0)"></i><i style="background:rgb(0,0,0)"></i><i style="background:rgb(0,0,0)"></i><i style="background:rgb(0,0,0)"></i><i style="background:rgb(0,0,0)"></i><i style="background:rgb(162,162,162)"></i><i style="background:rgb(255,255,255)"></i><i style="background:rgb(159,159,159)"></i><i style="background:rgb(0,0,0)"></i><i style="background:rgb(0,0,0)"></i><i style="background:rgb(0,0,0)"></i><i style="background:rgb(0,0,0)"></i><i style="background:rgb(0,0,0)"></i><i style="background:rgb(0,0,0)"></i><i style="background:rgb(0,0,0)"></i><i style="background:rgb(114,114,114)"></i><i style="background:rgb(255,255,255)"></i><i style="background:rgb(225,225,225)"></i><i style="background:rgb(7,7,7)"></i><i style="background:rgb(0,0,0)"></i><i style="background:rgb(0,0,0)"></i><i style="background:rgb(0,0,0)"></i><i style="background:rgb(0,0,0)"></i><i style="background:rgb(0,0,0)"></i><i style="background:rgb(0,0,0)"></i><i style="background:rgb(19,19,19)"></i><i style="background:rgb(232,232,232)"></i><i style="background:rgb(255,255,255)"></i><i style="background:rgb(186,186,186)"></i><i style="background:rgb(71,71,71)"></i><i style="background:rgb(62,62,62)"></i><i style="background:rgb(122,122,122)"></i><i style="background:rgb(110,110,110)"></i><i style="background:rgb(0,0,0)"></i><i style="background:rgb(0,0,0)"></i><i style="background:rgb(0,0,0)"></i><i style="background:rgb(47,47,47)"></i><i style="background:rgb(212,212,212)"></i><i style="background:rgb(255,255,255)"></i><i style="background:rgb(255,255,255)"></i><i style="background:rgb(255,255,255)"></i><i style="background:rgb(255,255,255)"></i><i style="background:rgb(112,112,112)"></i><i style="background:rgb(0,0,0)"></i><i style="background:rgb(0,0,0)"></i><i style="background:rgb(0,0,0)"></i><i style="background:rgb(0,0,0)"></i><i style="background:rgb(2,2,2)"></i><i style="background:rgb(53,53,53)"></i><i style="background:rgb(90,90,90)"></i><i style="background:rgb(85,85,85)"></i><i style="background:rgb(36,36,36)"></i><i style="background:rgb(0,0,0)"></i><i style="background:rgb(0,0,0)"></i></div><div class="pixgrid front"><i style="background:rgb(0,0,0)"></i><i style="background:rgb(0,0,0)"></i><i style="background:rgb(0,0,0)"></i><i style="background:rgb(42,42,42)"></i><i style="background:rgb(99,99,99)"></i><i style="background:rgb(99,99,99)"></i><i style="background:rgb(42,42,42)"></i><i style="background:rgb(0,0,0)"></i><i style="background:rgb(0,0,0)"></i><i style="background:rgb(0,0,0)"></i><i style="background:rgb(0,0,0)"></i><i style="background:rgb(0,0,0)"></i><i style="background:rgb(0,0,0)"></i><i style="background:rgb(173,173,173)"></i><i style="background:rgb(255,255,255)"></i><i style="background:rgb(255,255,255)"></i><i style="background:rgb(174,174,174)"></i><i style="background:rgb(0,0,0)"></i><i style="background:rgb(0,0,0)"></i><i style="background:rgb(0,0,0)"></i><i style="background:rgb(0,0,0)"></i><i style="background:rgb(0,0,0)"></i><i style="background:rgb(19,19,19)"></i><i style="background:rgb(249,249,249)"></i><i style="background:rgb(251,251,251)"></i><i style="background:rgb(250,250,250)"></i><i style="background:rgb(249,249,249)"></i><i style="background:rgb(20,20,20)"></i><i style="background:rgb(0,0,0)"></i><i style="background:rgb(0,0,0)"></i><i style="background:rgb(0,0,0)"></i><i style="background:rgb(0,0,0)"></i><i style="background:rgb(107,107,107)"></i><i style="background:rgb(255,255,255)"></i><i style="background:rgb(183,183,183)"></i><i style="background:rgb(181,181,181)"></i><i style="background:rgb(255,255,255)"></i><i style="background:rgb(108,108,108)"></i><i style="background:rgb(0,0,0)"></i><i style="background:rgb(0,0,0)"></i><i style="background:rgb(0,0,0)"></i><i style="background:rgb(0,0,0)"></i><i style="background:rgb(201,201,201)"></i><i style="background:rgb(255,255,255)"></i><i style="background:rgb(95,95,95)"></i><i style="background:rgb(93,93,93)"></i><i style="background:rgb(255,255,255)"></i><i style="background:rgb(203,203,203)"></i><i style="background:rgb(0,0,0)"></i><i style="background:rgb(0,0,0)"></i><i style="background:rgb(0,0,0)"></i><i style="background:rgb(41,41,41)"></i><i style="background:rgb(255,255,255)"></i><i style="background:rgb(247,247,247)"></i><i style="background:rgb(15,15,15)"></i><i style="background:rgb(14,14,14)"></i><i style="background:rgb(247,247,247)"></i><i style="background:rgb(255,255,255)"></i><i style="background:rgb(42,42,42)"></i><i style="background:rgb(0,0,0)"></i><i style="background:rgb(0,0,0)"></i><i style="background:rgb(135,135,135)"></i><i style="background:rgb(255,255,255)"></i><i style="background:rgb(248,248,248)"></i><i style="background:rgb(214,214,214)"></i><i style="background:rgb(214,214,214)"></i><i style="background:rgb(248,248,248)"></i><i style="background:rgb(255,255,255)"></i><i style="background:rgb(137,137,137)"></i><i style="background:rgb(0,0,0)"></i><i style="background:rgb(3,3,3)"></i><i style="background:rgb(227,227,227)"></i><i style="background:rgb(255,255,255)"></i><i style="background:rgb(212,212,212)"></i><i style="background:rgb(201,201,201)"></i><i style="background:rgb(201,201,201)"></i><i style="background:rgb(211,211,211)"></i><i style="background:rgb(255,255,255)"></i><i style="background:rgb(228,228,228)"></i><i style="background:rgb(3,3,3)"></i><i style="background:rgb(69,69,69)"></i><i style="background:rgb(255,255,255)"></i><i style="background:rgb(242,242,242)"></i><i style="background:rgb(10,10,10)"></i><i style="background:rgb(0,0,0)"></i><i style="background:rgb(0,0,0)"></i><i style="background:rgb(8,8,8)"></i><i style="background:rgb(241,241,241)"></i><i style="background:rgb(255,255,255)"></i><i style="background:rgb(71,71,71)"></i><i style="background:rgb(53,53,53)"></i><i style="background:rgb(99,99,99)"></i><i style="background:rgb(74,74,74)"></i><i style="background:rgb(0,0,0)"></i><i style="background:rgb(0,0,0)"></i><i style="background:rgb(0,0,0)"></i><i style="background:rgb(0,0,0)"></i><i style="background:rgb(73,73,73)"></i><i style="background:rgb(99,99,99)"></i><i style="background:rgb(53,53,53)"></i><div class="half left"><span>L</span></div><div class="half right"><span>R</span></div></div></div><div class="stack-label">N images of 10 × 10 pixels</div>
 </div><div class="column" style="width:54%;">
-<div class="fragment" data-fragment-index="1">
+<div>
 <div class="ask">
 <p>How do we get a (discrete) feature <span class="math inline">\(\cx\)</span> from an image of a letter?</p>
 </div>
 </div>
-<div class="fragment feature" data-fragment-index="2">
+<div class="feature">
 <p><span class="math inline">\(\color{#3C7DD9}{L}\)</span> = sum of the pixel values in the <strong>left</strong> half</p>
 <p><span class="math inline">\(\color{#E08A00}{R}\)</span> = sum of the pixel values in the <strong>right</strong> half</p>
 <p><span class="math display">\[\cx = g(\color{#3C7DD9}{L} - \color{#E08A00}{R}) \in \cX = \{-10, \dots, 10\}\]</span></p>
@@ -309,14 +322,14 @@ Michal Neoral
 <div class="ask">
 <p>How do we define the Bayesian risk <span class="math inline">\(R(\cq)\)</span> of a strategy <span class="math inline">\(\cq\)</span>?</p>
 </div>
-<div class="fragment risk-def" data-fragment-index="1">
+<div class="risk-def">
 <p><span class="math display">\[
 R(\cq) = \sum_{\cx \in \cX} \sum_{\ck \in \cK} \cpXK(\cx, \ck)\; \cW(\ck, \cq(\cx))
 \]</span></p>
 </div>
 <table class="symtab caption-top">
 <thead>
-<tr class="fragment header" data-fragment-index="2">
+<tr class="header">
 <th data-quarto-table-cell-role="th">Symbol</th>
 <th data-quarto-table-cell-role="th">Meaning</th>
 <th data-quarto-table-cell-role="th">Licence plates</th>
@@ -324,37 +337,37 @@ R(\cq) = \sum_{\cx \in \cX} \sum_{\ck \in \cK} \cpXK(\cx, \ck)\; \cW(\ck, \cq(\c
 </tr>
 </thead>
 <tbody>
-<tr class="fragment sym-X odd" data-fragment-index="2">
+<tr class="sym-X odd">
 <th data-quarto-table-cell-role="th">\(\cX\)</th>
 <td>observations \(\cx \in \cX\): what we <strong>know</strong></td>
 <td>\(\cx = g(L - R)\)</td>
 <td>cap colour, smell, ring</td>
 </tr>
-<tr class="fragment sym-K even" data-fragment-index="3">
+<tr class="sym-K even">
 <th data-quarto-table-cell-role="th">\(\cK\)</th>
 <td>hidden states \(\ck \in \cK\): what we <strong>don't know</strong></td>
 <td>letters \(\{\cA, \cC\}\)</td>
 <td>edible, poisonous</td>
 </tr>
-<tr class="fragment sym-D odd" data-fragment-index="4">
+<tr class="sym-D odd">
 <th data-quarto-table-cell-role="th">\(\cD\)</th>
 <td>decisions \(\cd \in \cD\)</td>
 <td>\(\cD = \cK = \{\cA, \cC\}\)</td>
 <td>eat, leave it (\(\cD \ne \cK\))</td>
 </tr>
-<tr class="fragment sym-p even" data-fragment-index="5">
+<tr class="sym-p even">
 <th data-quarto-table-cell-role="th">\(\cpXK\)</th>
 <td>joint probability \(\cpXK(\cx, \ck)\)</td>
 <td>feature \(\cx\) with letter \(\ck\)</td>
 <td>a red smelly one is poisonous</td>
 </tr>
-<tr class="fragment sym-W odd" data-fragment-index="6">
+<tr class="sym-W odd">
 <th data-quarto-table-cell-role="th">\(\cW\)</th>
 <td>loss \(\cW(\ck, \cd)\): price of \(\cd\) when the truth is \(\ck\)</td>
 <td>0/1 loss</td>
 <td>poisonous eaten: hospital</td>
 </tr>
-<tr class="fragment sym-q even" data-fragment-index="7">
+<tr class="sym-q even">
 <th data-quarto-table-cell-role="th">\(\cq\)</th>
 <td>strategy \(\cq: \cX \to \cD\)</td>
 <td>A or C for every \(\cx\)</td>
@@ -362,7 +375,7 @@ R(\cq) = \sum_{\cx \in \cX} \sum_{\ck \in \cK} \cpXK(\cx, \ck)\; \cW(\ck, \cq(\c
 </tr>
 </tbody>
 </table>
-<div class="fragment" data-fragment-index="8">
+<div>
 <div class="ask">
 <p>What is the Bayesian (optimal) strategy <span class="math inline">\(\cq^*\)</span>?</p>
 </div>
@@ -372,7 +385,7 @@ R(\cq) = \sum_{\cx \in \cX} \sum_{\ck \in \cK} \cpXK(\cx, \ck)\; \cW(\ck, \cq(\c
 <h2>What do we know?</h2>
 <div class="columns">
 <div class="column" style="width:50%;">
-<div class="card ok fragment fade-right">
+<div class="card ok">
 <p><span class="card-title">Known</span></p>
 <ul>
 <li><span class="math inline">\(\cp(\cx \mid \ck)\)</span>: likelihood</li>
@@ -380,7 +393,7 @@ R(\cq) = \sum_{\cx \in \cX} \sum_{\ck \in \cK} \cpXK(\cx, \ck)\; \cW(\ck, \cq(\c
 </ul>
 </div>
 </div><div class="column" style="width:50%;">
-<div class="card warn fragment fade-left">
+<div class="card warn">
 <p><span class="card-title">Unknown</span></p>
 <ul>
 <li><span class="math inline">\(\cpXK(\cx, \ck)\)</span>: joint probability</li>
@@ -388,7 +401,7 @@ R(\cq) = \sum_{\cx \in \cX} \sum_{\ck \in \cK} \cpXK(\cx, \ck)\; \cW(\ck, \cq(\c
 </ul>
 </div>
 </div></div>
-<div class="fragment">
+<div>
 <div class="ask">
 <p>How do we get <span class="math inline">\(\cpXK(\cx, \ck)\)</span>?</p>
 </div>
@@ -397,17 +410,17 @@ R(\cq) = \sum_{\cx \in \cX} \sum_{\ck \in \cK} \cpXK(\cx, \ck)\; \cW(\ck, \cq(\c
 <section class="slide level2 derivation">
 <h2>Derivation: the joint probability</h2>
 <div class="formula-grid" style="--label-width: 340px;">
-<div class="fragment">
+<div>
 <p><span class="fg-label">Product rule</span> <span class="math inline">\(\cpXK(\cx, \ck) = \cp(\cx \mid \ck)\, \cp(\ck) = \cp(\ck \mid \cx)\, \cp(\cx)\)</span></p>
 </div>
-<div class="fragment">
+<div>
 <p><span class="fg-label">Marginal</span> <span class="math inline">\(\cp(\cx) = \sum_{\ck \in \cK} \cpXK(\cx, \ck) = \sum_{\ck \in \cK} \cp(\cx \mid \ck)\, \cp(\ck)\)</span></p>
 </div>
-<div class="fragment">
+<div>
 <p><span class="fg-label">Bayes' rule</span> <span class="math inline">\(\cp(\ck \mid \cx) = \dfrac{\cp(\cx \mid \ck)\, \cp(\ck)}{\cp(\cx)}\)</span></p>
 </div>
 </div>
-<div class="fragment">
+<div>
 <p>The risk now contains only known quantities: <span class="math display">\[
 R(\cq) = \sum_{\cx \in \cX} \sum_{\ck \in \cK} \cp(\cx \mid \ck)\, \cp(\ck)\, \cW(\ck, \cq(\cx))
 \]</span></p>
@@ -509,17 +522,17 @@ R(\cq) = \sum_{\cx \in \cX} \sum_{\ck \in \cK} \cp(\cx \mid \ck)\, \cp(\ck)\, \c
 </div>
 </div></div>
 <div class="qrow">
-<div class="fragment" data-fragment-index="1">
+<div>
 <div class="ask">
 <p>1. What is the risk <span class="math inline">\(R(\cq)\)</span> of this strategy?</p>
 </div>
 </div>
-<div class="fragment" data-fragment-index="3">
+<div>
 <div class="ask">
 <p>2. How do we find the optimal strategy <span class="math inline">\(\cq^*\)</span>?</p>
 </div>
 </div>
-<div class="fragment" data-fragment-index="4">
+<div>
 <div class="ask">
 <p>3. How do we determine the classification error?</p>
 </div>
@@ -531,12 +544,12 @@ R(\cq) = \sum_{\cx \in \cX} \sum_{\ck \in \cK} \cp(\cx \mid \ck)\, \cp(\ck)\, \c
 <p><span class="math display">\[
 R(\cq) = \sum_{\cx \in \cX} \sum_{\ck \in \cK} \cp(\cx \mid \ck)\, \cp(\ck)\, \cW(\ck, \cq(\cx))
 \]</span></p>
-<div class="fragment">
+<div>
 <p>With the 0/1 loss, only the wrong classes <span class="math inline">\(\ck \ne \cq(\cx)\)</span> contribute: <span class="math display">\[
 R(\cq) = \sum_{\cx \in \cX} \sum_{\ck \ne \cq(\cx)} \cp(\cx \mid \ck)\, \cp(\ck)
 \]</span></p>
 </div>
-<div class="fragment">
+<div>
 <div class="gt results">
 <table class="caption-top">
 <colgroup>
@@ -581,7 +594,7 @@ R(\cq) = \sum_{\cx \in \cX} \sum_{\ck \ne \cq(\cx)} \cp(\cx \mid \ck)\, \cp(\ck)
 </table>
 </div>
 </div>
-<div class="fragment">
+<div>
 <p><span class="math display">\[
 R(\cq) = 0.35 + 0.1 + 0.05 + 0.2 = \mathbf{0.7}
 \]</span></p>
@@ -592,21 +605,21 @@ R(\cq) = 0.35 + 0.1 + 0.05 + 0.2 = \mathbf{0.7}
 <p><span class="math display">\[
 R(\cq) = \sum_{\cx \in \cX} \underbrace{\sum_{\ck \in \cK} \cp(\cx \mid \ck)\, \cp(\ck)\, \cW(\ck, \cq(\cx))}_{R(\cx,\, \cq(\cx)) \text{: partial risk}}
 \]</span></p>
-<div class="fragment">
+<div>
 <p>Each term depends only on the single decision <span class="math inline">\(\cq(\cx)\)</span>, so we minimize every term separately: <span class="math display">\[
 \min_{\cq} R(\cq) = \sum_{\cx \in \cX} \min_{\cd \in \cD} R(\cx, \cd),
 \qquad
 \cq^*(\cx) = \arg\min_{\cd \in \cD} R(\cx, \cd)
 \]</span></p>
 </div>
-<div class="fragment">
+<div>
 <p>For the 0/1 loss and two classes: <span class="math display">\[
 R(\cx, \cA) = \cp(\cx \mid \cC)\, \cp(\cC),
 \qquad
 R(\cx, \cC) = \cp(\cx \mid \cA)\, \cp(\cA)
 \]</span></p>
 </div>
-<div class="fragment">
+<div>
 <p>Example for <span class="math inline">\(x_1\)</span>: <span class="math display">\[
 R(x_1, \cA) = 0.7 \cdot 0.5 = 0.35, \qquad R(x_1, \cC) = 0.3 \cdot 0.5 = \mathbf{0.15}, \qquad \cq^*(x_1) = \cC
 \]</span></p>
@@ -616,19 +629,19 @@ R(x_1, \cA) = 0.7 \cdot 0.5 = 0.35, \qquad R(x_1, \cC) = 0.3 \cdot 0.5 = \mathbf
 <h2>Discrete example: results</h2>
 <div class="columns">
 <div class="column" style="width:62%;">
-<div class="fragment" data-fragment-index="1">
+<div>
 <p><span class="given-label">1. Risk of the given strategy</span> <span class="math display">\[
 R(\cq) = \cp(\cA)\,(0.1 + 0.4) + \cp(\cC)\,(0.7 + 0.2) = \mathbf{0.7}
 \]</span></p>
 </div>
 </div><div class="column" style="width:38%;">
-<div class="fragment" data-fragment-index="6">
+<div>
 <p><span class="given-label">3. Classification error</span> <span class="math display">\[
 \text{error} = \frac{\#\,\text{misclassified}}{\#\,\text{all} = N}
 \]</span></p>
 </div>
 </div></div>
-<div class="fragment" data-fragment-index="2">
+<div>
 <p><span class="given-label">2. Partial risk and the optimal strategy</span> <span class="math display">\[
 R(\cx, \cd) = \sum_{\ck \in \cK} \cp(\cx \mid \ck)\, \cp(\ck)\, \cW(\ck, \cd),
 \qquad
@@ -655,30 +668,30 @@ R(\cx, \cd) = \sum_{\ck \in \cK} \cp(\cx \mid \ck)\, \cp(\ck)\, \cW(\ck, \cd),
 </thead>
 <tbody>
 <tr class="odd">
-<td><span class="fragment" data-fragment-index="3"><span class="math inline">\(R(\cx, \cA)\)</span></span></td>
-<td style="text-align: center;"><span class="fragment" data-fragment-index="3">0.35</span></td>
-<td style="text-align: center;"><span class="fragment" data-fragment-index="3"><span class="best">0.1</span></span></td>
-<td style="text-align: center;"><span class="fragment" data-fragment-index="3"><span class="best">0.05</span></span></td>
-<td style="text-align: center;"><span class="fragment" data-fragment-index="3"><span class="best">0</span></span></td>
+<td><span><span class="math inline">\(R(\cx, \cA)\)</span></span></td>
+<td style="text-align: center;"><span>0.35</span></td>
+<td style="text-align: center;"><span><span class="best">0.1</span></span></td>
+<td style="text-align: center;"><span><span class="best">0.05</span></span></td>
+<td style="text-align: center;"><span><span class="best">0</span></span></td>
 </tr>
 <tr class="even">
-<td><span class="fragment" data-fragment-index="3"><span class="math inline">\(R(\cx, \cC)\)</span></span></td>
-<td style="text-align: center;"><span class="fragment" data-fragment-index="3"><span class="best">0.15</span></span></td>
-<td style="text-align: center;"><span class="fragment" data-fragment-index="3"><span class="best">0.1</span></span></td>
-<td style="text-align: center;"><span class="fragment" data-fragment-index="3"><span class="best">0.05</span></span></td>
-<td style="text-align: center;"><span class="fragment" data-fragment-index="3">0.2</span></td>
+<td><span><span class="math inline">\(R(\cx, \cC)\)</span></span></td>
+<td style="text-align: center;"><span><span class="best">0.15</span></span></td>
+<td style="text-align: center;"><span><span class="best">0.1</span></span></td>
+<td style="text-align: center;"><span><span class="best">0.05</span></span></td>
+<td style="text-align: center;"><span>0.2</span></td>
 </tr>
 <tr class="odd">
-<td><span class="fragment" data-fragment-index="4"><span class="math inline">\(\cq^*(\cx)\)</span></span></td>
-<td style="text-align: center;"><span class="fragment" data-fragment-index="4"><span class="chip c">C</span></span></td>
-<td style="text-align: center;"><span class="fragment" data-fragment-index="4"><span class="chip a">A</span> or <span class="chip c">C</span></span></td>
-<td style="text-align: center;"><span class="fragment" data-fragment-index="4"><span class="chip a">A</span> or <span class="chip c">C</span></span></td>
-<td style="text-align: center;"><span class="fragment" data-fragment-index="4"><span class="chip a">A</span></span></td>
+<td><span><span class="math inline">\(\cq^*(\cx)\)</span></span></td>
+<td style="text-align: center;"><span><span class="chip c">C</span></span></td>
+<td style="text-align: center;"><span><span class="chip a">A</span> or <span class="chip c">C</span></span></td>
+<td style="text-align: center;"><span><span class="chip a">A</span> or <span class="chip c">C</span></span></td>
+<td style="text-align: center;"><span><span class="chip a">A</span></span></td>
 </tr>
 </tbody>
 </table>
 </div>
-<div class="fragment" data-fragment-index="5">
+<div>
 <p><span class="math inline">\(R(\cq^*) = 0.15 + 0.1 + 0.05 + 0 = \mathbf{0.3}\)</span>. For <span class="math inline">\(x_2, x_3\)</span> both decisions are optimal (a tie), a preference must be agreed on.</p>
 </div>
 </section></section>
@@ -694,12 +707,12 @@ R(\cx, \cd) = \sum_{\ck \in \cK} \cp(\cx \mid \ck)\, \cp(\ck)\, \cW(\ck, \cd),
 \cp(\cx \mid \ck) = \frac{1}{\sigma_{\ck} \sqrt{2\pi}} \exp\left(-\frac{(\cx - \mu_{\ck})^2}{2\sigma_{\ck}^2}\right)
 \]</span></p>
 <p><span class="given-label">Given:</span> <span class="math inline">\(\muA,\ \muC,\ \sA,\ \sC\)</span>, <span class="math inline">\(\;\cp(\cA),\ \cp(\cC)\)</span>, <span class="math inline">\(\;\cW\)</span> = 0/1 loss</p>
-<div class="fragment">
+<div>
 <div class="ask">
 <p>How does the Bayesian risk <span class="math inline">\(R(\cq)\)</span> change for a continuous <span class="math inline">\(\cx\)</span>?</p>
 </div>
 </div>
-<div class="fragment">
+<div>
 <div class="ask">
 <p>What is the optimal strategy <span class="math inline">\(\cq^*(\cx)\)</span>?</p>
 </div>
@@ -711,12 +724,12 @@ R(\cx, \cd) = \sum_{\ck \in \cK} \cp(\cx \mid \ck)\, \cp(\ck)\, \cW(\ck, \cd),
 R(\cq) = \int_{\cX} \sum_{\ck \in \cK} \cpXK(\cx, \ck)\, \cW(\ck, \cq(\cx))\, d\cx
 = \int_{\cX} \cp(\cx) \sum_{\ck \in \cK} \cp(\ck \mid \cx)\, \cW(\ck, \cq(\cx))\, d\cx
 \]</span></p>
-<div class="fragment">
+<div>
 <p><span class="math inline">\(\cp(\cx) \ge 0\)</span>, so we minimize the integrand separately for every <span class="math inline">\(\cx\)</span>: <span class="math display">\[
 \cq^*(\cx) = \arg\min_{\cd \in \cD} \sum_{\ck \in \cK} \cp(\ck \mid \cx)\, \cW(\ck, \cd)
 \]</span></p>
 </div>
-<div class="fragment">
+<div>
 <p>For the 0/1 loss: <span class="math inline">\(\;\sum_{\ck \ne \cd} \cp(\ck \mid \cx) = 1 - \cp(\cd \mid \cx)\)</span>, therefore <span class="math display">\[
 \cq^*(\cx) = \arg\max_{\cd \in \cD} \cp(\cd \mid \cx)
 = \arg\max_{\cd \in \cD} \frac{\cp(\cx \mid \cd)\, \cp(\cd)}{\cp(\cx)}
@@ -727,21 +740,21 @@ R(\cq) = \int_{\cX} \sum_{\ck \in \cK} \cpXK(\cx, \ck)\, \cW(\ck, \cq(\cx))\, d\
 <section class="slide level2 derivation">
 <h2>Two classes: a quadratic inequality</h2>
 <p>We decide <span class="math inline">\(\cA\)</span> where <span class="math inline">\(\;\cp(\cx \mid \cA)\, \cp(\cA) \ge \cp(\cx \mid \cC)\, \cp(\cC)\)</span>:</p>
-<div class="fragment" data-fragment-index="1">
+<div>
 <p><span class="math display">\[
 \cp(\cA)\, \frac{1}{\sA \sqrt{2\pi}}\, e^{-\frac{(\cx - \muA)^2}{2\sA^2}}
 \;\ge\;
 \cp(\cC)\, \frac{1}{\sC \sqrt{2\pi}}\, e^{-\frac{(\cx - \muC)^2}{2\sC^2}}
 \]</span></p>
 </div>
-<div class="fragment" data-fragment-index="2">
+<div>
 <p><span class="math inline">\(\sqrt{2\pi}\)</span> cancels, both sides are positive, so we take the logarithm: <span class="math display">\[
 \ln \cp(\cA) - \ln \sA - \frac{(\cx - \muA)^2}{2\sA^2}
 \;\ge\;
 \ln \cp(\cC) - \ln \sC - \frac{(\cx - \muC)^2}{2\sC^2}
 \]</span></p>
 </div>
-<div class="fragment" data-fragment-index="3">
+<div>
 <p>Move the terms without <span class="math inline">\(\cx\)</span> to the right: <span class="math display">\[
 -\frac{(\cx - \muA)^2}{2\sA^2} + \frac{(\cx - \muC)^2}{2\sC^2}
 \;\ge\;
@@ -755,24 +768,24 @@ R(\cq) = \int_{\cX} \sum_{\ck \in \cK} \cpXK(\cx, \ck)\, \cW(\ck, \cq(\cx))\, d\
 -\frac{(\cx - \muA)^2}{2\sA^2} + \frac{(\cx - \muC)^2}{2\sC^2} \;\ge\; L
 \qquad \Big|\; \cdot\, 2\sA^2 \sC^2 &gt; 0
 \]</span></p>
-<div class="fragment" data-fragment-index="1">
+<div>
 <p><span class="math display">\[
 -\sC^2 (\cx - \muA)^2 + \sA^2 (\cx - \muC)^2 \;\ge\; 2 \sA^2 \sC^2 L
 \]</span></p>
 </div>
-<div class="fragment" data-fragment-index="2">
+<div>
 <p>Expand the squares: <span class="math display">\[
 -\sC^2 \cx^2 + 2\sC^2 \muA \cx - \sC^2 \muA^2 + \sA^2 \cx^2 - 2\sA^2 \muC \cx + \sA^2 \muC^2 - 2 \sA^2 \sC^2 L \;\ge\; 0
 \]</span></p>
 </div>
-<div class="fragment" data-fragment-index="3">
+<div>
 <p>Group by the powers of <span class="math inline">\(\cx\)</span>: <span class="math display">\[
 \bbox[#FFF1A8,4px]{(\sA^2 - \sC^2)}\, \cx^2
 + \bbox[#C9F0D4,4px]{2(\sC^2 \muA - \sA^2 \muC)}\, \cx
 + \bbox[#C6EEF6,4px]{\sA^2 \muC^2 - \sC^2 \muA^2 - 2 \sA^2 \sC^2 L} \;\ge\; 0
 \]</span></p>
 </div>
-<div class="fragment coef-row" data-fragment-index="4">
+<div class="coef-row">
 <p><span class="coef ca"><span class="math inline">\(a = \sA^2 - \sC^2\)</span></span> <span class="coef cb"><span class="math inline">\(b = 2(\sC^2 \muA - \sA^2 \muC)\)</span></span> <span class="coef cc"><span class="math inline">\(c = \sA^2 \muC^2 - \sC^2 \muA^2 - 2 \sA^2 \sC^2 L\)</span></span></p>
 </div>
 </section>
@@ -780,21 +793,21 @@ R(\cq) = \int_{\cX} \sum_{\ck \in \cK} \cpXK(\cx, \ck)\, \cW(\ck, \cq(\cx))\, d\
 <h2>Decision regions</h2>
 <div class="r-stack">
 <p><img data-src="img/regions-1.svg" alt="Class likelihoods with their means and standard deviations"></p>
-<p><img data-src="img/regions-2.svg" class="fragment" data-fragment-index="1" alt="Likelihoods multiplied by the priors"></p>
-<p><img data-src="img/regions-3.svg" class="fragment" data-fragment-index="2" alt="Decision regions C, A, C with thresholds t1 and t2"></p>
-<p><img data-src="img/regions-4.svg" class="fragment" data-fragment-index="3" alt="The same thresholds are the roots of the quadratic"></p>
+<p><img data-src="img/regions-2.svg" alt="Likelihoods multiplied by the priors"></p>
+<p><img data-src="img/regions-3.svg" alt="Decision regions C, A, C with thresholds t1 and t2"></p>
+<p><img data-src="img/regions-4.svg" alt="The same thresholds are the roots of the quadratic"></p>
 </div>
 <div class="capstack">
 <div class="caption-step">
 <p>Likelihoods <span class="math inline">\(\cp(\cx \mid \ck)\)</span> with means <span class="math inline">\(\mu_{\ck}\)</span> and standard deviations <span class="math inline">\(\sigma_{\ck}\)</span></p>
 </div>
-<div class="caption-step fragment" data-fragment-index="1">
+<div class="caption-step">
 <p>Multiply by the priors: <span class="math inline">\(\cp(\cx \mid \ck)\, \cp(\ck)\)</span></p>
 </div>
-<div class="caption-step fragment" data-fragment-index="2">
+<div class="caption-step">
 <p>Decide the class with the larger <span class="math inline">\(\cp(\cx \mid \ck)\, \cp(\ck)\)</span>: thresholds <span class="math inline">\(t_1, t_2\)</span></p>
 </div>
-<div class="caption-step fragment" data-fragment-index="3">
+<div class="caption-step">
 <p>The thresholds are the roots of <span class="math inline">\(a\cx^2 + b\cx + c = 0\)</span>, class <span class="math inline">\(\cA\)</span> where it is <span class="math inline">\(\ge 0\)</span></p>
 </div>
 </div>
@@ -989,12 +1002,12 @@ R(\cq) = \int_{\cX} \sum_{\ck \in \cK} \cpXK(\cx, \ck)\, \cW(\ck, \cq(\cx))\, d\
 <div class="column" style="width:68%;">
 <p><img data-src="img/quadratic-cases.svg" style="width: 100%; max-height: 860px; object-fit: contain;" alt="All cases of a quadratic inequality: a > 0, a < 0, a = 0 with two, one or no roots"></p>
 </div><div class="column" style="width:32%;">
-<div class="fragment">
+<div>
 <div class="ask">
 <p>Which intervals belong to class <span class="math inline">\(\cA\)</span> in each case?</p>
 </div>
 </div>
-<div class="fragment">
+<div>
 <div class="alert">
 <p>Handle <strong>every case</strong> in your code, including <span class="math inline">\(a = 0\)</span> and no real roots.</p>
 </div>
@@ -1004,7 +1017,7 @@ R(\cq) = \int_{\cX} \sum_{\ck \in \cK} \cpXK(\cx, \ck)\, \cW(\ck, \cq(\cx))\, d\
 <section class="slide level2">
 <h2>Output of the assignment</h2>
 
-<img data-src="img/assignment-output.svg" style="width: 100%;" alt="Number line with thresholds t1 and t2 and three decisions" class="r-stretch"><div class="fragment">
+<img data-src="img/assignment-output.svg" style="width: 100%;" alt="Number line with thresholds t1 and t2 and three decisions" class="r-stretch"><div>
 <p>The strategy is stored as two thresholds <code>q['t1'] &lt;= q['t2']</code> and the decisions for the three intervals, e.g. <code>q['decision'] = ['C', 'A', 'C']</code>.</p>
 </div>
 </section>
@@ -1012,7 +1025,7 @@ R(\cq) = \int_{\cX} \sum_{\ck \in \cK} \cpXK(\cx, \ck)\, \cW(\ck, \cq(\cx))\, d\
 <h2>The risk for continuous <span class="math inline">\(\cx\)</span></h2>
 <div class="r-stack risk-stack">
 <p><img data-src="img/risk-regions.svg" alt="Decision regions C, A, C with thresholds t1 and t2"></p>
-<p><img data-src="img/risk-integrals.svg" class="fragment" data-fragment-index="1" alt="The same regions with the integrals of the decided class under each region"></p>
+<p><img data-src="img/risk-integrals.svg" alt="The same regions with the integrals of the decided class under each region"></p>
 </div>
 <div class="columns">
 <div class="column" style="width:48%;">
@@ -1020,13 +1033,13 @@ R(\cq) = \int_{\cX} \sum_{\ck \in \cK} \cpXK(\cx, \ck)\, \cW(\ck, \cq(\cx))\, d\
 <p>Compute the risk <span class="math inline">\(R(\cq)\)</span> of your strategy.</p>
 </div>
 </div><div class="column" style="width:52%;">
-<div class="fragment" data-fragment-index="2">
+<div>
 <div class="alert" style="margin-top: 0;">
 <p><strong>Hint:</strong> the area under a normal density up to <span class="math inline">\(t\)</span> is <code>scipy.stats.norm.cdf(t, mu, sigma)</code></p>
 </div>
 </div>
 </div></div>
-<div class="fragment risk-formula" data-fragment-index="3">
+<div class="risk-formula">
 <p><span class="math display">\[
 R(\cq) = 1 - \Big( \int_{-\infty}^{t_1} \!\cp(\cC)\,\cp(\cx|\cC)\,d\cx
 + \int_{t_1}^{t_2} \!\cp(\cA)\,\cp(\cx|\cA)\,d\cx
@@ -1039,17 +1052,17 @@ R(\cq) = 1 - \Big( \int_{-\infty}^{t_1} \!\cp(\cC)\,\cp(\cx|\cC)\,d\cx
 <p><span class="math display">\[
 R(\cq) = \int_{-\infty}^{\infty} \sum_{\ck \in \cK} \cp(\ck)\, \cp(\cx \mid \ck)\, \cW(\ck, \cq(\cx))\, d\cx
 \]</span></p>
-<div class="fragment">
+<div>
 <p>0/1 loss: all classes except the decided one <span class="math inline">\(\cq(\cx)\)</span>: <span class="math display">\[
 R(\cq) = \int_{-\infty}^{\infty} \Big( \sum_{\ck \in \cK} \cp(\ck)\, \cp(\cx \mid \ck) \;-\; \cp(\cq(\cx))\, \cp(\cx \mid \cq(\cx)) \Big)\, d\cx
 \]</span></p>
 </div>
-<div class="fragment">
+<div>
 <p>The first part integrates to one: <span class="math display">\[
 \int_{-\infty}^{\infty} \sum_{\ck} \cp(\ck)\, \cp(\cx \mid \ck)\, d\cx = \sum_{\ck} \cp(\ck) \int_{-\infty}^{\infty} \cp(\cx \mid \ck)\, d\cx = \sum_{\ck} \cp(\ck) = 1
 \]</span></p>
 </div>
-<div class="fragment">
+<div>
 <p><span class="math display">\[
 R(\cq) = 1 - \int_{-\infty}^{\infty} \cp(\cq(\cx))\, \cp(\cx \mid \cq(\cx))\, d\cx
 \]</span> <span class="small muted">The integral is the probability of a correct decision.</span></p>
@@ -1060,14 +1073,14 @@ R(\cq) = 1 - \int_{-\infty}^{\infty} \cp(\cq(\cx))\, \cp(\cx \mid \cq(\cx))\, d\
 <p><span class="math inline">\(\cq\)</span> is constant on the intervals <span class="math inline">\((t_{i-1}, t_i)\)</span> with decisions <span class="math inline">\(\cd_1, \cd_2, \cd_3\)</span>, where <span class="math inline">\(t_0 = -\infty\)</span>, <span class="math inline">\(t_3 = \infty\)</span>: <span class="math display">\[
 R(\cq) = 1 - \sum_{i=1}^{3} \cp(\cd_i) \int_{t_{i-1}}^{t_i} \cp(\cx \mid \cd_i)\, d\cx
 \]</span></p>
-<div class="fragment">
+<div>
 <p>Cumulative distribution function of class <span class="math inline">\(\ck\)</span>, in code <code>norm.cdf(t, mu, sigma)</code>: <span class="math display">\[
 F_{\ck}(t) = \int_{-\infty}^{t} \cp(\cx \mid \ck)\, d\cx,
 \qquad
 \int_{a}^{b} \cp(\cx \mid \ck)\, d\cx = F_{\ck}(b) - F_{\ck}(a)
 \]</span> with <span class="math inline">\(F_{\ck}(-\infty) = 0\)</span> and <span class="math inline">\(F_{\ck}(\infty) = 1\)</span>.</p>
 </div>
-<div class="fragment">
+<div>
 <p>For the decisions <span class="math inline">\(\cC \mid \cA \mid \cC\)</span>: <span class="math display">\[
 R(\cq) = 1 - \Big( \cp(\cC)\, F_{\cC}(t_1) + \cp(\cA) \big( F_{\cA}(t_2) - F_{\cA}(t_1) \big) + \cp(\cC) \big( 1 - F_{\cC}(t_2) \big) \Big)
 \]</span></p>
@@ -1077,17 +1090,17 @@ R(\cq) = 1 - \Big( \cp(\cC)\, F_{\cC}(t_1) + \cp(\cA) \big( F_{\cA}(t_2) - F_{\c
 <h2>Derivation: a numerical example</h2>
 <p><span class="given-label">Parameters:</span> <span class="math inline">\(\muA = 0,\ \sA = 1,\ \muC = 2,\ \sC = 2,\ \cp(\cA) = 0.5\)</span></p>
 <p><span class="given-label">Thresholds:</span> <span class="math inline">\(t_1 = -2.571,\ t_2 = 1.238\)</span>, decisions <span class="math inline">\(\cC \mid \cA \mid \cC\)</span></p>
-<div class="fragment">
+<div>
 <p><span class="math display">\[
 F_{\cC}(t_1) = 0.0111,\quad F_{\cA}(t_1) = 0.0051,\quad F_{\cA}(t_2) = 0.8921,\quad F_{\cC}(t_2) = 0.3515
 \]</span></p>
 </div>
-<div class="fragment">
+<div>
 <p><span class="math display">\[
 R(\cq) = 1 - 0.5\,\big( 0.0111 + (0.8921 - 0.0051) + (1 - 0.3515) \big) = 1 - 0.7733 = \mathbf{0.2267}
 \]</span></p>
 </div>
-<div class="fragment">
+<div>
 <p>Check: the areas of the wrong class give the same result: <span class="math display">\[
 R(\cq) = \cp(\cA) \big( F_{\cA}(t_1) + 1 - F_{\cA}(t_2) \big) + \cp(\cC) \big( F_{\cC}(t_2) - F_{\cC}(t_1) \big) = 0.2267
 \]</span></p>
@@ -1097,13 +1110,16 @@ R(\cq) = \cp(\cA) \big( F_{\cA}(t_1) + 1 - F_{\cA}(t_2) \big) + \cp(\cC) \big( F
 <h2>Take-away for the lab</h2>
 <div class="check">
 <ul>
-<li class="fragment"><strong>Discrete <span class="math inline">\(\cx\)</span>:</strong> risk of a given strategy, the optimal strategy, classification error</li>
-<li class="fragment"><strong>Continuous <span class="math inline">\(\cx\)</span>:</strong> coefficients <span class="math inline">\(a\)</span>, <span class="math inline">\(b\)</span>, <span class="math inline">\(c\)</span> of the quadratic inequality</li>
-<li class="fragment">Thresholds <code>t1</code>, <code>t2</code> and the <strong>decisions</strong> for the three intervals</li>
-<li class="fragment"><strong>Risk</strong> of the strategy using <code>scipy.stats.norm.cdf</code></li>
-<li class="fragment">Watch out for <strong>all the cases</strong> (<span class="math inline">\(a = 0\)</span>, one or no real root)</li>
+<li><strong>Discrete <span class="math inline">\(\cx\)</span>:</strong> risk of a given strategy, the optimal strategy, classification error</li>
+<li><strong>Continuous <span class="math inline">\(\cx\)</span>:</strong> coefficients <span class="math inline">\(a\)</span>, <span class="math inline">\(b\)</span>, <span class="math inline">\(c\)</span> of the quadratic inequality</li>
+<li>Thresholds <code>t1</code>, <code>t2</code> and the <strong>decisions</strong> for the three intervals</li>
+<li><strong>Risk</strong> of the strategy using <code>scipy.stats.norm.cdf</code></li>
+<li>Watch out for <strong>all the cases</strong> (<span class="math inline">\(a = 0\)</span>, one or no real root)</li>
 </ul>
 </div>
+</section>
+<section class="slide level2 the-end" data-background-image="img/thats-all-folks.gif" data-background-size="contain" data-background-color="#000000">
+<h2></h2>
 
 </section></section>
     </div>
@@ -1137,7 +1153,7 @@ R(\cq) = \cp(\cA) \big( F_{\cA}(t_1) + 1 - F_{\cA}(t_2) \big) + \cp(\cC) \big( F
       Reveal.initialize({
 'controlsAuto': false,
 'previewLinksAuto': false,
-'pdfSeparateFragments': false,
+'pdfSeparateFragments': true,
 'autoAnimateEasing': "ease",
 'autoAnimateDuration': 1,
 'autoAnimateUnmatched': true,
@@ -1211,7 +1227,7 @@ R(\cq) = \cp(\cA) \big( F_{\cA}(t_1) + 1 - F_{\cA}(t_2) \big) + \cp(\cC) \big( F
         shuffle: false,
 
         // Turns fragments on and off globally
-        fragments: false,
+        fragments: true,
 
         // Flags whether to include the current fragment in the URL,
         // so that reloading brings you to the same fragment position

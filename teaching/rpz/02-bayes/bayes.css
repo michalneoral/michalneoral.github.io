@@ -135,103 +135,10 @@
 .reveal table.symtab tr.sym-W > * { background: rgba(140, 86, 75, 0.11); }
 .reveal table.symtab tr.sym-q > * { background: rgba(106, 76, 147, 0.10); }
 
-/* ---------- Tabulky zadání: ::: {.gt} kolem markdown tabulky ---------- */
-.reveal .gt table {
-  border-collapse: separate;
-  border-spacing: 0;
-  margin: 0.25em 0 0.7em;
-  font-size: 0.85em;
-  border: 2px solid #DCE6E0;
-  border-radius: 16px;
-  overflow: hidden;
-  box-shadow: 0 6px 18px rgba(32, 39, 41, 0.06);
-}
-.reveal .gt table th,
-.reveal .gt table td {
-  padding: 0.3em 0.7em;
-  border: none;
-  border-bottom: 1px solid #E8EEEA;
-  text-align: center;
-  vertical-align: middle;
-}
-.reveal .gt table thead th {
-  background: #EAF7F0;
-  color: #202729;
-  border-bottom: 2px solid #DCE6E0;
-}
-.reveal .gt table tbody tr:last-child td { border-bottom: none; }
-.reveal .gt table td:first-child,
-.reveal .gt table th:first-child {
-  text-align: left;
-  background: #F7F9F8;
-  border-right: 2px solid #DCE6E0;
-}
-.reveal .gt .cls-a { color: var(--class-a); font-weight: 700; }
-.reveal .gt .cls-c { color: var(--class-c); font-weight: 700; }
-.reveal .gt td:has(.w0) { background: #EAF7F0; }
-.reveal .gt td:has(.w1) { background: #FDECEA; }
-.reveal .gt .w0 { color: #2F7A52; font-weight: 700; }
-.reveal .gt .w1 { color: var(--class-c); font-weight: 700; }
-.reveal .chip {
-  display: inline-block;
-  min-width: 1.5em;
-  padding: 0.05em 0.35em;
-  border-radius: 10px;
-  color: #FFFFFF;
-  font-weight: 700;
-  text-align: center;
-}
-.reveal .chip.a { background: var(--class-a); }
-.reveal .chip.c { background: var(--class-c); }
-
-/* ---------- Diskrétní příklad: víc místa ---------- */
-.reveal .given-line { display: block; font-size: 0.95em; margin: 0.2em 0; }
-.reveal .given-row { margin-top: 0.6em; }
-.reveal .given-row .gt table { font-size: 1em; }
-.reveal .given-label { display: block; font-weight: 700; color: #424242; margin: 0.3em 0 0.2em; }
-.reveal .qrow {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 24px;
-  margin-top: 50px;
-}
-.reveal .qrow .ask { height: 100%; margin: 0; font-size: 0.75em; box-sizing: border-box; }
-
 /* Výsledky: minimum dílčího rizika */
 .reveal .gt.results table { font-size: 0.85em; margin: 0.1em 0 0.4em; }
 .reveal .gt.results table td, .reveal .gt.results table th { padding: 0.2em 0.7em; }
-.reveal .best {
-  display: inline-block;
-  padding: 0 0.4em;
-  border-radius: 8px;
-  background: #C9F0D4;
-  color: #1E6B3E;
-  font-weight: 700;
-}
-
 /* ---------- Odvození kvadratické nerovnice ---------- */
-.reveal section.derivation > p,
-.reveal section.derivation > div { font-size: 0.85em; }
-.reveal .coef-row { display: flex; gap: 24px; justify-content: center; margin-top: 20px; }
-.reveal .coef { padding: 12px 22px; border-radius: 14px; }
-.reveal .coef.ca { background: #FFF1A8; }
-.reveal .coef.cb { background: #C9F0D4; }
-.reveal .coef.cc { background: #C6EEF6; }
-
-/* ---------- Animace oblastí rozhodování ---------- */
-.reveal .r-stack img { width: 1500px; max-width: 100%; margin: 0 !important; background: #FFFFFF; }
-.reveal .capstack { position: relative; height: 90px; margin-top: 10px; }
-.reveal .caption-step {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: #FFFFFF;
-  font-size: 0.85em;
-  color: #202729;
-}
-.reveal .caption-step p { margin: 0; }
 
 /* ---------- Riziko pro spojité x ---------- */
 .reveal .risk-formula { font-size: 0.8em; margin-top: 10px; }
@@ -239,16 +146,6 @@
 /* Dva kroky grafu rizika (oblasti, pak integrály) */
 .reveal .risk-stack img { width: auto; max-width: 100%; max-height: 520px; background: #FFFFFF; }
 
-/* Hustší slide (výsledky): menší písmo a okraje vzorců */
-.reveal section.dense > p,
-.reveal section.dense > div { font-size: 0.82em; }
-.reveal section.dense .MathJax_Display,
-.reveal section.dense .MathJax_SVG_Display { margin: 0.25em 0 !important; }
-.reveal section.dense .given-label { margin: 0.2em 0 0; }
-
 /* Slide s rizikem: o něco menší mezery, ať se vejde i otázka na q* */
 .reveal .risk-def .MathJax_Display { margin: 0.15em 0 !important; }
 
-/* Slidy s odvozením: menší mezery kolem vzorců, ať se vejde víc kroků */
-.reveal section.derivation .MathJax_Display { margin: 0.3em 0 !important; }
-.reveal section.derivation p { margin: 0.35em 0; }
