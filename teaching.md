@@ -53,6 +53,16 @@ Lecturer: prof. Ing. Jiří Matas, Ph.D.<br>
     </div>
 </div>
 
+<div class="slide-deck">
+    <a href="/teaching/rpz/04-parzen/"><img src="/images/teaching/rpz-04-parzen.jpg" alt="First slide of Lab 4: 04 - Parzen Windows, Pattern Recognition and Machine Learning" width="320"></a>
+    <div>
+        <b>Lab 4: Non-parametric Estimates, Parzen Windows</b><br>
+        Density estimation from samples: the histogram, k-NN and Parzen windows, kernels in 1D and 2D, and choosing the bandwidth by cross-validation with the log-likelihood.<br>
+        <a href="/teaching/rpz/04-parzen/"><div class="color-button">slides</div></a>
+        <a href="/teaching/rpz/04-parzen/rpz-04-parzen.pdf"><div class="color-button">pdf</div></a>
+    </div>
+</div>
+
 <h2>Past Courses</h2>
 <ul>
     <li>
