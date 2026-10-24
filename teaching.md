@@ -63,6 +63,16 @@ Lecturer: prof. Ing. Jiří Matas, Ph.D.<br>
     </div>
 </div>
 
+<div class="slide-deck">
+    <a href="/teaching/rpz/05-mle-map-bayes/"><img src="/images/teaching/rpz-05-mle-map-bayes.jpg" alt="First slide of Lab 5: 05 - MLE, MAP, Bayes, Pattern Recognition and Machine Learning" width="320"></a>
+    <div>
+        <b>Lab 5: Parameter Estimation, MLE, MAP and Bayes</b><br>
+        Maximum likelihood, maximum a posteriori and Bayesian estimation compared on one picture, conjugate priors, the German tank problem, and worked examples with socks, a die and the exponential distribution.<br>
+        <a href="/teaching/rpz/05-mle-map-bayes/"><div class="color-button">slides</div></a>
+        <a href="/teaching/rpz/05-mle-map-bayes/rpz-05-mle-map-bayes.pdf"><div class="color-button">pdf</div></a>
+    </div>
+</div>
+
 <h2>Past Courses</h2>
 <ul>
     <li>

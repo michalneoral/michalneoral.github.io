@@ -1,0 +1,67 @@
+/* Styly specifické pro prezentaci 05 - MLE, MAP, Bayes.
+   Obecné komponenty (karty, odvození, krokové grafy, ...) jsou v theme/rpz.scss. */
+
+/* Krokové grafy: výška tak, aby se pod ně vešel popisek */
+.reveal .fig-stack img { width: auto; max-width: 100%; height: 700px; }
+
+/* Graf přes celou šířku bez popisku (ML pro tanky) */
+.reveal .side-stack img { width: 100%; height: auto; max-height: 820px; }
+
+/* Barvy odhadů jako v grafech a makrech \hML, \hMAP, \hMMSE */
+.reveal .ml { color: #3C7DD9; font-weight: 600; }
+.reveal .map { color: #E07812; font-weight: 600; }
+.reveal .mmse { color: #0A9396; font-weight: 600; }
+.reveal .post { color: #C0392B; font-weight: 600; }
+.reveal .pred { color: #2F7A52; font-weight: 600; }
+
+/* Interaktivní slidy: hodnoty pod posuvníky */
+.reveal .try-vals { font-size: 0.62em; line-height: 1.6; margin-top: 0.6em; }
+.reveal .try-vals .try-ml { color: #3C7DD9; }
+.reveal .try-vals .warn { color: #C0392B; }
+
+/* Tabulky: menší písmo, aby se vešly */
+.reveal .gt.methods table, .reveal .gt.conj table { font-size: 0.8em; }
+.reveal .try-vals .try-key { margin-top: 0.6em; }
+.reveal .gt.methods td:nth-child(3) { white-space: nowrap; }
+
+/* Společné nastavení nahoře na slidech ML, MAP, Bayes, MMSE (_setting.qmd) */
+.reveal .setting {
+  font-size: 0.68em; padding: 10px 24px; margin-bottom: 20px;
+  border-left: 8px solid #63D297; background: #F1F8F4; border-radius: 0 12px 12px 0;
+}
+.reveal .setting p { margin: 0; }
+
+/* Výsledek metody v rámečku: ::: {.result .r-ml} (r-map, r-mmse, r-post) */
+.reveal .result {
+  font-size: 0.8em; padding: 14px 28px; margin-top: 16px;
+  border: 4px solid #8A8F93; border-radius: 16px; background: #FAFAFA;
+}
+.reveal .result p { margin: 0; }
+.reveal .result.r-ml { border-color: #3C7DD9; background: #EEF4FC; }
+.reveal .result.r-map { border-color: #E07812; background: #FDF3E8; }
+.reveal .result.r-mmse { border-color: #0A9396; background: #E8F6F6; }
+.reveal .result.r-post { border-color: #C0392B; background: #FBEDEB; }
+.reveal .result .result-label { font-weight: 700; margin-right: 0.4em; }
+
+/* Interaktivní věrohodnost: dva grafy vedle sebe */
+.reveal .lik-row { display: flex; gap: 20px; }
+
+/* Karty pro/proti pod rámečkem s výsledkem: menší mezera */
+.reveal .cards.two { margin-top: 20px; }
+.reveal .cards.two .card { padding: 22px 36px; }
+
+/* Přepínače na interaktivních slidech: větší zaškrtávací políčka */
+.reveal form input[type="checkbox"] { width: 26px; height: 26px; vertical-align: middle; }
+
+/* Široký vzorec (MAP), aby se vešel na šířku slidu */
+.reveal .eq-small { font-size: 0.9em; }
+
+/* Vzorec nejdřív jako "theta = ?", po kliknutí celý: ::: {.swap-eq} se dvěma fragmenty */
+.reveal .swap-eq { display: grid; align-items: center; }
+.reveal .swap-eq > * { grid-area: 1 / 1; }
+
+/* Jeden model vybraný z posterioru (žlutě jako v grafu compare-4, compare-5) */
+.reveal .one-model { color: #C99A00; font-weight: 600; }
+
+/* Tabulka odhadů tanků: buňky na jeden řádek */
+.reveal .gt.tanks th, .reveal .gt.tanks td { white-space: nowrap; }
