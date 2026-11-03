@@ -255,7 +255,15 @@
         qm: "{\\color{#C0392B}{\\mathbf{?}}}",
         hML: ["{\\color{##3C7DD9}{\\hat{#1}_{\\text{ML}}}}", 1],
         hMAP: ["{\\color{##E07812}{\\hat{#1}_{\\text{MAP}}}}", 1],
-        hMMSE: ["{\\color{##0A9396}{\\hat{#1}_{\\text{MMSE}}}}", 1]
+        hMMSE: ["{\\color{##0A9396}{\\hat{#1}_{\\text{MMSE}}}}", 1],
+        // Logistická regrese (06): váhy w (fialové jako parametr θ), vektor x, log odds a, sigmoida,
+        // třídy +1 (modrá, jako třída 1) a -1 (červená, jako třída 2)
+        cw: "{\\color{#7D3C98}{\\mathbf{w}}}",
+        cbx: "{\\color{#0F8B8D}{\\mathbf{x}}}",
+        ca: "{\\color{#B7950B}{a}}",
+        csig: "{\\color{#4E8F3A}{\\sigma}}",
+        kp: "{\\color{#3C7DD9}{+1}}",
+        km: "{\\color{#C0392B}{-1}}"
       }
     }
   });
@@ -606,20 +614,24 @@ L(\cth) = \cp(\cT \mid \cth) = \prod_{i=1}^{N} \cp(\cx_i \mid \cth)
 </section>
 <section class="slide level2">
 <h2>Prior, likelihood, posterior</h2>
+<div class="keep-animation">
 <div class="r-stack fig-stack">
 <p><img data-src="img/bayes-1.svg" alt="Prior distribution of the parameter"></p>
-<p><img data-src="img/bayes-2.svg" alt="Prior and likelihood with the ML estimate at its maximum"></p>
-<p><img data-src="img/bayes-3.svg" alt="Prior, likelihood and posterior with ML, MAP and MMSE estimates"></p>
+<p><img data-src="img/bayes-2.svg" class="fragment" data-fragment-index="1" alt="Prior and likelihood with the ML estimate at its maximum"></p>
+<p><img data-src="img/bayes-3.svg" class="fragment" data-fragment-index="2" alt="Prior, likelihood and posterior with ML, MAP and MMSE estimates"></p>
 </div>
+</div>
+<div class="keep-animation">
 <div class="capstack">
 <div class="caption-step">
 <p>Before the data: the <strong>prior</strong> <span class="math inline">\(\cp(\cth)\)</span>.</p>
 </div>
-<div class="caption-step">
+<div class="caption-step fragment" data-fragment-index="1">
 <p>The data: <strong>likelihood</strong> <span class="math inline">\(\cp(\cT \mid \cth)\)</span>, its maximum is <span class="math inline">\(\hML{\cth}\)</span>.</p>
 </div>
-<div class="caption-step">
+<div class="caption-step fragment" data-fragment-index="2">
 <p><strong>Posterior</strong> <span class="math inline">\(\propto\)</span> likelihood <span class="math inline">\(\times\)</span> prior: a compromise between the two.</p>
+</div>
 </div>
 </div>
 </section>
@@ -662,28 +674,32 @@ L(\cth) = \cp(\cT \mid \cth) = \prod_{i=1}^{N} \cp(\cx_i \mid \cth)
 </section>
 <section class="slide level2">
 <h2>Comparing the estimates</h2>
+<div class="keep-animation">
 <div class="r-stack fig-stack">
 <p><img data-src="img/compare-1.svg" alt="Four samples on the x axis and the prior mean"></p>
-<p><img data-src="img/compare-2.svg" alt="The ML normal density, narrow around the samples"></p>
-<p><img data-src="img/compare-3.svg" alt="The MAP normal density, shifted towards the prior mean and wider"></p>
-<p><img data-src="img/compare-4.svg" alt="The Bayesian predictive density, a Student t distribution, dash-dotted"></p>
-<p><img data-src="img/compare-5.svg" alt="Ten normal densities drawn from the posterior in grey, one of them in yellow, behind the predictive density"></p>
+<p><img data-src="img/compare-2.svg" class="fragment" data-fragment-index="1" alt="The ML normal density, narrow around the samples"></p>
+<p><img data-src="img/compare-3.svg" class="fragment" data-fragment-index="2" alt="The MAP normal density, shifted towards the prior mean and wider"></p>
+<p><img data-src="img/compare-4.svg" class="fragment" data-fragment-index="3" alt="The Bayesian predictive density, a Student t distribution, dash-dotted"></p>
+<p><img data-src="img/compare-5.svg" class="fragment" data-fragment-index="4" alt="Ten normal densities drawn from the posterior in grey, one of them in yellow, behind the predictive density"></p>
 </div>
+</div>
+<div class="keep-animation">
 <div class="capstack">
 <div class="caption-step">
 <p><span class="math inline">\(N = 4\)</span> samples, normal model, unknown <span class="math inline">\(\mu\)</span> and <span class="math inline">\(\sigma^2\)</span>. The prior puts <span class="math inline">\(\mu\)</span> around <span class="math inline">\(\mu_0 = 3\)</span>.</p>
 </div>
-<div class="caption-step">
+<div class="caption-step fragment" data-fragment-index="1">
 <p><span class="ml">ML</span>: plug in <span class="math inline">\(\hML{\cth}\)</span>. It fits the 4 samples tightly, too narrow.</p>
 </div>
-<div class="caption-step">
+<div class="caption-step fragment" data-fragment-index="2">
 <p><span class="map">MAP</span>: the prior pulls <span class="math inline">\(\mu\)</span> towards <span class="math inline">\(\mu_0\)</span> and makes <span class="math inline">\(\sigma\)</span> larger.</p>
 </div>
-<div class="caption-step">
+<div class="caption-step fragment" data-fragment-index="3">
 <p><span class="pred">Bayes</span>: the predictive <span class="math inline">\(\cp(\cx^* \mid \cT)\)</span>, not a normal any more.</p>
 </div>
-<div class="caption-step">
+<div class="caption-step fragment" data-fragment-index="4">
 <p>It averages models from <span class="math inline">\(\cp(\cth \mid \cT)\)</span>: 10 of them drawn, <span class="one-model">one</span> highlighted.</p>
+</div>
 </div>
 </div>
 </section>
@@ -711,16 +727,20 @@ R(\hat\cth) = \int \cp(\cth \mid \cT)\, (\cth - \hat\cth)^2\, d\cth
 </section>
 <section class="slide level2">
 <h2>Comparing the estimates: MMSE</h2>
+<div class="keep-animation">
 <div class="r-stack fig-stack">
 <p><img data-src="img/compare-4.svg" alt="ML, MAP and the Bayesian predictive density, dash-dotted"></p>
-<p><img data-src="img/compare-6.svg" alt="The MMSE normal density added as a solid line"></p>
+<p><img data-src="img/compare-6.svg" class="fragment" data-fragment-index="1" alt="The MMSE normal density added as a solid line"></p>
 </div>
+</div>
+<div class="keep-animation">
 <div class="capstack">
 <div class="caption-step">
 <p><span class="ml">ML</span>, <span class="map">MAP</span> and <span class="pred">Bayes</span> from before.</p>
 </div>
-<div class="caption-step">
+<div class="caption-step fragment" data-fragment-index="1">
 <p><span class="mmse">MMSE</span>: plug in the posterior mean. Still a normal, unlike <span class="pred">Bayes</span>.</p>
+</div>
 </div>
 </div>
 </section>
@@ -983,6 +1003,7 @@ Z = \int_m^M \frac{d\cth}{\cth^{n}} = \frac{1}{n - 1} \left( \frac{1}{m^{n-1}} -
 <section class="slide level2">
 <h2>ML, MAP, MMSE and Bayes for the tanks</h2>
 <div class="keep-animation">
+<div class="keep-animation">
 <div class="r-stack fig-stack">
 <p><img data-src="img/tank-bayes-1.svg" alt="One observation and the ML plug-in density"></p>
 <p><img data-src="img/tank-bayes-2.svg" class="fragment" data-fragment-index="1" alt="The posterior over theta with the MAP estimate equal to the ML estimate"></p>
@@ -990,6 +1011,8 @@ Z = \int_m^M \frac{d\cth}{\cth^{n}} = \frac{1}{n - 1} \left( \frac{1}{m^{n-1}} -
 <p><img data-src="img/tank-bayes-4.svg" class="fragment" data-fragment-index="3" alt="The Bayesian predictive density"></p>
 <p><img data-src="img/tank-bayes-5.svg" class="fragment" data-fragment-index="4" alt="All estimates after ten observations"></p>
 </div>
+</div>
+<div class="keep-animation">
 <div class="capstack">
 <div class="caption-step">
 <p>One tank, <span class="math inline">\(\cx_1 = 5.15\)</span>: the ML plug-in density ends at the observation.</p>
@@ -1005,6 +1028,7 @@ Z = \int_m^M \frac{d\cth}{\cth^{n}} = \frac{1}{n - 1} \left( \frac{1}{m^{n-1}} -
 </div>
 <div class="caption-step fragment" data-fragment-index="4">
 <p>Ten tanks: the posterior is narrow, all estimates are close.</p>
+</div>
 </div>
 </div>
 </div>

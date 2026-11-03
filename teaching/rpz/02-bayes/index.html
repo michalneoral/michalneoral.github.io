@@ -246,7 +246,24 @@
         stwo: "{\\color{#C0392B}{\\sigma_2}}",
         // Parzen (04): odhad hustoty a šířka jádra
         cph: "{\\color{#3C7DD9}{\\hat{p}}}",
-        ch: "{\\color{#7A8B00}{h}}"
+        ch: "{\\color{#7A8B00}{h}}",
+        // MLE, MAP, Bayes (05): parametr, trénovací množina a odhady (barvy jako v grafech);
+        // v makrech s argumentem se # v barvě píše ## (jinak by to byl odkaz na argument)
+        cth: "{\\color{#7D3C98}{\\theta}}",
+        cpi: "{\\color{#7D3C98}{\\pi}}",
+        cT: "{\\color{#0F8B8D}{T}}",
+        qm: "{\\color{#C0392B}{\\mathbf{?}}}",
+        hML: ["{\\color{##3C7DD9}{\\hat{#1}_{\\text{ML}}}}", 1],
+        hMAP: ["{\\color{##E07812}{\\hat{#1}_{\\text{MAP}}}}", 1],
+        hMMSE: ["{\\color{##0A9396}{\\hat{#1}_{\\text{MMSE}}}}", 1],
+        // Logistická regrese (06): váhy w (fialové jako parametr θ), vektor x, log odds a, sigmoida,
+        // třídy +1 (modrá, jako třída 1) a -1 (červená, jako třída 2)
+        cw: "{\\color{#7D3C98}{\\mathbf{w}}}",
+        cbx: "{\\color{#0F8B8D}{\\mathbf{x}}}",
+        ca: "{\\color{#B7950B}{a}}",
+        csig: "{\\color{#4E8F3A}{\\sigma}}",
+        kp: "{\\color{#3C7DD9}{+1}}",
+        km: "{\\color{#C0392B}{-1}}"
       }
     }
   });
@@ -794,24 +811,28 @@ R(\cq) = \int_{\cX} \sum_{\ck \in \cK} \cpXK(\cx, \ck)\, \cW(\ck, \cq(\cx))\, d\
 </section>
 <section class="slide level2">
 <h2>Decision regions</h2>
+<div class="keep-animation">
 <div class="r-stack">
 <p><img data-src="img/regions-1.svg" alt="Class likelihoods with their means and standard deviations"></p>
-<p><img data-src="img/regions-2.svg" alt="Likelihoods multiplied by the priors"></p>
-<p><img data-src="img/regions-3.svg" alt="Decision regions C, A, C with thresholds t1 and t2"></p>
-<p><img data-src="img/regions-4.svg" alt="The same thresholds are the roots of the quadratic"></p>
+<p><img data-src="img/regions-2.svg" class="fragment" data-fragment-index="1" alt="Likelihoods multiplied by the priors"></p>
+<p><img data-src="img/regions-3.svg" class="fragment" data-fragment-index="2" alt="Decision regions C, A, C with thresholds t1 and t2"></p>
+<p><img data-src="img/regions-4.svg" class="fragment" data-fragment-index="3" alt="The same thresholds are the roots of the quadratic"></p>
 </div>
+</div>
+<div class="keep-animation">
 <div class="capstack">
 <div class="caption-step">
 <p>Likelihoods <span class="math inline">\(\cp(\cx \mid \ck)\)</span> with means <span class="math inline">\(\mu_{\ck}\)</span> and standard deviations <span class="math inline">\(\sigma_{\ck}\)</span></p>
 </div>
-<div class="caption-step">
+<div class="caption-step fragment" data-fragment-index="1">
 <p>Multiply by the priors: <span class="math inline">\(\cp(\cx \mid \ck)\, \cp(\ck)\)</span></p>
 </div>
-<div class="caption-step">
+<div class="caption-step fragment" data-fragment-index="2">
 <p>Decide the class with the larger <span class="math inline">\(\cp(\cx \mid \ck)\, \cp(\ck)\)</span>: thresholds <span class="math inline">\(t_1, t_2\)</span></p>
 </div>
-<div class="caption-step">
+<div class="caption-step fragment" data-fragment-index="3">
 <p>The thresholds are the roots of <span class="math inline">\(a\cx^2 + b\cx + c = 0\)</span>, class <span class="math inline">\(\cA\)</span> where it is <span class="math inline">\(\ge 0\)</span></p>
+</div>
 </div>
 </div>
 </section>

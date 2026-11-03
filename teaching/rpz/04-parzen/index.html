@@ -246,7 +246,24 @@
         stwo: "{\\color{#C0392B}{\\sigma_2}}",
         // Parzen (04): odhad hustoty a šířka jádra
         cph: "{\\color{#3C7DD9}{\\hat{p}}}",
-        ch: "{\\color{#7A8B00}{h}}"
+        ch: "{\\color{#7A8B00}{h}}",
+        // MLE, MAP, Bayes (05): parametr, trénovací množina a odhady (barvy jako v grafech);
+        // v makrech s argumentem se # v barvě píše ## (jinak by to byl odkaz na argument)
+        cth: "{\\color{#7D3C98}{\\theta}}",
+        cpi: "{\\color{#7D3C98}{\\pi}}",
+        cT: "{\\color{#0F8B8D}{T}}",
+        qm: "{\\color{#C0392B}{\\mathbf{?}}}",
+        hML: ["{\\color{##3C7DD9}{\\hat{#1}_{\\text{ML}}}}", 1],
+        hMAP: ["{\\color{##E07812}{\\hat{#1}_{\\text{MAP}}}}", 1],
+        hMMSE: ["{\\color{##0A9396}{\\hat{#1}_{\\text{MMSE}}}}", 1],
+        // Logistická regrese (06): váhy w (fialové jako parametr θ), vektor x, log odds a, sigmoida,
+        // třídy +1 (modrá, jako třída 1) a -1 (červená, jako třída 2)
+        cw: "{\\color{#7D3C98}{\\mathbf{w}}}",
+        cbx: "{\\color{#0F8B8D}{\\mathbf{x}}}",
+        ca: "{\\color{#B7950B}{a}}",
+        csig: "{\\color{#4E8F3A}{\\sigma}}",
+        kp: "{\\color{#3C7DD9}{+1}}",
+        km: "{\\color{#C0392B}{-1}}"
       }
     }
   });
@@ -364,24 +381,28 @@ Michal Neoral
 </section>
 <section class="slide level2">
 <h2>The histogram as a density estimate</h2>
+<div class="keep-animation">
 <div class="r-stack fig-stack">
 <p><img data-src="img/hist-1.svg" alt="The true density p(x), a mixture of two normal distributions"></p>
-<p><img data-src="img/hist-2.svg" alt="Twelve samples drawn from the true density"></p>
-<p><img data-src="img/hist-3.svg" alt="Histogram with bins of width 1.5 and counts 0, 3, 3, 0, 5, 1"></p>
-<p><img data-src="img/hist-4.svg" alt="The histogram compared with the true density, one bin in a dense region is empty"></p>
+<p><img data-src="img/hist-2.svg" class="fragment" data-fragment-index="1" alt="Twelve samples drawn from the true density"></p>
+<p><img data-src="img/hist-3.svg" class="fragment" data-fragment-index="2" alt="Histogram with bins of width 1.5 and counts 0, 3, 3, 0, 5, 1"></p>
+<p><img data-src="img/hist-4.svg" class="fragment" data-fragment-index="3" alt="The histogram compared with the true density, one bin in a dense region is empty"></p>
 </div>
+</div>
+<div class="keep-animation">
 <div class="capstack">
 <div class="caption-step">
 <p>The true density <span class="math inline">\(\cp(\cx)\)</span> exists, but we do <strong>not</strong> know it.</p>
 </div>
-<div class="caption-step">
+<div class="caption-step fragment" data-fragment-index="1">
 <p>We only get <span class="math inline">\(N = 12\)</span> samples drawn from it: <span class="math inline">\(\cx_i \sim \cp(\cx)\)</span>.</p>
 </div>
-<div class="caption-step">
+<div class="caption-step fragment" data-fragment-index="2">
 <p>Bins of width <span class="math inline">\(w_b\)</span>, <span class="math inline">\(N_b\)</span> samples in bin <span class="math inline">\(b\)</span>. What is the height of the bin?</p>
 </div>
-<div class="caption-step">
+<div class="caption-step fragment" data-fragment-index="3">
 <p>Compared with the true <span class="math inline">\(\cp(\cx)\)</span>: one bin in a dense region is <strong>empty</strong>.</p>
+</div>
 </div>
 </div>
 </section>
@@ -443,11 +464,14 @@ P(\cx \in \text{bin } b) \approx \frac{N_b}{N}
 <section class="slide level2">
 <h2>More dimensions: <span class="math inline">\(\;\cph(\cx) = \frac{K}{N V}\)</span></h2>
 <div class="keep-animation">
+<div class="keep-animation">
 <div class="r-stack fig-stack knn-stack">
 <p><img data-src="img/knn-parzen-1.svg" alt="k-NN: circles around two query points reaching their third nearest neighbour; the circles have different volumes"></p>
 <p><img data-src="img/knn-parzen-2.svg" class="fragment" data-fragment-index="2" alt="Parzen: circles of a fixed size around the same query points containing different numbers of samples"></p>
 <p><img data-src="img/knn-parzen-3.svg" class="fragment" data-fragment-index="3" alt="Both methods with squares instead of circles"></p>
 </div>
+</div>
+<div class="keep-animation">
 <div class="capstack">
 <div class="caption-step">
 <p>The histogram in <span class="math inline">\(D\)</span> dimensions: <span class="math inline">\(K\)</span> samples in a volume <span class="math inline">\(V\)</span> around <span class="math inline">\(\cx\)</span>.</p>
@@ -460,6 +484,7 @@ P(\cx \in \text{bin } b) \approx \frac{N_b}{N}
 </div>
 <div class="caption-step fragment" data-fragment-index="3">
 <p>The volume can be a ball or a <strong>hypercube</strong>: the cube is easy to count in.</p>
+</div>
 </div>
 </div>
 </div>
@@ -488,6 +513,7 @@ K = \sum_{i=1}^{N} \varphi\Big(\frac{\cx - \cx_i}{\ch}\Big)
 <section class="slide level2">
 <h2>A sum of kernels</h2>
 <div class="keep-animation">
+<div class="keep-animation">
 <div class="r-stack fig-stack">
 <p><img data-src="img/sum-1.svg" alt="Six samples on the x axis"></p>
 <p><img data-src="img/sum-2.svg" class="fragment" data-fragment-index="1" alt="A box around the first sample"></p>
@@ -501,6 +527,8 @@ K = \sum_{i=1}^{N} \varphi\Big(\frac{\cx - \cx_i}{\ch}\Big)
 <p><img data-src="img/sum-10.svg" class="fragment" data-fragment-index="9" alt="A small Gaussian around every sample"></p>
 <p><img data-src="img/sum-11.svg" class="fragment" data-fragment-index="10" alt="The sum of the Gaussians is a smooth curve"></p>
 </div>
+</div>
+<div class="keep-animation">
 <div class="capstack">
 <div class="caption-step">
 <p><span class="math inline">\(N = 6\)</span> samples <span class="math inline">\(\cx_i\)</span>.</p>
@@ -516,6 +544,7 @@ K = \sum_{i=1}^{N} \varphi\Big(\frac{\cx - \cx_i}{\ch}\Big)
 </div>
 <div class="caption-step fragment" data-fragment-index="10">
 <p>Their sum is a <strong>smooth</strong> estimate.</p>
+</div>
 </div>
 </div>
 </div>
@@ -657,6 +686,7 @@ K_\text{type}(\cx, \cx_i) = K_\text{type}(\cx_i, \cx)
 <section class="slide level2">
 <h2>Parzen windows in 2D</h2>
 <div class="keep-animation">
+<div class="keep-animation">
 <div class="r-stack kde-stack">
 <p><img data-src="img/kde2d-1.svg" alt="ball kernel with a small h and the samples only"></p>
 <p><img data-src="img/kde2d-2.svg" class="fragment" data-fragment-index="1" alt="ball kernel with a small h placed on the first sample"></p>
@@ -679,6 +709,8 @@ K_\text{type}(\cx, \cx_i) = K_\text{type}(\cx_i, \cx)
 <p><img data-src="img/kde2d-19.svg" class="fragment" data-fragment-index="18" alt="Gaussian kernel with a large h placed on three samples"></p>
 <p><img data-src="img/kde2d-20.svg" class="fragment" data-fragment-index="19" alt="Gaussian kernel with a large h placed on every sample: the density estimate"></p>
 </div>
+</div>
+<div class="keep-animation">
 <div class="capstack">
 <div class="caption-step">
 <p><strong>Ball</strong> kernel, small <span class="math inline">\(\ch\)</span> (radius). Put it on every sample and average.</p>
@@ -703,6 +735,7 @@ K_\text{type}(\cx, \cx_i) = K_\text{type}(\cx_i, \cx)
 </div>
 <div class="caption-step fragment" data-fragment-index="19">
 <p>Large <span class="math inline">\(\ch\)</span>: the kernels merge into a smooth density with two clusters.</p>
+</div>
 </div>
 </div>
 </div>

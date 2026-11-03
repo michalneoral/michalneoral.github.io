@@ -246,7 +246,24 @@
         stwo: "{\\color{#C0392B}{\\sigma_2}}",
         // Parzen (04): odhad hustoty a šířka jádra
         cph: "{\\color{#3C7DD9}{\\hat{p}}}",
-        ch: "{\\color{#7A8B00}{h}}"
+        ch: "{\\color{#7A8B00}{h}}",
+        // MLE, MAP, Bayes (05): parametr, trénovací množina a odhady (barvy jako v grafech);
+        // v makrech s argumentem se # v barvě píše ## (jinak by to byl odkaz na argument)
+        cth: "{\\color{#7D3C98}{\\theta}}",
+        cpi: "{\\color{#7D3C98}{\\pi}}",
+        cT: "{\\color{#0F8B8D}{T}}",
+        qm: "{\\color{#C0392B}{\\mathbf{?}}}",
+        hML: ["{\\color{##3C7DD9}{\\hat{#1}_{\\text{ML}}}}", 1],
+        hMAP: ["{\\color{##E07812}{\\hat{#1}_{\\text{MAP}}}}", 1],
+        hMMSE: ["{\\color{##0A9396}{\\hat{#1}_{\\text{MMSE}}}}", 1],
+        // Logistická regrese (06): váhy w (fialové jako parametr θ), vektor x, log odds a, sigmoida,
+        // třídy +1 (modrá, jako třída 1) a -1 (červená, jako třída 2)
+        cw: "{\\color{#7D3C98}{\\mathbf{w}}}",
+        cbx: "{\\color{#0F8B8D}{\\mathbf{x}}}",
+        ca: "{\\color{#B7950B}{a}}",
+        csig: "{\\color{#4E8F3A}{\\sigma}}",
+        kp: "{\\color{#3C7DD9}{+1}}",
+        km: "{\\color{#C0392B}{-1}}"
       }
     }
   });
@@ -884,20 +901,24 @@ R(\cq) = \sum_{\cx \in \cX} \sum_{\ck \in \cK} \cpXK(\cx, \ck)\; \cW(\ck, \cq(\c
 </section>
 <section class="slide level2">
 <h2>Example I: two triangles</h2>
+<div class="keep-animation">
 <div class="r-stack fig-stack">
 <p><img data-src="img/tri-1.svg" alt="Densities p(x|1) = |x| and p(x|2) = 1 - |x| on the interval from -1 to 1"></p>
-<p><img data-src="img/tri-2.svg" alt="The likelihood ratio r(x) added to the densities"></p>
-<p><img data-src="img/tri-3.svg" alt="A threshold on the likelihood ratio gives the decision regions 1, 2, 1 and the two errors"></p>
+<p><img data-src="img/tri-2.svg" class="fragment" data-fragment-index="1" alt="The likelihood ratio r(x) added to the densities"></p>
+<p><img data-src="img/tri-3.svg" class="fragment" data-fragment-index="2" alt="A threshold on the likelihood ratio gives the decision regions 1, 2, 1 and the two errors"></p>
 </div>
+</div>
+<div class="keep-animation">
 <div class="capstack">
 <div class="caption-step">
 <p><span class="math inline">\(\cp(\cx \mid \cone) = |\cx|, \quad \cp(\cx \mid \ctwo) = 1 - |\cx|, \quad \cx \in [-1, 1]\)</span>. Find the minimax strategy.</p>
 </div>
-<div class="caption-step">
+<div class="caption-step fragment" data-fragment-index="1">
 <p>Step 1: draw the likelihood ratio <span class="math inline">\(\cr(\cx)\)</span></p>
 </div>
-<div class="caption-step">
+<div class="caption-step fragment" data-fragment-index="2">
 <p>Step 2: a threshold <span class="math inline">\(\cl\)</span> gives the regions <span class="math inline">\(\cone \mid \ctwo \mid \cone\)</span> and the errors. Which <span class="math inline">\(\cl\)</span> is optimal?</p>
+</div>
 </div>
 </div>
 </section>
@@ -1120,20 +1141,24 @@ t^2 + 3t - 2 = 0, \qquad t = \tfrac{1}{2} \big( \sqrt{17} - 3 \big) \approx 0.56
 </section>
 <section class="slide level2">
 <h2>Example III: two normal distributions</h2>
+<div class="keep-animation">
 <div class="r-stack fig-stack">
 <p><img data-src="img/gauss-1.svg" alt="Two normal densities with means -5 and 1 and standard deviations 2 and 5"></p>
-<p><img data-src="img/gauss-2.svg" alt="The scaled likelihood ratio with a threshold and the boundaries t1 and t2"></p>
-<p><img data-src="img/gauss-3.svg" alt="Decision regions 2, 1, 2 and the errors of both classes"></p>
+<p><img data-src="img/gauss-2.svg" class="fragment" data-fragment-index="1" alt="The scaled likelihood ratio with a threshold and the boundaries t1 and t2"></p>
+<p><img data-src="img/gauss-3.svg" class="fragment" data-fragment-index="2" alt="Decision regions 2, 1, 2 and the errors of both classes"></p>
 </div>
+</div>
+<div class="keep-animation">
 <div class="capstack">
 <div class="caption-step">
 <p><span class="math inline">\(\cp(\cx \mid \ck)\)</span> normal with <span class="math inline">\(\mone = -5,\ \sone = 2,\ \mtwo = 1,\ \stwo = 5\)</span>. Find the minimax strategy.</p>
 </div>
-<div class="caption-step">
+<div class="caption-step fragment" data-fragment-index="1">
 <p>A threshold <span class="math inline">\(\cl\)</span> on <span class="math inline">\(\cr(\cx)\)</span> gives two boundaries <span class="math inline">\(t_1, t_2\)</span>. How do we compute them?</p>
 </div>
-<div class="caption-step">
+<div class="caption-step fragment" data-fragment-index="2">
 <p>Regions <span class="math inline">\(\ctwo \mid \cone \mid \ctwo\)</span> and the errors for <span class="math inline">\(\cl = 1\)</span>. How do we get <span class="math inline">\(\eone = \etwo\)</span>?</p>
+</div>
 </div>
 </div>
 </section>
@@ -1212,6 +1237,7 @@ R(\cq) = \cp(\cone)\, \eone + \big( 1 - \cp(\cone) \big)\, \etwo
 <section class="slide level2">
 <h2>Minimax as the worst-case Bayes</h2>
 <div class="keep-animation">
+<div class="keep-animation">
 <div class="r-stack fig-stack">
 <p><img data-src="img/risk-00.svg" alt="Risk of the optimal Bayesian strategy as a function of the prior"></p>
 <p><img data-src="img/risk-01.svg" class="fragment" data-fragment-index="1" alt="A strategy designed for prior 0.6 evaluated for all priors is a line touching the curve"></p>
@@ -1233,6 +1259,8 @@ R(\cq) = \cp(\cone)\, \eone + \big( 1 - \cp(\cone) \big)\, \etwo
 <p><img data-src="img/risk-17.svg" class="fragment" data-fragment-index="17" alt="The errors of both classes for every prior and their maximum"></p>
 <p><img data-src="img/risk-18.svg" class="fragment" data-fragment-index="18" alt="The minimax strategy is the Bayesian strategy with a horizontal risk line"></p>
 </div>
+</div>
+<div class="keep-animation">
 <div class="capstack">
 <div class="caption-step">
 <p>For each prior <span class="math inline">\(\cp(\cone)\)</span>: the risk of <strong>its own</strong> optimal Bayesian strategy (example III)</p>
@@ -1251,6 +1279,7 @@ R(\cq) = \cp(\cone)\, \eone + \big( 1 - \cp(\cone) \big)\, \etwo
 </div>
 <div class="caption-step fragment" data-fragment-index="18">
 <p>Minimax: the Bayesian strategy for <span class="math inline">\(p^*(\cone)\)</span>, its line is horizontal, <span class="math inline">\(\eone = \etwo\)</span></p>
+</div>
 </div>
 </div>
 </div>
