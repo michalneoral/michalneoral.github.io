@@ -1,0 +1,1792 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<script src="index_files/libs/clipboard/clipboard.min.js"></script>
+<script src="index_files/libs/quarto-html/tabby.min.js"></script>
+<script src="index_files/libs/quarto-html/popper.min.js"></script>
+<script src="index_files/libs/quarto-html/tippy.umd.min.js"></script>
+<link href="index_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="index_files/libs/quarto-html/light-border.css" rel="stylesheet">
+<link href="index_files/libs/quarto-html/quarto-syntax-highlighting-bb62276ab45c84d9efd712f51ff97b5a.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.10.18">
+
+  <meta name="author" content="Michal Neoral">
+  <meta name="dcterms.date" content="2026-10-30">
+  <title>06 - Logistic Regression</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="index_files/libs/revealjs/dist/reset.css">
+  <link rel="stylesheet" href="index_files/libs/revealjs/dist/reveal.css">
+  <style>
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: 1.5em;}
+    div.column{flex: auto;}
+    @media screen {
+    div.columns{gap: min(4vw, 1.5em);}
+    div.column{overflow-x: auto;}
+    }
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+      vertical-align: middle;
+    }
+    /* CSS for syntax highlighting */
+    html { -webkit-text-size-adjust: 100%; }
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+      }
+    pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+    div.sourceCode
+      { color: #24292e;  }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span { color: #24292e; } /* Normal */
+    code span.al { color: #ff5555; font-weight: bold; } /* Alert */
+    code span.an { color: #6a737d; } /* Annotation */
+    code span.at { color: #d73a49; } /* Attribute */
+    code span.bn { color: #005cc5; } /* BaseN */
+    code span.bu { color: #d73a49; } /* BuiltIn */
+    code span.cf { color: #d73a49; } /* ControlFlow */
+    code span.ch { color: #032f62; } /* Char */
+    code span.cn { color: #005cc5; } /* Constant */
+    code span.co { color: #6a737d; } /* Comment */
+    code span.cv { color: #6a737d; } /* CommentVar */
+    code span.do { color: #6a737d; } /* Documentation */
+    code span.dt { color: #d73a49; } /* DataType */
+    code span.dv { color: #005cc5; } /* DecVal */
+    code span.er { color: #ff5555; text-decoration: underline; } /* Error */
+    code span.ex { color: #d73a49; font-weight: bold; } /* Extension */
+    code span.fl { color: #005cc5; } /* Float */
+    code span.fu { color: #6f42c1; } /* Function */
+    code span.im { color: #032f62; } /* Import */
+    code span.in { color: #6a737d; } /* Information */
+    code span.kw { color: #d73a49; } /* Keyword */
+    code span.op { color: #24292e; } /* Operator */
+    code span.ot { color: #6f42c1; } /* Other */
+    code span.pp { color: #d73a49; } /* Preprocessor */
+    code span.re { color: #6a737d; } /* RegionMarker */
+    code span.sc { color: #005cc5; } /* SpecialChar */
+    code span.ss { color: #032f62; } /* SpecialString */
+    code span.st { color: #032f62; } /* String */
+    code span.va { color: #e36209; } /* Variable */
+    code span.vs { color: #032f62; } /* VerbatimString */
+    code span.wa { color: #ff5555; } /* Warning */
+  </style>
+  <link rel="stylesheet" href="index_files/libs/revealjs/dist/theme/quarto-c25f51df9efc0ed011c530767492aed3.css">
+  <link rel="stylesheet" href="../../theme/fonts/fonts.css">
+  <link rel="stylesheet" href="logreg.css">
+  <link href="index_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
+  <link href="index_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
+  <link href="index_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
+  <link href="index_files/libs/revealjs/plugin/reveal-chalkboard/font-awesome/css/all.css" rel="stylesheet">
+  <link href="index_files/libs/revealjs/plugin/reveal-chalkboard/style.css" rel="stylesheet">
+  <link href="index_files/libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
+  <style type="text/css">
+    .reveal div.sourceCode {
+      margin: 0;
+      overflow: auto;
+    }
+    .reveal div.hanging-indent {
+      margin-left: 1em;
+      text-indent: -1em;
+    }
+    .reveal .slide:not(.center) {
+      height: 100%;
+    }
+    .reveal .slide.scrollable {
+      overflow-y: auto;
+    }
+    .reveal .footnotes {
+      height: 100%;
+      overflow-y: auto;
+    }
+    .reveal .slide .absolute {
+      position: absolute;
+      display: block;
+    }
+    .reveal .footnotes ol {
+      counter-reset: ol;
+      list-style-type: none; 
+      margin-left: 0;
+    }
+    .reveal .footnotes ol li:before {
+      counter-increment: ol;
+      content: counter(ol) ". "; 
+    }
+    .reveal .footnotes ol li > p:first-child {
+      display: inline-block;
+    }
+    .reveal .slide ul,
+    .reveal .slide ol {
+      margin-bottom: 0.5em;
+    }
+    .reveal .slide ul li,
+    .reveal .slide ol li {
+      margin-top: 0.4em;
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide ul[role="tablist"] li {
+      margin-bottom: 0;
+    }
+    .reveal .slide ul li > *:first-child,
+    .reveal .slide ol li > *:first-child {
+      margin-block-start: 0;
+    }
+    .reveal .slide ul li > *:last-child,
+    .reveal .slide ol li > *:last-child {
+      margin-block-end: 0;
+    }
+    .reveal .slide .columns:nth-child(3) {
+      margin-block-start: 0.8em;
+    }
+    .reveal blockquote {
+      box-shadow: none;
+    }
+    .reveal .tippy-content>* {
+      margin-top: 0.2em;
+      margin-bottom: 0.7em;
+    }
+    .reveal .tippy-content>*:last-child {
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide > img.stretch.quarto-figure-center,
+    .reveal .slide > img.r-stretch.quarto-figure-center {
+      display: block;
+      margin-left: auto;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-left,
+    .reveal .slide > img.r-stretch.quarto-figure-left  {
+      display: block;
+      margin-left: 0;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-right,
+    .reveal .slide > img.r-stretch.quarto-figure-right  {
+      display: block;
+      margin-left: auto;
+      margin-right: 0; 
+    }
+  </style>
+  <script>
+  // Smazat uložené nastavení menu MathJaxu (cookie mjx.menu). Jinak může zůstat zapnutý
+  // průzkumník vzorců, který po kliknutí do vzorce zachytává šipky a zvýrazňuje části vzorce.
+  document.cookie = "mjx.menu=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/";
+  </script>
+  <script type="text/x-mathjax-config">
+  // Barevné symboly pro bayesovské rozhodování, jednotné napříč slidy.
+  // Použití ve vzorcích: \cx, \cX (pozorování), \ck, \cK (stavy), \cd, \cD (rozhodnutí),
+  // \cp, \cpXK (pravděpodobnost), \cW (ztráta), \cq (strategie), \cA, \cC (třídy A a C),
+  // \muA, \muC, \sA, \sC (parametry tříd).
+  MathJax.Hub.Config({
+    // Vzorce nejsou v pořadí Tab a nemají menu: šipky vždy ovládají prezentaci.
+    showMathMenu: false,
+    showMathMenuMSIE: false,
+    menuSettings: { inTabOrder: false, explorer: false, zoom: "None" },
+    TeX: {
+      Macros: {
+        cx: "{\\color{#0F8B8D}{x}}",
+        cX: "{\\color{#0F8B8D}{X}}",
+        ck: "{\\color{#A23B72}{k}}",
+        cK: "{\\color{#A23B72}{K}}",
+        cd: "{\\color{#E08A00}{d}}",
+        cD: "{\\color{#E08A00}{D}}",
+        cp: "{\\color{#4E8F3A}{p}}",
+        cpXK: "{\\color{#4E8F3A}{p_{XK}}}",
+        cW: "{\\color{#8C564B}{W}}",
+        cq: "{\\color{#6A4C93}{q}}",
+        cA: "{\\color{#3C7DD9}{A}}",
+        cC: "{\\color{#C0392B}{C}}",
+        muA: "{\\color{#3C7DD9}{\\mu_A}}",
+        muC: "{\\color{#C0392B}{\\mu_C}}",
+        sA: "{\\color{#3C7DD9}{\\sigma_A}}",
+        sC: "{\\color{#C0392B}{\\sigma_C}}",
+        // Minimax (03): třídy 1/2 a F/M, likelihood ratio r a jeho práh lambda, chyby tříd
+        cone: "{\\color{#3C7DD9}{1}}",
+        ctwo: "{\\color{#C0392B}{2}}",
+        cF: "{\\color{#3C7DD9}{F}}",
+        cM: "{\\color{#C0392B}{M}}",
+        cr: "{\\color{#7A8B00}{r}}",
+        cl: "{\\color{#7A8B00}{\\lambda}}",
+        eone: "{\\epsilon({\\color{#3C7DD9}{1}})}",
+        etwo: "{\\epsilon({\\color{#C0392B}{2}})}",
+        mone: "{\\color{#3C7DD9}{\\mu_1}}",
+        mtwo: "{\\color{#C0392B}{\\mu_2}}",
+        sone: "{\\color{#3C7DD9}{\\sigma_1}}",
+        stwo: "{\\color{#C0392B}{\\sigma_2}}",
+        // Parzen (04): odhad hustoty a šířka jádra
+        cph: "{\\color{#3C7DD9}{\\hat{p}}}",
+        ch: "{\\color{#7A8B00}{h}}",
+        // MLE, MAP, Bayes (05): parametr, trénovací množina a odhady (barvy jako v grafech);
+        // v makrech s argumentem se # v barvě píše ## (jinak by to byl odkaz na argument)
+        cth: "{\\color{#7D3C98}{\\theta}}",
+        cpi: "{\\color{#7D3C98}{\\pi}}",
+        cT: "{\\color{#0F8B8D}{T}}",
+        qm: "{\\color{#C0392B}{\\mathbf{?}}}",
+        hML: ["{\\color{##3C7DD9}{\\hat{#1}_{\\text{ML}}}}", 1],
+        hMAP: ["{\\color{##E07812}{\\hat{#1}_{\\text{MAP}}}}", 1],
+        hMMSE: ["{\\color{##0A9396}{\\hat{#1}_{\\text{MMSE}}}}", 1],
+        // Logistická regrese (06): váhy w (fialové jako parametr θ), vektor x, log odds a, sigmoida,
+        // třídy +1 (modrá, jako třída 1) a -1 (červená, jako třída 2)
+        cw: "{\\color{#7D3C98}{\\mathbf{w}}}",
+        cbx: "{\\color{#0F8B8D}{\\mathbf{x}}}",
+        ca: "{\\color{#B7950B}{a}}",
+        csig: "{\\color{#4E8F3A}{\\sigma}}",
+        kp: "{\\color{#3C7DD9}{+1}}",
+        km: "{\\color{#C0392B}{-1}}"
+      }
+    }
+  });
+  </script>
+  <style>
+    .MathJax:focus, .MathJax_Display:focus, .MathJax_SVG:focus { outline: none; }
+  </style>
+  <script type="module" src="index_files/libs/quarto-ojs/quarto-ojs-runtime.js"></script>
+  <link href="index_files/libs/quarto-ojs/quarto-ojs.css" rel="stylesheet">
+</head>
+<body class="quarto-light">
+  <div class="reveal">
+    <div class="slides">
+
+<section class="quarto-title-block center">
+  <h1 class="title">06 - Logistic Regression</h1>
+  <p class="subtitle">Pattern Recognition and Machine Learning, Lab 6</p>
+
+<div class="quarto-title-authors">
+<div class="quarto-title-author">
+<div class="quarto-title-author-name">
+Michal Neoral
+</div>
+        <p class="quarto-title-affiliation">
+            neoramic@fel.cvut.cz
+          </p>
+    </div>
+</div>
+
+  <p class="date">30 October 2026</p>
+</section>
+<section>
+<section class="title-slide slide level1 center">
+<h1>Recap</h1>
+
+</section>
+<section class="slide level2">
+<h2>Where are we?</h2>
+<div class="cards">
+<div class="card">
+<p><span class="card-title">Lab 2: Bayes</span></p>
+<ul>
+<li><span class="math inline">\(\cp(\cx \mid \ck)\)</span>, <span class="math inline">\(\cp(\ck)\)</span> <span class="green">known</span></li>
+<li>optimal strategy <span class="math inline">\(\cq^*(\cx)\)</span></li>
+</ul>
+<p><span class="small muted">We know <strong>everything</strong>.</span></p>
+</div>
+<div class="card">
+<p><span class="card-title">Labs 4 and 5: estimate</span></p>
+<ul>
+<li><span class="math inline">\(\cp(\cx \mid \ck)\)</span> <strong><span class="red">unknown</span></strong></li>
+<li>estimate it: Parzen, ML, MAP, Bayes</li>
+<li>then plug into Bayes</li>
+</ul>
+<p><span class="small muted"><strong>Generative</strong>: a model of how <span class="math inline">\(\cx\)</span> looks.</span></p>
+</div>
+<div class="card ok">
+<p><span class="card-title">Today</span></p>
+<ul>
+<li>we need only <span class="math inline">\(\cp(\ck \mid \cx)\)</span></li>
+<li>estimate it <strong>directly</strong></li>
+</ul>
+<p><span class="small muted"><strong>Discriminative</strong>: a model of the decision.</span></p>
+<p><span class="tag">today</span></p>
+</div>
+</div>
+<div>
+<div class="alert">
+<p>To decide, we do not need to know how the data look. We need <span class="math inline">\(\cp(\ck \mid \cx)\)</span>, nothing more.</p>
+</div>
+</div>
+</section>
+<section class="slide level2">
+<h2>Two ways to the posterior</h2>
+<div class="keep-animation">
+<div class="r-stack fig-stack">
+<p><img data-src="img/gen-disc-1.svg" alt="Generative model: two normal densities as ellipses around the two classes"></p>
+<p><img data-src="img/gen-disc-2.svg" class="fragment" data-fragment-index="1" alt="Next to it the discriminative model: only the decision line and the posterior"></p>
+</div>
+</div>
+<div class="keep-animation">
+<div class="capstack">
+<div class="caption-step">
+<p><strong>Generative</strong>: model <span class="math inline">\(\cp(\cx \mid \ck)\, \cp(\ck)\)</span>, get <span class="math inline">\(\cp(\ck \mid \cx)\)</span> by Bayes. Can <strong>generate</strong> new data.</p>
+</div>
+<div class="caption-step fragment" data-fragment-index="1">
+<p><strong>Discriminative</strong>: model only <span class="math inline">\(\cp(\ck \mid \cx)\)</span>. Simpler, but <strong>no model of the data</strong>.</p>
+</div>
+</div>
+</div>
+</section></section>
+<section>
+<section class="title-slide slide level1 center">
+<h1>From Bayes to <span class="white">log odds</span></h1>
+
+</section>
+<section class="slide level2">
+<h2>Bayesian strategy, 0/1 loss, two classes</h2>
+<div class="swap-eq">
+<div>
+<p><span class="math display">\[
+\cq^*(\cx) = \arg\max_{\ck} \cp(\ck \mid \cx)
+\]</span></p>
+</div>
+</div>
+<div>
+<p><span class="math display">\[
+\cq^*(\cx) = \cone
+\quad\text{if}\quad
+\cp(\cone \mid \cx) &gt; \cp(\ctwo \mid \cx)
+\;\Leftrightarrow\;
+\frac{\cp(\cone \mid \cx)}{\cp(\ctwo \mid \cx)} &gt; 1
+\;\Leftrightarrow\;
+\underbrace{\ln \frac{\cp(\cone \mid \cx)}{\cp(\ctwo \mid \cx)}}_{\ca(\cx)\ \text{log odds}} &gt; 0
+\]</span></p>
+</div>
+<div>
+<div class="ask">
+<p>Have you seen this ratio before?</p>
+</div>
+</div>
+<div>
+<div class="alert red">
+<p><strong>Not</strong> the likelihood ratio <span class="math inline">\(\frac{\cp(\cx \mid \cone)}{\cp(\cx \mid \ctwo)}\)</span> from minimax. This is the ratio of the <strong>posteriors</strong>, the <strong>odds</strong>.</p>
+</div>
+</div>
+</section>
+<section class="slide level2">
+<h2>The simplest choice: a linear log odds</h2>
+<div class="columns">
+<div class="column" style="width:55%;">
+<p>Model the log odds <strong>directly</strong>, as a linear function of <span class="math inline">\(\cx\)</span>:</p>
+<p><span class="math display">\[
+\ca(\cx) = \ln \frac{\cp(\cone \mid \cx)}{\cp(\ctwo \mid \cx)} = w_0 + \mathbf{w}_1^\top \cx = \cw^\top \cbx
+\]</span></p>
+<p><span class="small muted">The bias is hidden in the vector: <span class="math inline">\(\cbx = [1, \cx]\)</span>, <span class="math inline">\(\cw = [w_0, \mathbf{w}_1]\)</span>.</span></p>
+<div>
+<div class="alert">
+<p>For many problems the log odds <strong>is</strong> linear: e.g. two normal classes with the <strong>same covariance</strong> (later).</p>
+</div>
+</div>
+</div><div class="column" style="width:45%;">
+<div>
+<div class="ask">
+<ol type="1">
+<li>Express <span class="math inline">\(\cp(\cone \mid \cx)\)</span> and <span class="math inline">\(\cp(\ctwo \mid \cx)\)</span> using <span class="math inline">\(\ca(\cx) = \cw^\top \cbx\)</span>.</li>
+<li>Show that <span class="math inline">\(1 - \csig(u) = \csig(-u)\)</span> for <span class="math inline">\(\csig(u) = \frac{1}{1 + e^{-u}}\)</span>.</li>
+</ol>
+</div>
+<p><span class="small muted">More problems like this: <a href="https://cmp.felk.cvut.cz/rpz/rpz_exercise_book.pdf" target="_blank">exercise book</a> on CourseWare.</span></p>
+</div>
+</div></div>
+</section>
+<section class="slide level2">
+<h2>The logistic sigmoid</h2>
+<div class="columns">
+<div class="column" style="width:60%;">
+<p><img data-src="img/sigmoid.svg" alt="The logistic sigmoid from 0 to 1, value one half at zero, symmetric around this point"></p>
+</div><div class="column" style="width:40%;">
+<p><span class="math inline">\(\cp(\cone \mid \cx) = \csig(\cw^\top \cbx)\)</span><br>
+<span class="math inline">\(\cp(\ctwo \mid \cx) = \csig(-\cw^\top \cbx)\)</span></p>
+<div>
+<ul>
+<li>a <strong>probability</strong> in <span class="math inline">\((0, 1)\)</span></li>
+<li><span class="math inline">\(\csig(0) = \frac{1}{2}\)</span>: the <strong>boundary</strong></li>
+<li><span class="math inline">\(\csig(-u) = 1 - \csig(u)\)</span></li>
+<li><span class="math inline">\(\csig' = \csig\,(1 - \csig)\)</span></li>
+</ul>
+</div>
+<div>
+<div class="ask">
+<p>Does it look familiar?</p>
+</div>
+</div>
+<div>
+<p><span class="math inline">\(\tanh u = 2\, \csig(2u) - 1\)</span>, a normal CDF (Lab 2)</p>
+</div>
+</div></div>
+</section>
+<section class="slide level2">
+<h2>What <span class="math inline">\(w_0\)</span> and <span class="math inline">\(w_1\)</span> do (1D)</h2>
+<div class="keep-animation">
+<div class="r-stack fig-stack low">
+<p><img data-src="img/w-effect-1.svg" alt="Sigmoids with slopes 0.5, 1.5 and 5, all crossing one half at zero"></p>
+<p><img data-src="img/w-effect-2.svg" class="fragment" data-fragment-index="1" alt="Adds sigmoids shifted by the bias minus two, zero and two"></p>
+<p><img data-src="img/w-effect-3.svg" class="fragment" data-fragment-index="2" alt="Adds a sigmoid with a negative slope, the classes swap sides"></p>
+</div>
+</div>
+<div class="keep-animation">
+<div class="capstack">
+<div class="caption-step">
+<p><span class="math inline">\(\cp(\kp \mid x) = \csig(w_0 + w_1 x)\)</span>: larger <span class="math inline">\(|w_1|\)</span>, <strong>steeper</strong>, more confident.</p>
+</div>
+<div class="caption-step fragment" data-fragment-index="1">
+<p><span class="math inline">\(w_0\)</span> <strong>shifts</strong> the curve: <span class="math inline">\(\cp = \frac{1}{2}\)</span> at <span class="math inline">\(x = -w_0 / w_1\)</span>.</p>
+</div>
+<div class="caption-step fragment" data-fragment-index="2">
+<p>The <strong>sign</strong> of <span class="math inline">\(w_1\)</span>: which class is on which side.</p>
+</div>
+</div>
+</div>
+</section>
+<section class="slide level2 nostretch">
+<h2>Logistic regression: try it</h2>
+<div class="columns">
+<div class="column" style="width:26%;">
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb1" data-startfrom="252" data-source-offset="-0"><pre class="sourceCode numberSource js number-lines code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 251;"><span id="cb1-252"><a href="" aria-label="252"></a>viewof w0L <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">range</span>([<span class="op">-</span><span class="dv">4</span><span class="op">,</span> <span class="dv">4</span>]<span class="op">,</span> {<span class="dt">value</span><span class="op">:</span> <span class="dv">0</span><span class="op">,</span> <span class="dt">step</span><span class="op">:</span> <span class="fl">0.05</span><span class="op">,</span> <span class="dt">label</span><span class="op">:</span> <span class="st">"w₀"</span>})</span>
+<span id="cb1-253"><a href="" aria-label="253"></a>viewof w1L <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">range</span>([<span class="op">-</span><span class="dv">4</span><span class="op">,</span> <span class="dv">4</span>]<span class="op">,</span> {<span class="dt">value</span><span class="op">:</span> <span class="op">-</span><span class="dv">1</span><span class="op">,</span> <span class="dt">step</span><span class="op">:</span> <span class="fl">0.05</span><span class="op">,</span> <span class="dt">label</span><span class="op">:</span> <span class="st">"w₁"</span>})</span>
+<span id="cb1-254"><a href="" aria-label="254"></a><span class="co">// V PDF (?print-pdf) všechno zapnuté, jinak se na stránce ukáží jen body</span></span>
+<span id="cb1-255"><a href="" aria-label="255"></a>viewof showLR <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">checkbox</span>([<span class="st">"p(+1 | x)"</span><span class="op">,</span> <span class="st">"fit of each sample"</span><span class="op">,</span> <span class="st">"ML solution"</span>]<span class="op">,</span> {<span class="dt">value</span><span class="op">:</span> location<span class="op">.</span><span class="at">search</span><span class="op">.</span><span class="fu">includes</span>(<span class="st">"print-pdf"</span>) <span class="op">?</span> [<span class="st">"p(+1 | x)"</span><span class="op">,</span> <span class="st">"fit of each sample"</span><span class="op">,</span> <span class="st">"ML solution"</span>] <span class="op">:</span> []})</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<div id="ojs-cell-1-1" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<div id="ojs-cell-1-2" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<div id="ojs-cell-1-3" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb2" data-startfrom="258" data-source-offset="0"><pre class="sourceCode numberSource js number-lines code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 257;"><span id="cb2-258"><a href="" aria-label="258"></a><span class="fu">html</span><span class="vs">`&lt;div class="try-vals"&gt;</span></span>
+<span id="cb2-259"><a href="" aria-label="259"></a><span class="vs">&lt;div&gt;N = </span><span class="sc">${</span>ptsLR<span class="op">.</span><span class="at">length</span><span class="sc">}</span><span class="vs"> samples&lt;/div&gt;</span></span>
+<span id="cb2-260"><a href="" aria-label="260"></a><span class="vs">&lt;div&gt;E(w) = &lt;b&gt;</span><span class="sc">${</span><span class="fu">lossLR</span>(w0L<span class="op">,</span> w1L)<span class="op">.</span><span class="fu">toFixed</span>(<span class="dv">3</span>)<span class="sc">}</span><span class="vs">&lt;/b&gt;&lt;/div&gt;</span></span>
+<span id="cb2-261"><a href="" aria-label="261"></a><span class="vs">&lt;div&gt;errors: &lt;b&gt;</span><span class="sc">${</span><span class="fu">errLR</span>(w0L<span class="op">,</span> w1L)<span class="sc">}</span><span class="vs">&lt;/b&gt;&lt;/div&gt;</span></span>
+<span id="cb2-262"><a href="" aria-label="262"></a><span class="sc">${</span>showLR<span class="op">.</span><span class="fu">includes</span>(<span class="st">"ML solution"</span>) <span class="op">?</span> <span class="fu">html</span><span class="vs">`&lt;div class="try-ml"&gt;ML: w₀ = </span><span class="sc">${</span>wML[<span class="dv">0</span>]<span class="op">.</span><span class="fu">toFixed</span>(<span class="dv">2</span>)<span class="sc">}</span><span class="vs">, w₁ = </span><span class="sc">${</span>wML[<span class="dv">1</span>]<span class="op">.</span><span class="fu">toFixed</span>(<span class="dv">2</span>)<span class="sc">}</span><span class="vs">&lt;/div&gt;</span></span>
+<span id="cb2-263"><a href="" aria-label="263"></a><span class="vs">&lt;div class="try-ml"&gt;E(w) = </span><span class="sc">${</span><span class="fu">lossLR</span>(wML[<span class="dv">0</span>]<span class="op">,</span> wML[<span class="dv">1</span>])<span class="op">.</span><span class="fu">toFixed</span>(<span class="dv">3</span>)<span class="sc">}</span><span class="vs">, errors: </span><span class="sc">${</span><span class="fu">errLR</span>(wML[<span class="dv">0</span>]<span class="op">,</span> wML[<span class="dv">1</span>])<span class="sc">}</span><span class="vs">&lt;/div&gt;`</span> <span class="op">:</span> <span class="st">""</span><span class="sc">}</span></span>
+<span id="cb2-264"><a href="" aria-label="264"></a><span class="vs">&lt;/div&gt;`</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-2" data-nodetype="expression">
+
+</div>
+</div>
+</div>
+</div><div class="column" style="width:74%;">
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb3" data-startfrom="272" data-source-offset="-48"><pre class="sourceCode numberSource js number-lines code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 271;"><span id="cb3-272"><a href="" aria-label="272"></a>xPos <span class="op">=</span> [<span class="op">-</span><span class="fl">1.25</span><span class="op">,</span> <span class="fl">0.23</span><span class="op">,</span> <span class="fl">0.45</span><span class="op">,</span> <span class="fl">1.16</span><span class="op">,</span> <span class="fl">1.48</span><span class="op">,</span> <span class="fl">1.59</span><span class="op">,</span> <span class="fl">1.68</span><span class="op">,</span> <span class="fl">1.85</span><span class="op">,</span> <span class="fl">1.95</span><span class="op">,</span> <span class="fl">2.31</span><span class="op">,</span> <span class="fl">2.35</span><span class="op">,</span> <span class="fl">2.65</span><span class="op">,</span> <span class="fl">2.8</span><span class="op">,</span> <span class="fl">3.08</span>]</span>
+<span id="cb3-273"><a href="" aria-label="273"></a>xNeg <span class="op">=</span> [<span class="op">-</span><span class="fl">2.73</span><span class="op">,</span> <span class="op">-</span><span class="fl">2.6</span><span class="op">,</span> <span class="op">-</span><span class="fl">1.91</span><span class="op">,</span> <span class="op">-</span><span class="fl">1.86</span><span class="op">,</span> <span class="op">-</span><span class="fl">1.82</span><span class="op">,</span> <span class="op">-</span><span class="fl">1.58</span><span class="op">,</span> <span class="op">-</span><span class="fl">1.03</span><span class="op">,</span> <span class="op">-</span><span class="fl">0.92</span><span class="op">,</span> <span class="op">-</span><span class="fl">0.72</span><span class="op">,</span> <span class="op">-</span><span class="fl">0.64</span><span class="op">,</span> <span class="fl">0.27</span><span class="op">,</span> <span class="fl">0.29</span><span class="op">,</span> <span class="fl">0.38</span><span class="op">,</span> <span class="fl">0.8</span>]</span>
+<span id="cb3-274"><a href="" aria-label="274"></a>ptsLR <span class="op">=</span> xPos<span class="op">.</span><span class="fu">map</span>(x <span class="kw">=&gt;</span> ({x<span class="op">,</span> <span class="dt">k</span><span class="op">:</span> <span class="dv">1</span>}))<span class="op">.</span><span class="fu">concat</span>(xNeg<span class="op">.</span><span class="fu">map</span>(x <span class="kw">=&gt;</span> ({x<span class="op">,</span> <span class="dt">k</span><span class="op">:</span> <span class="op">-</span><span class="dv">1</span>})))</span>
+<span id="cb3-275"><a href="" aria-label="275"></a>sigm <span class="op">=</span> u <span class="kw">=&gt;</span> <span class="dv">1</span> <span class="op">/</span> (<span class="dv">1</span> <span class="op">+</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">exp</span>(<span class="op">-</span>u))</span>
+<span id="cb3-276"><a href="" aria-label="276"></a>lossLR <span class="op">=</span> (a<span class="op">,</span> b) <span class="kw">=&gt;</span> d3<span class="op">.</span><span class="fu">mean</span>(ptsLR<span class="op">,</span> d <span class="kw">=&gt;</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">log1p</span>(<span class="bu">Math</span><span class="op">.</span><span class="fu">exp</span>(<span class="op">-</span>d<span class="op">.</span><span class="at">k</span> <span class="op">*</span> (a <span class="op">+</span> b <span class="op">*</span> d<span class="op">.</span><span class="at">x</span>))))</span>
+<span id="cb3-277"><a href="" aria-label="277"></a>errLR <span class="op">=</span> (a<span class="op">,</span> b) <span class="kw">=&gt;</span> ptsLR<span class="op">.</span><span class="fu">filter</span>(d <span class="kw">=&gt;</span> d<span class="op">.</span><span class="at">k</span> <span class="op">*</span> (a <span class="op">+</span> b <span class="op">*</span> d<span class="op">.</span><span class="at">x</span>) <span class="op">&lt;=</span> <span class="dv">0</span>)<span class="op">.</span><span class="at">length</span></span>
+<span id="cb3-278"><a href="" aria-label="278"></a>wML <span class="op">=</span> [<span class="op">-</span><span class="fl">0.608</span><span class="op">,</span> <span class="fl">1.719</span>]</span>
+<span id="cb3-279"><a href="" aria-label="279"></a>xsLR <span class="op">=</span> d3<span class="op">.</span><span class="fu">range</span>(<span class="op">-</span><span class="fl">3.5</span><span class="op">,</span> <span class="fl">3.501</span><span class="op">,</span> <span class="fl">0.02</span>)</span>
+<span id="cb3-280"><a href="" aria-label="280"></a>showP <span class="op">=</span> showLR<span class="op">.</span><span class="fu">includes</span>(<span class="st">"p(+1 | x)"</span>)</span>
+<span id="cb3-281"><a href="" aria-label="281"></a>showFit <span class="op">=</span> showLR<span class="op">.</span><span class="fu">includes</span>(<span class="st">"fit of each sample"</span>)</span>
+<span id="cb3-282"><a href="" aria-label="282"></a>Plot<span class="op">.</span><span class="fu">plot</span>({</span>
+<span id="cb3-283"><a href="" aria-label="283"></a>  <span class="dt">width</span><span class="op">:</span> <span class="dv">1300</span><span class="op">,</span> <span class="dt">height</span><span class="op">:</span> <span class="dv">700</span><span class="op">,</span> <span class="dt">marginLeft</span><span class="op">:</span> <span class="dv">80</span><span class="op">,</span> <span class="dt">marginTop</span><span class="op">:</span> <span class="dv">40</span><span class="op">,</span> <span class="dt">marginBottom</span><span class="op">:</span> <span class="dv">60</span><span class="op">,</span></span>
+<span id="cb3-284"><a href="" aria-label="284"></a>  <span class="dt">style</span><span class="op">:</span> {<span class="dt">fontSize</span><span class="op">:</span> <span class="st">"22px"</span>}<span class="op">,</span></span>
+<span id="cb3-285"><a href="" aria-label="285"></a>  <span class="dt">x</span><span class="op">:</span> {<span class="dt">label</span><span class="op">:</span> <span class="st">"x"</span><span class="op">,</span> <span class="dt">domain</span><span class="op">:</span> [<span class="op">-</span><span class="fl">3.5</span><span class="op">,</span> <span class="fl">3.5</span>]}<span class="op">,</span></span>
+<span id="cb3-286"><a href="" aria-label="286"></a>  <span class="dt">y</span><span class="op">:</span> {<span class="dt">label</span><span class="op">:</span> <span class="st">"p(+1 | x)"</span><span class="op">,</span> <span class="dt">domain</span><span class="op">:</span> [<span class="op">-</span><span class="fl">0.05</span><span class="op">,</span> <span class="fl">1.05</span>]<span class="op">,</span> <span class="dt">grid</span><span class="op">:</span> <span class="kw">true</span><span class="op">,</span> <span class="dt">ticks</span><span class="op">:</span> [<span class="dv">0</span><span class="op">,</span> <span class="fl">0.5</span><span class="op">,</span> <span class="dv">1</span>]}<span class="op">,</span></span>
+<span id="cb3-287"><a href="" aria-label="287"></a>  <span class="dt">marks</span><span class="op">:</span> [</span>
+<span id="cb3-288"><a href="" aria-label="288"></a>    showLR<span class="op">.</span><span class="fu">includes</span>(<span class="st">"ML solution"</span>) <span class="op">?</span> Plot<span class="op">.</span><span class="fu">line</span>(xsLR<span class="op">,</span> {<span class="dt">x</span><span class="op">:</span> d <span class="kw">=&gt;</span> d<span class="op">,</span> <span class="dt">y</span><span class="op">:</span> d <span class="kw">=&gt;</span> <span class="fu">sigm</span>(wML[<span class="dv">0</span>] <span class="op">+</span> wML[<span class="dv">1</span>] <span class="op">*</span> d)<span class="op">,</span> <span class="dt">stroke</span><span class="op">:</span> <span class="st">"#4E8F3A"</span><span class="op">,</span> <span class="dt">strokeWidth</span><span class="op">:</span> <span class="dv">3</span><span class="op">,</span> <span class="dt">strokeDasharray</span><span class="op">:</span> <span class="st">"8 6"</span><span class="op">,</span> <span class="dt">strokeOpacity</span><span class="op">:</span> <span class="fl">0.6</span>}) <span class="op">:</span> <span class="kw">null</span><span class="op">,</span></span>
+<span id="cb3-289"><a href="" aria-label="289"></a>    showP <span class="op">?</span> Plot<span class="op">.</span><span class="fu">line</span>(xsLR<span class="op">,</span> {<span class="dt">x</span><span class="op">:</span> d <span class="kw">=&gt;</span> d<span class="op">,</span> <span class="dt">y</span><span class="op">:</span> d <span class="kw">=&gt;</span> <span class="fu">sigm</span>(w0L <span class="op">+</span> w1L <span class="op">*</span> d)<span class="op">,</span> <span class="dt">stroke</span><span class="op">:</span> <span class="st">"#4E8F3A"</span><span class="op">,</span> <span class="dt">strokeWidth</span><span class="op">:</span> <span class="dv">5</span>}) <span class="op">:</span> <span class="kw">null</span><span class="op">,</span></span>
+<span id="cb3-290"><a href="" aria-label="290"></a>    showP <span class="op">&amp;&amp;</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">abs</span>(w1L) <span class="op">&gt;</span> <span class="fl">0.01</span> <span class="op">&amp;&amp;</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">abs</span>(w0L <span class="op">/</span> w1L) <span class="op">&lt;</span> <span class="fl">3.5</span> <span class="op">?</span> Plot<span class="op">.</span><span class="fu">ruleX</span>([<span class="op">-</span>w0L <span class="op">/</span> w1L]<span class="op">,</span> {<span class="dt">stroke</span><span class="op">:</span> <span class="st">"#202729"</span><span class="op">,</span> <span class="dt">strokeWidth</span><span class="op">:</span> <span class="dv">3</span>}) <span class="op">:</span> <span class="kw">null</span><span class="op">,</span></span>
+<span id="cb3-291"><a href="" aria-label="291"></a>    showFit <span class="op">?</span> Plot<span class="op">.</span><span class="fu">ruleX</span>(ptsLR<span class="op">,</span> {<span class="dt">x</span><span class="op">:</span> <span class="st">"x"</span><span class="op">,</span> <span class="dt">y1</span><span class="op">:</span> d <span class="kw">=&gt;</span> d<span class="op">.</span><span class="at">k</span> <span class="op">&gt;</span> <span class="dv">0</span> <span class="op">?</span> <span class="dv">1</span> <span class="op">:</span> <span class="dv">0</span><span class="op">,</span> <span class="dt">y2</span><span class="op">:</span> d <span class="kw">=&gt;</span> <span class="fu">sigm</span>(w0L <span class="op">+</span> w1L <span class="op">*</span> d<span class="op">.</span><span class="at">x</span>)<span class="op">,</span> <span class="dt">stroke</span><span class="op">:</span> d <span class="kw">=&gt;</span> d<span class="op">.</span><span class="at">k</span> <span class="op">&gt;</span> <span class="dv">0</span> <span class="op">?</span> <span class="st">"#3C7DD9"</span> <span class="op">:</span> <span class="st">"#C0392B"</span><span class="op">,</span> <span class="dt">strokeWidth</span><span class="op">:</span> <span class="dv">4</span><span class="op">,</span> <span class="dt">strokeOpacity</span><span class="op">:</span> <span class="fl">0.55</span>}) <span class="op">:</span> <span class="kw">null</span><span class="op">,</span></span>
+<span id="cb3-292"><a href="" aria-label="292"></a>    Plot<span class="op">.</span><span class="fu">dot</span>(ptsLR<span class="op">,</span> {<span class="dt">x</span><span class="op">:</span> <span class="st">"x"</span><span class="op">,</span> <span class="dt">y</span><span class="op">:</span> d <span class="kw">=&gt;</span> d<span class="op">.</span><span class="at">k</span> <span class="op">&gt;</span> <span class="dv">0</span> <span class="op">?</span> <span class="dv">1</span> <span class="op">:</span> <span class="dv">0</span><span class="op">,</span> <span class="dt">r</span><span class="op">:</span> <span class="dv">10</span><span class="op">,</span> <span class="dt">fill</span><span class="op">:</span> d <span class="kw">=&gt;</span> d<span class="op">.</span><span class="at">k</span> <span class="op">&gt;</span> <span class="dv">0</span> <span class="op">?</span> <span class="st">"#3C7DD9"</span> <span class="op">:</span> <span class="st">"#C0392B"</span><span class="op">,</span> <span class="dt">stroke</span><span class="op">:</span> <span class="st">"white"</span><span class="op">,</span> <span class="dt">strokeWidth</span><span class="op">:</span> <span class="fl">1.5</span>})<span class="op">,</span></span>
+<span id="cb3-293"><a href="" aria-label="293"></a>    Plot<span class="op">.</span><span class="fu">ruleY</span>([<span class="fl">0.5</span>]<span class="op">,</span> {<span class="dt">stroke</span><span class="op">:</span> <span class="st">"#8A8F93"</span><span class="op">,</span> <span class="dt">strokeDasharray</span><span class="op">:</span> <span class="st">"3 5"</span>})</span>
+<span id="cb3-294"><a href="" aria-label="294"></a>  ]</span>
+<span id="cb3-295"><a href="" aria-label="295"></a>})</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<div id="ojs-cell-3-1" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<div id="ojs-cell-3-2" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<div id="ojs-cell-3-3" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<div id="ojs-cell-3-4" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<div id="ojs-cell-3-5" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<div id="ojs-cell-3-6" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<div id="ojs-cell-3-7" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<div id="ojs-cell-3-8" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<div id="ojs-cell-3-9" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<div id="ojs-cell-3-10" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<div id="ojs-cell-3-11" data-nodetype="expression">
+
+</div>
+</div>
+</div>
+</div>
+</div></div>
+</section>
+<section class="slide level2">
+<h2>The threshold in 1D</h2>
+<div class="columns">
+<div class="column" style="width:52%;">
+<p><span class="math display">\[
+\cp(\kp \mid x) = \csig(w_0 + w_1 x)
+\]</span></p>
+<p><span class="small muted">Labels <span class="math inline">\(\ck \in \{\kp, \km\}\)</span> from now on, as in the assignment.</span></p>
+</div><div class="column" style="width:48%;">
+<div class="ask">
+<ol type="1">
+<li>For which <span class="math inline">\(x\)</span> is <span class="math inline">\(\cp(\kp \mid x) = \cp(\km \mid x) = \frac{1}{2}\)</span>?</li>
+<li><span class="math inline">\(\cw = (1.5, -0.7)\)</span>: the threshold? Which side is <span class="math inline">\(\kp\)</span>?</li>
+<li>Write the strategy <span class="math inline">\(\cq(x)\)</span>.</li>
+</ol>
+</div>
+<p><span class="small muted">More problems like this: <a href="https://cmp.felk.cvut.cz/rpz/rpz_exercise_book.pdf" target="_blank">exercise book</a> on CourseWare.</span></p>
+</div></div>
+</section>
+<section class="slide level2 derivation">
+<h2>Derivation: the threshold in 1D</h2>
+<div>
+<p><span class="math display">\[
+\csig(w_0 + w_1 x) = \tfrac{1}{2}
+\;\Leftrightarrow\;
+w_0 + w_1 x = 0
+\;\Leftrightarrow\;
+\boxed{x^* = -\frac{w_0}{w_1}}
+\]</span></p>
+</div>
+<div>
+<p><span class="math display">\[
+\cw = (1.5, -0.7):
+\qquad
+x^* = -\frac{1.5}{-0.7} \approx 2.14,
+\qquad
+w_1 &lt; 0 \;\Rightarrow\; \cp(\kp \mid x) \text{ decreases}
+\]</span></p>
+</div>
+<div>
+<p><span class="math display">\[
+\cq(x) =
+\begin{cases}
+\kp &amp; \text{if } x &lt; 2.14 \\
+\km &amp; \text{if } x \geq 2.14
+\end{cases}
+\]</span></p>
+</div>
+</section>
+<section class="slide level2">
+<h2>More dimensions: a linear decision boundary</h2>
+<div class="columns">
+<div class="column" style="width:50%;">
+<div class="keep-animation">
+<div class="r-stack fig-stack">
+<p><img data-src="img/boundary-1.svg" alt="Two classes of points in the plane, blue upper right, red lower left"></p>
+<p><img data-src="img/boundary-2.svg" class="fragment" data-fragment-index="1" alt="Contours of the posterior probability, parallel straight lines"></p>
+<p><img data-src="img/boundary-3.svg" class="fragment" data-fragment-index="2" alt="The decision line where the posterior is one half and the weight vector perpendicular to it"></p>
+</div>
+</div>
+</div><div class="column" style="width:50%;">
+<div class="keep-animation">
+<div class="r-stack fig-stack">
+<p><img data-src="img/boundary3d-1.svg" alt="The same points in 3D: blue at height one, red at height zero"></p>
+<p><img data-src="img/boundary3d-2.svg" class="fragment" data-fragment-index="1" alt="The posterior as a surface over the plane: a sigmoid step along one direction, constant along the other"></p>
+<p><img data-src="img/boundary3d-3.svg" class="fragment" data-fragment-index="2" alt="The surface cut by a horizontal plane at one half, the cut is a straight line"></p>
+</div>
+</div>
+</div></div>
+<div class="keep-animation">
+<div class="capstack">
+<div class="caption-step">
+<p><span class="math inline">\(\cx \in \mathbb{R}^2\)</span>, <span class="math inline">\(\cp(\kp \mid \cx) = \csig(w_0 + w_1 x_1 + w_2 x_2)\)</span>: a <strong>surface</strong> over the plane.</p>
+</div>
+<div class="caption-step fragment" data-fragment-index="1">
+<p>A sigmoid along <span class="math inline">\(\cw\)</span>, <strong>constant</strong> across it: the contours are <strong>parallel lines</strong>.</p>
+</div>
+<div class="caption-step fragment" data-fragment-index="2">
+<p>Boundary <span class="math inline">\(\cw^\top \cbx = 0\)</span>: the surface cut at <span class="math inline">\(\frac{1}{2}\)</span>, a <strong>line</strong> (<span class="math inline">\(\mathbb{R}^D\)</span>: a <strong>hyperplane</strong>) <span class="math inline">\(\perp \cw\)</span>.</p>
+</div>
+</div>
+</div>
+<div>
+<div class="alert">
+<p>Logistic regression is a <strong>linear classifier</strong>: it can only cut the space by a hyperplane.</p>
+</div>
+</div>
+</section></section>
+<section>
+<section class="title-slide slide level1 center">
+<h1>Learning <span class="white"><span class="math inline">\(\cw\)</span></span></h1>
+
+</section>
+<section class="slide level2">
+<h2>Labels <span class="math inline">\(\pm 1\)</span>: one formula for both classes</h2>
+<div class="columns">
+<div class="column" style="width:50%;">
+<div>
+<p><span class="math display">\[
+\begin{aligned}
+\cp(\kp \mid \cx) &amp;= \csig(\cw^\top \cbx) \\
+\cp(\km \mid \cx) &amp;= \csig(-\cw^\top \cbx)
+\end{aligned}
+\]</span></p>
+</div>
+<div>
+<p><span class="math display">\[
+\Downarrow
+\]</span> <span class="math display">\[
+\boxed{\cp(\ck \mid \cx) = \csig(\ck\, \cw^\top \cbx)}
+\]</span></p>
+</div>
+</div><div class="column" style="width:50%;">
+<div>
+<p>Training set: <span class="math display">\[
+\cT = \{(\cx_1, \ck_1), \dots, (\cx_N, \ck_N)\}
+\]</span> <span class="math display">\[
+\ck_i \in \{\kp, \km\}
+\]</span></p>
+</div>
+<div>
+<div class="ask">
+<p>How to find <span class="math inline">\(\cw\)</span>? We have seen it last week.</p>
+</div>
+</div>
+</div></div>
+</section>
+<section class="slide level2">
+<h2>Maximum likelihood for <span class="math inline">\(\cw\)</span></h2>
+<div class="swap-eq">
+<div>
+<p><span class="math display">\[
+\ell(\cw) = \sum_{i=1}^{N} \ln \cp(\cx_i, \ck_i \mid \cw)
+= \sum_{i=1}^{N} \ln \cp(\ck_i \mid \cx_i, \cw) + \underbrace{\sum_{i=1}^{N} \ln \cp(\cx_i)}_{\text{does not depend on } \cw}
+\]</span></p>
+</div>
+</div>
+<div>
+<p><span class="math display">\[
+\cw^* = \arg\max_{\cw} \sum_{i=1}^{N} \ln \csig(\ck_i\, \cw^\top \cbx_i)
+= \arg\min_{\cw} \underbrace{\frac{1}{N} \sum_{i=1}^{N} \ln\big(1 + e^{-\ck_i\, \cw^\top \cbx_i}\big)}_{E(\cw)}
+\]</span></p>
+</div>
+<div>
+<div class="result">
+<p><span class="result-label">Result:</span> <span class="math inline">\(E(\cw)\)</span> is <strong>convex</strong>: one minimum, but <strong>no closed form</strong>. We need a numerical method.</p>
+</div>
+</div>
+</section>
+<section class="slide level2">
+<h2>Cross-entropy loss</h2>
+<div class="columns">
+<div class="column" style="width:56%;">
+<p><img data-src="img/ce-loss.svg" alt="Loss of one sample as a function of the signed margin, compared with the 0/1 loss"></p>
+</div><div class="column" style="width:44%;">
+<div>
+<p>Loss of one sample: <span class="math inline">\(-\ln \cp(\ck_i \mid \cx_i)\)</span></p>
+<ul>
+<li>right side, confident: loss <span class="math inline">\(\approx 0\)</span></li>
+<li>on the boundary: <span class="math inline">\(\ln 2\)</span></li>
+<li>wrong side: grows <strong>linearly</strong></li>
+</ul>
+</div>
+<div>
+<div class="alert">
+<p>A smooth, convex replacement of the 0/1 loss. We can take its <strong>gradient</strong>.</p>
+</div>
+</div>
+</div></div>
+</section>
+<section class="slide level2">
+<h2>Cross-entropy, entropy, KL divergence</h2>
+<div>
+<p>True distribution <span class="math inline">\(p\)</span>, model <span class="math inline">\(q\)</span>: <span class="math display">\[
+H(p, q) = -\sum_{\ck} p(\ck) \ln q(\ck)
+= \underbrace{-\sum_{\ck} p(\ck) \ln p(\ck)}_{\text{entropy } H(p)} + \underbrace{\sum_{\ck} p(\ck) \ln \frac{p(\ck)}{q(\ck)}}_{D_{\mathrm{KL}}(p \,\|\, q) \,\geq\, 0}
+\]</span></p>
+</div>
+<div>
+<p>One sample, true label <span class="math inline">\(\ck_i\)</span>: <span class="math inline">\(p\)</span> is <strong>one-hot</strong>, <span class="math inline">\(H(p) = 0\)</span> <span class="math display">\[
+H(p, q) = -\ln q(\ck_i) = \ln\big(1 + e^{-\ck_i\, \cw^\top \cbx_i}\big)
+\]</span></p>
+</div>
+<div>
+<div class="alert">
+<p>Minimizing cross-entropy = minimizing KL = <strong>maximizing likelihood</strong>.</p>
+</div>
+</div>
+</section>
+<section class="slide level2">
+<h2>The gradient of <span class="math inline">\(E(\cw)\)</span></h2>
+<div class="columns">
+<div class="column" style="width:52%;">
+<p><span class="math display">\[
+E(\cw) = \frac{1}{N} \sum_{i=1}^{N} \ln\big(1 + e^{-\ck_i\, \cw^\top \cbx_i}\big)
+\]</span></p>
+</div><div class="column" style="width:48%;">
+<div class="ask">
+<ol type="1">
+<li>Compute the gradient <span class="math inline">\(\nabla E(\cw)\)</span>.</li>
+<li>Which samples push the most?</li>
+</ol>
+</div>
+<p><span class="small muted">More problems like this: <a href="https://cmp.felk.cvut.cz/rpz/rpz_exercise_book.pdf" target="_blank">exercise book</a> on CourseWare.</span></p>
+</div></div>
+</section>
+<section class="slide level2 derivation">
+<h2>Derivation: the gradient</h2>
+<div>
+<p><span class="math display">\[
+\nabla E(\cw) = \frac{1}{N} \sum_{i=1}^{N} \frac{e^{-\ck_i\, \cw^\top \cbx_i}}{1 + e^{-\ck_i\, \cw^\top \cbx_i}}\, (-\ck_i\, \cbx_i)
+= -\frac{1}{N} \sum_{i=1}^{N} \csig(-\ck_i\, \cw^\top \cbx_i)\; \ck_i\, \cbx_i
+\]</span></p>
+</div>
+<div>
+<p><span class="math display">\[
+\boxed{\nabla E(\cw) = -\frac{1}{N} \sum_{i=1}^{N} \big(1 - \cp(\ck_i \mid \cx_i)\big)\, \ck_i\, \cbx_i}
+\qquad \text{badly classified samples push the most}
+\]</span></p>
+</div>
+<div>
+<p><span class="math display">\[
+\text{Hessian:}\quad
+H(\cw) = \frac{1}{N} \sum_{i=1}^{N} \cp(\kp \mid \cx_i)\, \cp(\km \mid \cx_i)\; \cbx_i \cbx_i^\top \;\succeq\; 0
+\quad\Rightarrow\quad E \text{ is convex}
+\]</span></p>
+</div>
+</section>
+<section class="slide level2">
+<h2>Gradient descent: the step size</h2>
+<div class="keep-animation">
+<div class="r-stack fig-stack low">
+<p><img data-src="img/gd-rates-1.svg" alt="Gradient descent with a too small step, many tiny steps"></p>
+<p><img data-src="img/gd-rates-2.svg" class="fragment" data-fragment-index="1" alt="Gradient descent with a good step, reaches the minimum quickly"></p>
+<p><img data-src="img/gd-rates-3.svg" class="fragment" data-fragment-index="2" alt="Gradient descent with a too large step, jumps over the minimum and diverges"></p>
+</div>
+</div>
+<div class="keep-animation">
+<div class="capstack">
+<div class="caption-step">
+<p><span class="math inline">\(\cw \leftarrow \cw - \eta\, \nabla E(\cw)\)</span>. Step <span class="math inline">\(\eta\)</span> <strong>too small</strong>: slow.</p>
+</div>
+<div class="caption-step fragment" data-fragment-index="1">
+<p><strong>Just right</strong>: a few steps to the minimum.</p>
+</div>
+<div class="caption-step fragment" data-fragment-index="2">
+<p><strong>Too large</strong>: jumps over the minimum, may <strong>diverge</strong>.</p>
+</div>
+</div>
+</div>
+</section>
+<section class="slide level2">
+<h2>Gradient descent with an adaptive step</h2>
+<div class="columns">
+<div class="column" style="width:52%;">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="" aria-label="1"></a>w <span class="op">=</span> w_init</span>
+<span id="cb4-2"><a href="" aria-label="2"></a>step_size <span class="op">=</span> <span class="fl">1.0</span></span>
+<span id="cb4-3"><a href="" aria-label="3"></a>E, g <span class="op">=</span> compute_E_and_gradient(X, k, w)</span>
+<span id="cb4-4"><a href="" aria-label="4"></a><span class="cf">while</span> <span class="kw">not</span> TERMINATION_CONDITION:</span>
+<span id="cb4-5"><a href="" aria-label="5"></a>    E_new, g_new <span class="op">=</span> compute_E_and_gradient(X, k, w <span class="op">-</span> step_size <span class="op">*</span> g)</span>
+<span id="cb4-6"><a href="" aria-label="6"></a>    <span class="cf">if</span> E_new <span class="op">&lt;</span> E:        <span class="co"># success: accept, larger step</span></span>
+<span id="cb4-7"><a href="" aria-label="7"></a>        w <span class="op">-=</span> step_size <span class="op">*</span> g</span>
+<span id="cb4-8"><a href="" aria-label="8"></a>        E, g <span class="op">=</span> E_new, g_new</span>
+<span id="cb4-9"><a href="" aria-label="9"></a>        step_size <span class="op">*=</span> <span class="dv">2</span></span>
+<span id="cb4-10"><a href="" aria-label="10"></a>    <span class="cf">else</span>:                <span class="co"># failure: smaller step</span></span>
+<span id="cb4-11"><a href="" aria-label="11"></a>        step_size <span class="op">/=</span> <span class="dv">2</span></span>
+<span id="cb4-12"><a href="" aria-label="12"></a><span class="cf">return</span> w</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div><div class="column" style="width:48%;">
+<div>
+<ul>
+<li>accept the step only if <span class="math inline">\(E\)</span> <strong>decreases</strong></li>
+<li>success: <strong>double</strong> the step</li>
+<li>failure: <strong>halve</strong> it</li>
+<li>stop: <span class="math inline">\(\|\cw_\text{new} - \cw_\text{prev}\| \leq \varepsilon\)</span></li>
+</ul>
+</div>
+<div>
+<div class="alert">
+<p>The gradient is normalized by <span class="math inline">\(\frac{1}{N}\)</span>: the step size does not depend on the number of samples.</p>
+</div>
+</div>
+</div></div>
+</section>
+<section class="slide level2">
+<h2>Gradient descent in action</h2>
+<img data-src="img/gd-path.svg" class="r-stretch" alt="Left: contours of the loss in the plane of bias and slope with the path from the start to the minimum. Right: loss and step size per iteration">
+<p><span class="small muted">The 1D data from the interactive slide, start at <span class="math inline">\(\cw = (-7, -8)\)</span> as in the assignment.</span></p>
+</section>
+<section class="slide level2">
+<h2>Separable data: ML is overconfident</h2>
+<div class="keep-animation">
+<div class="keep-animation">
+<div class="r-stack fig-stack">
+<p><img data-src="img/overconfident-1.svg" alt="Separable data, sigmoids getting steeper and steeper towards a step"></p>
+<p><img data-src="img/overconfident-2.svg" class="fragment" data-fragment-index="1" alt="Twelve sigmoids drawn from the posterior over the weights, in grey"></p>
+<p><img data-src="img/overconfident-3.svg" class="fragment" data-fragment-index="2" alt="The Bayesian prediction, the average of the sigmoids, dash-dotted"></p>
+</div>
+</div>
+<div class="keep-animation">
+<div class="capstack">
+<div class="caption-step">
+<p>Separable data: every step of gradient descent makes <span class="math inline">\(\|\cw\|\)</span> larger, <span class="math inline">\(E \to 0\)</span>. The limit is a <strong>step</strong>.</p>
+</div>
+<div class="caption-step fragment" data-fragment-index="1">
+<p>With a prior <span class="math inline">\(\cp(\cw)\)</span>: the posterior <span class="math inline">\(\cp(\cw \mid \cT)\)</span>, models drawn from it.</p>
+</div>
+<div class="caption-step fragment" data-fragment-index="2">
+<p><span class="bayes">Bayes</span> averages them (as in Lab 5): <strong>uncertain</strong> between the classes.</p>
+</div>
+</div>
+</div>
+</div>
+</section></section>
+<section>
+<section class="title-slide slide level1 center">
+<h1>Generative vs <span class="white">discriminative</span></h1>
+
+</section>
+<section class="slide level2">
+<h2>When is the log odds linear?</h2>
+<div class="columns">
+<div class="column" style="width:50%;">
+<p>Two normal classes, the <strong>same</strong> <span class="math inline">\(\Sigma\)</span>: <span class="math display">\[
+\ca(\cx) = \ln \frac{\cp(\cx \mid \cone)\, \cp(\cone)}{\cp(\cx \mid \ctwo)\, \cp(\ctwo)}
+\]</span></p>
+</div><div class="column" style="width:50%;">
+<div>
+<p>The terms <span class="math inline">\(\cx^\top \Sigma^{-1} \cx\)</span> <strong>cancel</strong>: <span class="math display">\[
+\ca(\cx) = \underbrace{(\mu_1 - \mu_2)^\top \Sigma^{-1}}_{\mathbf{w}_1^\top} \cx + w_0
+\]</span></p>
+</div>
+</div></div>
+<div class="keep-animation">
+<div class="r-stack fig-stack xlow">
+<p><img data-src="img/when-linear-1.svg" class="fragment" data-fragment-index="2" alt="Equal variances: the logistic regression matches the true posterior"></p>
+<p><img data-src="img/when-linear-2.svg" class="fragment" data-fragment-index="3" alt="Same mean, different variances: the true posterior is a bump, the logistic regression is almost flat"></p>
+</div>
+</div>
+<div class="keep-animation">
+<div class="capstack">
+<div class="caption-step fragment" data-fragment-index="2">
+<p>Equal variances: logistic regression is the <strong>exact</strong> model.</p>
+</div>
+<div class="caption-step fragment" data-fragment-index="3">
+<p>Same mean, different variances: a <strong>quadratic</strong> log odds, logistic regression <strong>fails</strong>.</p>
+</div>
+</div>
+</div>
+</section>
+<section class="slide level2">
+<h2>Number of parameters</h2>
+<div class="columns">
+<div class="column" style="width:50%;">
+<p>Two classes, <span class="math inline">\(\cx \in \mathbb{R}^D\)</span>:</p>
+<ul>
+<li><strong>generative</strong>: two normal densities with a <strong>shared</strong> covariance, priors</li>
+<li><strong>logistic regression</strong>: <span class="math inline">\(\cw\)</span></li>
+</ul>
+</div><div class="column" style="width:50%;">
+<div class="ask">
+<ol type="1">
+<li>How many parameters does each model have?</li>
+<li><span class="math inline">\(D = 2\)</span>? <span class="math inline">\(D = 784\)</span> (MNIST, <span class="math inline">\(28 \times 28\)</span>)?</li>
+</ol>
+</div>
+<p><span class="small muted">More problems like this: <a href="https://cmp.felk.cvut.cz/rpz/rpz_exercise_book.pdf" target="_blank">exercise book</a> on CourseWare.</span></p>
+</div></div>
+</section>
+<section class="slide level2 derivation">
+<h2>Derivation: number of parameters</h2>
+<div>
+<p><span class="math display">\[
+\text{generative:}\quad
+\underbrace{2D}_{\mu_1, \mu_2}
++ \underbrace{\tfrac{D(D+1)}{2}}_{\Sigma}
++ \underbrace{1}_{\cp(\cone)}
+= O(D^2)
+\qquad\qquad
+\text{logistic regression:}\quad
+\underbrace{D + 1}_{\cw} = O(D)
+\]</span></p>
+</div>
+<div>
+<div class="gt">
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th><span class="math inline">\(D\)</span></th>
+<th>generative</th>
+<th>logistic regression</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>2</td>
+<td>8</td>
+<td>3</td>
+</tr>
+<tr class="even">
+<td>784</td>
+<td>309 289</td>
+<td>785</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div>
+<div class="alert">
+<p>Fewer parameters: fewer data needed. But if the generative model is <strong>right</strong>, it uses the data better.</p>
+</div>
+</div>
+</section>
+<section class="slide level2">
+<h2>Interpretability</h2>
+<div class="columns">
+<div class="column" style="width:52%;">
+<p><span class="math display">\[
+\ca(\cx) = w_0 + \sum_{j=1}^{D} w_j x_j
+\]</span></p>
+<div>
+<ul>
+<li><span class="math inline">\(|w_j|\)</span> large: feature <span class="math inline">\(x_j\)</span> is <strong>important</strong></li>
+<li>sign of <span class="math inline">\(w_j\)</span>: towards which class</li>
+<li><span class="math inline">\(x_j\)</span> up by 1: the odds multiplied by <span class="math inline">\(e^{w_j}\)</span></li>
+</ul>
+</div>
+<div>
+<div class="alert">
+<p>Compare <span class="math inline">\(|w_j|\)</span> only for <strong>normalized</strong> features (same scale).</p>
+</div>
+</div>
+</div><div class="column" style="width:48%;">
+<div>
+<div class="gt">
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th>feature <span class="math inline">\(x_j\)</span></th>
+<th><span class="math inline">\(w_j\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>body temperature</td>
+<td>2.1</td>
+</tr>
+<tr class="even">
+<td>cough</td>
+<td>1.4</td>
+</tr>
+<tr class="odd">
+<td>vaccinated</td>
+<td>-1.8</td>
+</tr>
+<tr class="even">
+<td>shoe size</td>
+<td>0.02</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><span class="small muted">A made-up example: flu (<span class="math inline">\(\kp\)</span>) or not (<span class="math inline">\(\km\)</span>).</span></p>
+</div>
+</div></div>
+</section></section>
+<section>
+<section class="title-slide slide level1 center">
+<h1>Beyond <span class="white">two classes and lines</span></h1>
+
+</section>
+<section class="slide level2">
+<h2>More classes: softmax</h2>
+<div class="columns">
+<div class="column" style="width:50%;">
+<p>One <span class="math inline">\(\cw_\ck\)</span> per class: <span class="math display">\[
+\cp(\ck \mid \cx) = \frac{e^{\cw_\ck^\top \cbx}}{\sum_{m=1}^{K} e^{\cw_m^\top \cbx}}
+\]</span></p>
+<div>
+<div class="ask">
+<p>Show that for <span class="math inline">\(K = 2\)</span> it is the sigmoid.</p>
+</div>
+</div>
+<div>
+<p><span class="math display">\[
+\cp(1 \mid \cx) = \csig\big((\cw_1 - \cw_2)^\top \cbx\big)
+\]</span></p>
+</div>
+</div><div class="column" style="width:50%;">
+<div>
+<div class="gt softmax">
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th><span class="math inline">\(\cw_\ck^\top \cbx\)</span></th>
+<th><span class="math inline">\(e^{\cw_\ck^\top \cbx}\)</span></th>
+<th><span class="math inline">\(\cp(\ck \mid \cx)\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1.3</td>
+<td>3.7</td>
+<td>0.02</td>
+</tr>
+<tr class="even">
+<td>5.1</td>
+<td>164.0</td>
+<td><span class="best">0.90</span></td>
+</tr>
+<tr class="odd">
+<td>2.2</td>
+<td>9.0</td>
+<td>0.05</td>
+</tr>
+<tr class="even">
+<td>0.7</td>
+<td>2.0</td>
+<td>0.01</td>
+</tr>
+<tr class="odd">
+<td>1.1</td>
+<td>3.0</td>
+<td>0.02</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><span class="small muted">Exponentiate, normalize to sum 1.</span></p>
+</div>
+</div></div>
+</section>
+<section class="slide level2">
+<h2>Only a linear boundary?</h2>
+<img data-src="img/lifting-0.svg" class="r-stretch" alt="One dimensional data with the classes alternating, a single sigmoid cannot separate them">
+<div>
+<div class="ask">
+<p>The classes alternate. What can we do with one sigmoid?</p>
+</div>
+</div>
+</section>
+<section class="slide level2">
+<h2>Dimensionality lifting</h2>
+<div class="keep-animation">
+<div class="r-stack fig-stack">
+<p><img data-src="img/lifting-1.svg" alt="Seven arctan features with different shifts"></p>
+<p><img data-src="img/lifting-2.svg" class="fragment" data-fragment-index="1" alt="The features multiplied by learned weights"></p>
+<p><img data-src="img/lifting-3.svg" class="fragment" data-fragment-index="2" alt="Their sum, the log odds, crosses zero four times"></p>
+<p><img data-src="img/lifting-4.svg" class="fragment" data-fragment-index="3" alt="The posterior probability separates the alternating classes"></p>
+</div>
+</div>
+<div class="keep-animation">
+<div class="capstack">
+<div class="caption-step">
+<p><strong>Fixed</strong> features <span class="math inline">\(\mathbf{f}(x) = (f_1(x), \dots, f_7(x)) \in \mathbb{R}^7\)</span>: lift <span class="math inline">\(x\)</span> into 7 dimensions.</p>
+</div>
+<div class="caption-step fragment" data-fragment-index="1">
+<p>Logistic regression in <span class="math inline">\(\mathbb{R}^7\)</span> learns the weights <span class="math inline">\(w_j\)</span>.</p>
+</div>
+<div class="caption-step fragment" data-fragment-index="2">
+<p><span class="math inline">\(\ca(x) = \cw^\top \mathbf{f}(x)\)</span>: <strong>linear in <span class="math inline">\(\mathbf{f}\)</span></strong>, nonlinear in <span class="math inline">\(x\)</span>.</p>
+</div>
+<div class="caption-step fragment" data-fragment-index="3">
+<p>Three thresholds in <span class="math inline">\(x\)</span>: the <strong>bonus task</strong> (after Prince, 2012).</p>
+</div>
+</div>
+</div>
+</section>
+<section class="slide level2">
+<h2>Towards neural networks</h2>
+<div class="keep-animation">
+<div class="r-stack fig-stack low">
+<p><img data-src="img/network-1.svg" alt="Logistic regression drawn as one neuron: inputs, weighted sum, sigmoid, probability"></p>
+<p><img data-src="img/network-2.svg" class="fragment" data-fragment-index="1" alt="A hidden layer of features before the neuron: fixed for lifting, learned in a neural network"></p>
+</div>
+</div>
+<div class="keep-animation">
+<div class="capstack">
+<div class="caption-step">
+<p>Logistic regression: a weighted sum and a sigmoid, <strong>one neuron</strong>.</p>
+</div>
+<div class="caption-step fragment" data-fragment-index="1">
+<p>Features in a <strong>hidden layer</strong>: fixed (lifting) or <strong>learned</strong> (neural network, Lab 12).</p>
+</div>
+</div>
+</div>
+</section>
+<section class="slide level2">
+<h2>High dimensions, many samples</h2>
+<div class="cards">
+<div class="card">
+<p><span class="card-title">Large <span class="math inline">\(D\)</span> (e.g. <span class="math inline">\(10^9\)</span>)</span></p>
+<ul>
+<li>slow evaluation</li>
+<li>slow learning</li>
+<li><strong>GPUs</strong></li>
+</ul>
+</div>
+<div class="card">
+<p><span class="card-title">Large <span class="math inline">\(N\)</span></span></p>
+<ul>
+<li>full gradient: slow</li>
+<li><strong>SGD</strong>: gradient from a random <strong>mini-batch</strong></li>
+</ul>
+</div>
+<div class="card">
+<p><span class="card-title">Few good features</span></p>
+<ul>
+<li><strong>incremental</strong>: add features one at a time</li>
+<li><span class="math inline">\(\ca(\cx) = \sum_{j=1}^{M} w_j f_j(\cx)\)</span>, <span class="math inline">\(M \ll D\)</span></li>
+<li><strong>AdaBoost</strong> (Lab 10)</li>
+</ul>
+</div>
+</div>
+</section>
+<section class="slide level2">
+<h2>Regularization</h2>
+<div class="columns">
+<div class="column" style="width:40%;">
+<p><span class="math display">\[
+E_\lambda(\cw) = E(\cw) + \lambda \|\cw\|_2^2
+\]</span></p>
+<div>
+<ul>
+<li><strong>L2</strong> (ridge): MAP, a <strong>normal prior</strong> on <span class="math inline">\(\cw\)</span> (Lab 5)</li>
+<li><strong>L1</strong> (lasso), <span class="math inline">\(\lambda \|\cw\|_1\)</span>: a <strong>sparse</strong> <span class="math inline">\(\cw\)</span></li>
+<li><strong>weight decay</strong> in neural nets</li>
+</ul>
+</div>
+<div>
+<div class="alert">
+<p>Separable data: <span class="math inline">\(\|\cw\|\)</span> stays <strong>finite</strong>.</p>
+</div>
+</div>
+</div><div class="column" style="width:60%;">
+<div>
+<p><img data-src="img/regularization.svg" alt="L1 constraint as a diamond touching the loss contours at a corner, L2 constraint as a circle touching them elsewhere"></p>
+</div>
+</div></div>
+</section>
+<section class="slide level2">
+<h2>Regularization on MNIST: the weights</h2>
+<div class="weights">
+<div>
+<p><span class="wlabel">no regularization</span> <img data-src="img/weights-noreg.png" alt="Weight image without regularization: noisy pixels everywhere"></p>
+</div>
+<div>
+<p><span class="wlabel">L2</span> <img data-src="img/weights-l2.png" alt="Weight image with L2 regularization: smooth, shows the shape of digits"></p>
+</div>
+<div>
+<p><span class="wlabel">L1</span> <img data-src="img/weights-l1.png" alt="Weight image with L1 regularization: only a few pixels are nonzero"></p>
+</div>
+</div>
+<div>
+<div class="alert">
+<p>How to choose <span class="math inline">\(\lambda\)</span>, the features, the model? <strong>Validation</strong> (cross-validation from Lab 4).</p>
+</div>
+</div>
+<p><span class="small muted">One weight per pixel (784), from a solution of the assignment in previous years.</span></p>
+</section></section>
+<section>
+<section class="title-slide slide level1 center">
+<h1>The <span class="white">assignment</span></h1>
+
+</section>
+<section class="slide level2">
+<h2>Assignment: logistic regression</h2>
+<div class="cards">
+<div class="card">
+<p><span class="card-title">Part 1: letters A and C</span></p>
+<ul>
+<li>1D feature: left minus right</li>
+<li>loss, gradient, descent</li>
+<li>test error about <strong>7 %</strong></li>
+</ul>
+</div>
+<div class="card">
+<p><span class="card-title">Part 2: MNIST</span></p>
+<ul>
+<li>pixels: <span class="math inline">\(D = 784\)</span></li>
+<li>the same functions</li>
+<li>the <strong>weights</strong> as an image</li>
+</ul>
+</div>
+<div class="card">
+<p><span class="card-title">Bonus: lifting</span></p>
+<ul>
+<li><span class="math inline">\(\arctan\)</span> features (Prince)</li>
+<li>nonlinear boundary in 1D</li>
+<li>labels <strong><span class="math inline">\(\pm 1\)</span></strong>, not 0, 1</li>
+</ul>
+</div>
+</div>
+<div>
+<div class="alert">
+<p>Add the <strong>1</strong> for the bias, normalize the test data with the <strong>training</strong> mean and variance, and divide the gradient by <span class="math inline">\(N\)</span>.</p>
+</div>
+</div>
+</section>
+<section class="slide level2">
+<h2>Take-away for the lab</h2>
+<div class="check">
+<ul>
+<li><strong>Discriminative</strong>: model <span class="math inline">\(\cp(\ck \mid \cx)\)</span> directly, no <span class="math inline">\(\cp(\cx \mid \ck)\)</span></li>
+<li>Linear <strong>log odds</strong> <span class="math inline">\(\iff\)</span> <span class="math inline">\(\cp(\ck \mid \cx) = \csig(\ck\, \cw^\top \cbx)\)</span>, a linear boundary</li>
+<li>ML <span class="math inline">\(=\)</span> min of the <strong>cross-entropy</strong>: convex, solved by <strong>gradient descent</strong></li>
+<li>Separable data: <span class="math inline">\(\|\cw\| \to \infty\)</span>, use a prior (<strong>regularization</strong>) or Bayes</li>
+<li><strong>Softmax</strong> for more classes, <strong>lifting</strong> for nonlinear boundaries: towards neural networks</li>
+</ul>
+</div>
+</section>
+<section class="slide level2 the-end" data-background-image="img/thats-all-folks.gif" data-background-size="contain" data-background-color="#000000">
+<h2></h2>
+
+</section></section>
+    </div>
+  <div class="quarto-auto-generated-content" style="display: none;">
+<div class="footer footer-default">
+
+</div>
+</div></div>
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script>
+  <script src="index_files/libs/revealjs/dist/reveal.js"></script>
+  <!-- reveal.js plugins -->
+  <script src="index_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
+  <script src="index_files/libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
+  <script src="index_files/libs/revealjs/plugin/reveal-menu/menu.js"></script>
+  <script src="index_files/libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
+  <script src="index_files/libs/revealjs/plugin/reveal-chalkboard/plugin.js"></script>
+  <script src="index_files/libs/revealjs/plugin/quarto-support/support.js"></script>
+  
+
+  <script src="index_files/libs/revealjs/plugin/notes/notes.js"></script>
+  <script src="index_files/libs/revealjs/plugin/search/search.js"></script>
+  <script src="index_files/libs/revealjs/plugin/zoom/zoom.js"></script>
+  <script src="index_files/libs/revealjs/plugin/math/math.js"></script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://revealjs.com/config/
+      Reveal.initialize({
+'controlsAuto': false,
+'previewLinksAuto': false,
+'pdfSeparateFragments': true,
+'autoAnimateEasing': "ease",
+'autoAnimateDuration': 1,
+'autoAnimateUnmatched': true,
+'jumpToSlide': true,
+'pdfMaxPagesPerSlide': 1,
+'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"<i class=\"fas fa-gear\"></i>","content":"<ul class=\"slide-menu-items\">\n<li class=\"slide-tool-item active\" data-item=\"0\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\"><kbd>f</kbd> Fullscreen</a></li>\n<li class=\"slide-tool-item\" data-item=\"1\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\"><kbd>s</kbd> Speaker View</a></li>\n<li class=\"slide-tool-item\" data-item=\"2\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>o</kbd> Slide Overview</a></li>\n<li class=\"slide-tool-item\" data-item=\"3\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.togglePdfExport(event)\"><kbd>e</kbd> PDF Export Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"4\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleScrollView(event)\"><kbd>r</kbd> Scroll View Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"5\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleChalkboard(event)\"><kbd>b</kbd> Toggle Chalkboard</a></li>\n<li class=\"slide-tool-item\" data-item=\"6\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleNotesCanvas(event)\"><kbd>c</kbd> Toggle Notes Canvas</a></li>\n<li class=\"slide-tool-item\" data-item=\"7\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.downloadDrawings(event)\"><kbd>d</kbd> Download Drawings</a></li>\n<li class=\"slide-tool-item\" data-item=\"8\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\"><kbd>?</kbd> Keyboard Help</a></li>\n</ul>"}],"openButton":true},
+'chalkboard': {"buttons":false},
+'smaller': false,
+ 
+        // Display controls in the bottom right corner
+        controls: false,
+
+        // Help the user learn the controls by providing hints, for example by
+        // bouncing the down arrow when they first encounter a vertical slide
+        controlsTutorial: false,
+
+        // Determines where controls appear, "edges" or "bottom-right"
+        controlsLayout: 'edges',
+
+        // Visibility rule for backwards navigation arrows; "faded", "hidden"
+        // or "visible"
+        controlsBackArrows: 'faded',
+
+        // Display a presentation progress bar
+        progress: true,
+
+        // Display the page number of the current slide
+        slideNumber: 'c',
+
+        // 'all', 'print', or 'speaker'
+        showSlideNumber: 'all',
+
+        // Add the current slide number to the URL hash so that reloading the
+        // page/copying the URL will return you to the same slide
+        hash: true,
+
+        // Start with 1 for the hash rather than 0
+        hashOneBasedIndex: false,
+
+        // Flags if we should monitor the hash and change slides accordingly
+        respondToHashChanges: true,
+
+        // Push each slide change to the browser history
+        history: true,
+
+        // Enable keyboard shortcuts for navigation
+        keyboard: true,
+
+        // Enable the slide overview mode
+        overview: true,
+
+        // Disables the default reveal.js slide layout (scaling and centering)
+        // so that you can use custom CSS layout
+        disableLayout: false,
+
+        // Vertical centering of slides
+        center: false,
+
+        // Enables touch navigation on devices with touch input
+        touch: true,
+
+        // Loop the presentation
+        loop: false,
+
+        // Change the presentation direction to be RTL
+        rtl: false,
+
+        // see https://revealjs.com/vertical-slides/#navigation-mode
+        navigationMode: 'linear',
+
+        // Randomizes the order of slides each time the presentation loads
+        shuffle: false,
+
+        // Turns fragments on and off globally
+        fragments: true,
+
+        // Flags whether to include the current fragment in the URL,
+        // so that reloading brings you to the same fragment position
+        fragmentInURL: false,
+
+        // Flags if the presentation is running in an embedded mode,
+        // i.e. contained within a limited portion of the screen
+        embedded: false,
+
+        // Flags if we should show a help overlay when the questionmark
+        // key is pressed
+        help: true,
+
+        // Flags if it should be possible to pause the presentation (blackout)
+        pause: true,
+
+        // Flags if speaker notes should be visible to all viewers
+        showNotes: false,
+
+        // Global override for autoplaying embedded media (null/true/false)
+        autoPlayMedia: null,
+
+        // Global override for preloading lazy-loaded iframes (null/true/false)
+        preloadIframes: null,
+
+        // Number of milliseconds between automatically proceeding to the
+        // next slide, disabled when set to 0, this value can be overwritten
+        // by using a data-autoslide attribute on your slides
+        autoSlide: 0,
+
+        // Stop auto-sliding after user input
+        autoSlideStoppable: true,
+
+        // Use this method for navigation when auto-sliding
+        autoSlideMethod: null,
+
+        // Specify the average time in seconds that you think you will spend
+        // presenting each slide. This is used to show a pacing timer in the
+        // speaker view
+        defaultTiming: null,
+
+        // Enable slide navigation via mouse wheel
+        mouseWheel: false,
+
+        // The display mode that will be used to show slides
+        display: 'block',
+
+        // Hide cursor if inactive
+        hideInactiveCursor: true,
+
+        // Time before the cursor is hidden (in ms)
+        hideCursorTime: 5000,
+
+        // Opens links in an iframe preview overlay
+        previewLinks: false,
+
+        // Transition style (none/fade/slide/convex/concave/zoom)
+        transition: 'slide',
+
+        // Transition speed (default/fast/slow)
+        transitionSpeed: 'default',
+
+        // Transition style for full page slide backgrounds
+        // (none/fade/slide/convex/concave/zoom)
+        backgroundTransition: 'fade',
+
+        // Number of slides away from the current that are visible
+        viewDistance: 3,
+
+        // Number of slides away from the current that are visible on mobile
+        // devices. It is advisable to set this to a lower number than
+        // viewDistance in order to save resources.
+        mobileViewDistance: 2,
+
+        // The "normal" size of the presentation, aspect ratio will be preserved
+        // when the presentation is scaled to fit different resolutions. Can be
+        // specified using percentage units.
+        width: 1920,
+
+        height: 1080,
+
+        // Factor of the display size that should remain empty around the content
+        margin: 0.1,
+
+        math: {
+          mathjax: 'https://cdn.jsdelivr.net/npm/mathjax@2.7.9/MathJax.js',
+          config: 'TeX-AMS_HTML-full',
+          tex2jax: {
+            inlineMath: [['\\(','\\)']],
+            displayMath: [['\\[','\\]']],
+            balanceBraces: true,
+            processEscapes: false,
+            processRefs: true,
+            processEnvironments: true,
+            preview: 'TeX',
+            skipTags: ['script','noscript','style','textarea','pre','code'],
+            ignoreClass: 'tex2jax_ignore',
+            processClass: 'tex2jax_process'
+          },
+        },
+
+        // reveal.js plugins
+        plugins: [QuartoLineHighlight, PdfExport, RevealMenu, RevealChalkboard, QuartoSupport,
+
+          RevealMath,
+          RevealNotes,
+          RevealSearch,
+          RevealZoom
+        ]
+      });
+    </script>
+    <script>
+    // Titulní slide a sekční slidy (# Nadpis) dostanou tmavé pozadí jako v původních
+    // RPZ prezentacích. Nastavuje se přes data-background-color, aby reveal.js
+    // správně přepnul .has-dark-background (barva textu, schování mátového pruhu).
+    (function () {
+      const DARK = "#202729";
+      function init() {
+        if (!(window.Reveal && Reveal.isReady && Reveal.isReady())) return setTimeout(init, 50);
+        document.querySelectorAll("section.quarto-title-block, section.title-slide.level1").forEach(s => {
+          if (!s.hasAttribute("data-background-color") && !s.hasAttribute("data-background-image")) {
+            s.setAttribute("data-background-color", DARK);
+          }
+        });
+        Reveal.sync();
+      }
+      init();
+    })();
+    </script>
+    <script>
+    // Zvýrazňování prvků podle aktuálního fragmentu.
+    //
+    // Fragment může mít atributy s CSS selektory (hledá se v rámci aktuálního slidu):
+    //   data-hl=".pig"        prvky, které se zvýrazní (třída .hl)
+    //   data-given=".pen-g"   podmínka, zobrazí se normálně (třída .given)
+    // Dokud je aktivní takový fragment, slide má třídu .hl-active a ostatní prvky
+    // se mohou ztlumit (viz CSS prezentace). Fragment bez těchto atributů zvýraznění zruší.
+    (function () {
+      function apply() {
+        const slide = Reveal.getCurrentSlide();
+        if (!slide) return;
+        slide.querySelectorAll(".hl, .given").forEach(el => el.classList.remove("hl", "given"));
+
+        let current = null;
+        let currentIndex = -1;
+        slide.querySelectorAll(".fragment.visible").forEach(f => {
+          const i = Number(f.getAttribute("data-fragment-index"));
+          if (i >= currentIndex) { currentIndex = i; current = f; }
+        });
+
+        const active = current && (current.dataset.hl || current.dataset.given);
+        slide.classList.toggle("hl-active", Boolean(active));
+        if (!active) return;
+
+        const mark = (selector, cls) => {
+          if (selector) slide.querySelectorAll(selector).forEach(el => el.classList.add(cls));
+        };
+        mark(current.dataset.given, "given");
+        mark(current.dataset.hl, "hl");
+      }
+
+      function init() {
+        if (!(window.Reveal && Reveal.isReady && Reveal.isReady())) return setTimeout(init, 50);
+        ["fragmentshown", "fragmenthidden", "slidechanged"].forEach(ev => Reveal.on(ev, apply));
+        apply();
+      }
+      init();
+    })();
+    </script>
+    <script type="ojs-module-contents">
+    eyJjb250ZW50cyI6W3sibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtMSIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6InZpZXdvZiB3MEwgPSBJbnB1dHMucmFuZ2UoWy00LCA0XSwge3ZhbHVlOiAwLCBzdGVwOiAwLjA1LCBsYWJlbDogXCJ34oKAXCJ9KVxudmlld29mIHcxTCA9IElucHV0cy5yYW5nZShbLTQsIDRdLCB7dmFsdWU6IC0xLCBzdGVwOiAwLjA1LCBsYWJlbDogXCJ34oKBXCJ9KVxuLy8gViBQREYgKD9wcmludC1wZGYpIHbFoWVjaG5vIHphcG51dMOpLCBqaW5hayBzZSBuYSBzdHLDoW5jZSB1a8Ohxb7DrSBqZW4gYm9keVxudmlld29mIHNob3dMUiA9IElucHV0cy5jaGVja2JveChbXCJwKCsxIHwgeClcIiwgXCJmaXQgb2YgZWFjaCBzYW1wbGVcIiwgXCJNTCBzb2x1dGlvblwiXSwge3ZhbHVlOiBsb2NhdGlvbi5zZWFyY2guaW5jbHVkZXMoXCJwcmludC1wZGZcIikgPyBbXCJwKCsxIHwgeClcIiwgXCJmaXQgb2YgZWFjaCBzYW1wbGVcIiwgXCJNTCBzb2x1dGlvblwiXSA6IFtdfSlcbiJ9LHsibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtMiIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6Imh0bWxgPGRpdiBjbGFzcz1cInRyeS12YWxzXCI+XG48ZGl2Pk4gPSAke3B0c0xSLmxlbmd0aH0gc2FtcGxlczwvZGl2PlxuPGRpdj5FKHcpID0gPGI+JHtsb3NzTFIodzBMLCB3MUwpLnRvRml4ZWQoMyl9PC9iPjwvZGl2PlxuPGRpdj5lcnJvcnM6IDxiPiR7ZXJyTFIodzBMLCB3MUwpfTwvYj48L2Rpdj5cbiR7c2hvd0xSLmluY2x1ZGVzKFwiTUwgc29sdXRpb25cIikgPyBodG1sYDxkaXYgY2xhc3M9XCJ0cnktbWxcIj5NTDogd+KCgCA9ICR7d01MWzBdLnRvRml4ZWQoMil9LCB34oKBID0gJHt3TUxbMV0udG9GaXhlZCgyKX08L2Rpdj5cbjxkaXYgY2xhc3M9XCJ0cnktbWxcIj5FKHcpID0gJHtsb3NzTFIod01MWzBdLCB3TUxbMV0pLnRvRml4ZWQoMyl9LCBlcnJvcnM6ICR7ZXJyTFIod01MWzBdLCB3TUxbMV0pfTwvZGl2PmAgOiBcIlwifVxuPC9kaXY+YFxuIn0seyJtZXRob2ROYW1lIjoiaW50ZXJwcmV0IiwiY2VsbE5hbWUiOiJvanMtY2VsbC0zIiwiaW5saW5lIjpmYWxzZSwic291cmNlIjoiLy8gc3Rlam7DoSBkYXRhIGpha28gdiBmaWd1cmVzLnB5IChYX1BPUywgWF9ORUcpXG54UG9zID0gWy0xLjI1LCAwLjIzLCAwLjQ1LCAxLjE2LCAxLjQ4LCAxLjU5LCAxLjY4LCAxLjg1LCAxLjk1LCAyLjMxLCAyLjM1LCAyLjY1LCAyLjgsIDMuMDhdXG54TmVnID0gWy0yLjczLCAtMi42LCAtMS45MSwgLTEuODYsIC0xLjgyLCAtMS41OCwgLTEuMDMsIC0wLjkyLCAtMC43MiwgLTAuNjQsIDAuMjcsIDAuMjksIDAuMzgsIDAuOF1cbnB0c0xSID0geFBvcy5tYXAoeCA9PiAoe3gsIGs6IDF9KSkuY29uY2F0KHhOZWcubWFwKHggPT4gKHt4LCBrOiAtMX0pKSlcbnNpZ20gPSB1ID0+IDEgLyAoMSArIE1hdGguZXhwKC11KSlcbmxvc3NMUiA9IChhLCBiKSA9PiBkMy5tZWFuKHB0c0xSLCBkID0+IE1hdGgubG9nMXAoTWF0aC5leHAoLWQuayAqIChhICsgYiAqIGQueCkpKSlcbmVyckxSID0gKGEsIGIpID0+IHB0c0xSLmZpbHRlcihkID0+IGQuayAqIChhICsgYiAqIGQueCkgPD0gMCkubGVuZ3RoXG53TUwgPSBbLTAuNjA4LCAxLjcxOV1cbnhzTFIgPSBkMy5yYW5nZSgtMy41LCAzLjUwMSwgMC4wMilcbnNob3dQID0gc2hvd0xSLmluY2x1ZGVzKFwicCgrMSB8IHgpXCIpXG5zaG93Rml0ID0gc2hvd0xSLmluY2x1ZGVzKFwiZml0IG9mIGVhY2ggc2FtcGxlXCIpXG5QbG90LnBsb3Qoe1xuICB3aWR0aDogMTMwMCwgaGVpZ2h0OiA3MDAsIG1hcmdpbkxlZnQ6IDgwLCBtYXJnaW5Ub3A6IDQwLCBtYXJnaW5Cb3R0b206IDYwLFxuICBzdHlsZToge2ZvbnRTaXplOiBcIjIycHhcIn0sXG4gIHg6IHtsYWJlbDogXCJ4XCIsIGRvbWFpbjogWy0zLjUsIDMuNV19LFxuICB5OiB7bGFiZWw6IFwicCgrMSB8IHgpXCIsIGRvbWFpbjogWy0wLjA1LCAxLjA1XSwgZ3JpZDogdHJ1ZSwgdGlja3M6IFswLCAwLjUsIDFdfSxcbiAgbWFya3M6IFtcbiAgICBzaG93TFIuaW5jbHVkZXMoXCJNTCBzb2x1dGlvblwiKSA/IFBsb3QubGluZSh4c0xSLCB7eDogZCA9PiBkLCB5OiBkID0+IHNpZ20od01MWzBdICsgd01MWzFdICogZCksIHN0cm9rZTogXCIjNEU4RjNBXCIsIHN0cm9rZVdpZHRoOiAzLCBzdHJva2VEYXNoYXJyYXk6IFwiOCA2XCIsIHN0cm9rZU9wYWNpdHk6IDAuNn0pIDogbnVsbCxcbiAgICBzaG93UCA/IFBsb3QubGluZSh4c0xSLCB7eDogZCA9PiBkLCB5OiBkID0+IHNpZ20odzBMICsgdzFMICogZCksIHN0cm9rZTogXCIjNEU4RjNBXCIsIHN0cm9rZVdpZHRoOiA1fSkgOiBudWxsLFxuICAgIHNob3dQICYmIE1hdGguYWJzKHcxTCkgPiAwLjAxICYmIE1hdGguYWJzKHcwTCAvIHcxTCkgPCAzLjUgPyBQbG90LnJ1bGVYKFstdzBMIC8gdzFMXSwge3N0cm9rZTogXCIjMjAyNzI5XCIsIHN0cm9rZVdpZHRoOiAzfSkgOiBudWxsLFxuICAgIHNob3dGaXQgPyBQbG90LnJ1bGVYKHB0c0xSLCB7eDogXCJ4XCIsIHkxOiBkID0+IGQuayA+IDAgPyAxIDogMCwgeTI6IGQgPT4gc2lnbSh3MEwgKyB3MUwgKiBkLngpLCBzdHJva2U6IGQgPT4gZC5rID4gMCA/IFwiIzNDN0REOVwiIDogXCIjQzAzOTJCXCIsIHN0cm9rZVdpZHRoOiA0LCBzdHJva2VPcGFjaXR5OiAwLjU1fSkgOiBudWxsLFxuICAgIFBsb3QuZG90KHB0c0xSLCB7eDogXCJ4XCIsIHk6IGQgPT4gZC5rID4gMCA/IDEgOiAwLCByOiAxMCwgZmlsbDogZCA9PiBkLmsgPiAwID8gXCIjM0M3REQ5XCIgOiBcIiNDMDM5MkJcIiwgc3Ryb2tlOiBcIndoaXRlXCIsIHN0cm9rZVdpZHRoOiAxLjV9KSxcbiAgICBQbG90LnJ1bGVZKFswLjVdLCB7c3Ryb2tlOiBcIiM4QThGOTNcIiwgc3Ryb2tlRGFzaGFycmF5OiBcIjMgNVwifSlcbiAgXVxufSlcbiJ9LHsibWV0aG9kTmFtZSI6ImludGVycHJldFF1aWV0Iiwic291cmNlIjoic2hpbnlJbnB1dCgndzBMJykifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXRRdWlldCIsInNvdXJjZSI6InNoaW55SW5wdXQoJ3cxTCcpIn0seyJtZXRob2ROYW1lIjoiaW50ZXJwcmV0UXVpZXQiLCJzb3VyY2UiOiJzaGlueUlucHV0KCdzaG93TFInKSJ9XX0=
+    </script>
+    <script type="module">
+    if (window.location.protocol === "file:") { alert("The OJS runtime does not work with file:// URLs. Please use a web server to view this document."); }
+    window._ojs.paths.runtimeToDoc = "../../..";
+    window._ojs.paths.runtimeToRoot = "../../../../..";
+    window._ojs.paths.docToRoot = "../..";
+    window._ojs.selfContained = false;
+    window._ojs.runtime.interpretFromScriptTags();
+    </script>
+    <script id="quarto-html-after-body" type="application/javascript">
+      window.document.addEventListener("DOMContentLoaded", function (event) {
+        const tabsets =  window.document.querySelectorAll(".panel-tabset-tabby")
+        tabsets.forEach(function(tabset) {
+          const tabby = new Tabby('#' + tabset.id);
+        });
+        const isCodeAnnotation = (el) => {
+          for (const clz of el.classList) {
+            if (clz.startsWith('code-annotation-')) {                     
+              return true;
+            }
+          }
+          return false;
+        }
+        const onCopySuccess = function(e) {
+          // button target
+          const button = e.trigger;
+          // don't keep focus
+          button.blur();
+          // flash "checked"
+          button.classList.add('code-copy-button-checked');
+          var currentTitle = button.getAttribute("title");
+          button.setAttribute("title", "Copied!");
+          let tooltip;
+          if (window.bootstrap) {
+            button.setAttribute("data-bs-toggle", "tooltip");
+            button.setAttribute("data-bs-placement", "left");
+            button.setAttribute("data-bs-title", "Copied!");
+            tooltip = new bootstrap.Tooltip(button, 
+              { trigger: "manual", 
+                customClass: "code-copy-button-tooltip",
+                offset: [0, -8]});
+            tooltip.show();    
+          }
+          setTimeout(function() {
+            if (tooltip) {
+              tooltip.hide();
+              button.removeAttribute("data-bs-title");
+              button.removeAttribute("data-bs-toggle");
+              button.removeAttribute("data-bs-placement");
+            }
+            button.setAttribute("title", currentTitle);
+            button.classList.remove('code-copy-button-checked');
+          }, 1000);
+          // clear code selection
+          e.clearSelection();
+        }
+        const getTextToCopy = function(trigger) {
+          const outerScaffold = trigger.parentElement.cloneNode(true);
+          const codeEl = outerScaffold.querySelector('code');
+          for (const childEl of codeEl.children) {
+            if (isCodeAnnotation(childEl)) {
+              childEl.remove();
+            }
+          }
+          return codeEl.innerText;
+        }
+        const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+          text: getTextToCopy
+        });
+        clipboard.on('success', onCopySuccess);
+        if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+          const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+            text: getTextToCopy,
+            container: window.document.getElementById('quarto-embedded-source-code-modal')
+          });
+          clipboardModal.on('success', onCopySuccess);
+        }
+          var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+          var mailtoRegex = new RegExp(/^mailto:/);
+            var filterRegex = new RegExp('/' + window.location.host + '/');
+          var isInternal = (href) => {
+              return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+          }
+          // Inspect non-navigation links and adorn them if external
+         var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+          for (var i=0; i<links.length; i++) {
+            const link = links[i];
+            if (!isInternal(link.href)) {
+              // undo the damage that might have been done by quarto-nav.js in the case of
+              // links that we want to consider external
+              if (link.dataset.originalHref !== undefined) {
+                link.href = link.dataset.originalHref;
+              }
+            }
+          }
+        function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+          const config = {
+            allowHTML: true,
+            maxWidth: 500,
+            delay: 100,
+            arrow: false,
+            appendTo: function(el) {
+                return el.closest('section.slide') || el.parentElement;
+            },
+            interactive: true,
+            interactiveBorder: 10,
+            theme: 'light-border',
+            placement: 'bottom-start',
+          };
+          if (contentFn) {
+            config.content = contentFn;
+          }
+          if (onTriggerFn) {
+            config.onTrigger = onTriggerFn;
+          }
+          if (onUntriggerFn) {
+            config.onUntrigger = onUntriggerFn;
+          }
+            config['offset'] = [0,0];
+            config['maxWidth'] = 700;
+          window.tippy(el, config); 
+        }
+        const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+        for (var i=0; i<noterefs.length; i++) {
+          const ref = noterefs[i];
+          tippyHover(ref, function() {
+            // use id or data attribute instead here
+            let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+            try { href = new URL(href).hash; } catch {}
+            const id = href.replace(/^#\/?/, "");
+            const note = window.document.getElementById(id);
+            if (note) {
+              return note.innerHTML;
+            } else {
+              return "";
+            }
+          });
+        }
+        const findCites = (el) => {
+          const parentEl = el.parentElement;
+          if (parentEl) {
+            const cites = parentEl.dataset.cites;
+            if (cites) {
+              return {
+                el,
+                cites: cites.split(' ')
+              };
+            } else {
+              return findCites(el.parentElement)
+            }
+          } else {
+            return undefined;
+          }
+        };
+        var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+        for (var i=0; i<bibliorefs.length; i++) {
+          const ref = bibliorefs[i];
+          const citeInfo = findCites(ref);
+          if (citeInfo) {
+            tippyHover(citeInfo.el, function() {
+              var popup = window.document.createElement('div');
+              citeInfo.cites.forEach(function(cite) {
+                var citeDiv = window.document.createElement('div');
+                citeDiv.classList.add('hanging-indent');
+                citeDiv.classList.add('csl-entry');
+                var biblioDiv = window.document.getElementById('ref-' + cite);
+                if (biblioDiv) {
+                  citeDiv.innerHTML = biblioDiv.innerHTML;
+                }
+                popup.appendChild(citeDiv);
+              });
+              return popup.innerHTML;
+            });
+          }
+        }
+      });
+      </script>
+    
+
+</body></html>

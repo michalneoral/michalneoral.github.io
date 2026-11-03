@@ -73,6 +73,16 @@ Lecturer: prof. Ing. Jiří Matas, Ph.D.<br>
     </div>
 </div>
 
+<div class="slide-deck">
+    <a href="/teaching/rpz/06-logreg/"><img src="/images/teaching/rpz-06-logreg.jpg" alt="First slide of Lab 6: 06 - Logistic Regression, Pattern Recognition and Machine Learning" width="320"></a>
+    <div>
+        <b>Lab 6: Logistic Regression</b><br>
+        From the Bayesian strategy to linear log odds and the sigmoid, learning the weights by maximum likelihood and gradient descent, generative vs discriminative models, softmax, feature lifting and regularization.<br>
+        <a href="/teaching/rpz/06-logreg/"><div class="color-button">slides</div></a>
+        <a href="/teaching/rpz/06-logreg/rpz-06-logreg.pdf"><div class="color-button">pdf</div></a>
+    </div>
+</div>
+
 <h2>Past Courses</h2>
 <ul>
     <li>

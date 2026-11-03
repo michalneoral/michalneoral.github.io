@@ -1,0 +1,45 @@
+/* Styly specifické pro prezentaci 06 - logistická regrese.
+   Obecné komponenty (karty, odvození, krokové grafy, ...) jsou v theme/rpz.scss. */
+
+/* Krokové grafy: výška tak, aby se pod ně vešel popisek */
+.reveal .fig-stack img { width: auto; max-width: 100%; height: 640px; }
+.reveal .fig-stack.tall img { height: 760px; }
+.reveal .fig-stack.low img { height: 560px; }
+.reveal .fig-stack.xlow img { height: 460px; }
+
+/* Barvy pojmů jako v grafech a makrech \cw, \ca, \kp, \km */
+.reveal .pos { color: #3C7DD9; font-weight: 600; }
+.reveal .neg { color: #C0392B; font-weight: 600; }
+.reveal .wcol { color: #7D3C98; font-weight: 600; }
+.reveal .pcol { color: #4E8F3A; font-weight: 600; }
+.reveal .bayes { color: #2F7A52; font-weight: 600; }
+
+/* Výsledek v rámečku: ::: {.result} */
+.reveal .result {
+  font-size: 0.8em; padding: 14px 28px; margin-top: 16px;
+  border: 4px solid #7D3C98; border-radius: 16px; background: #F5EEF8;
+}
+.reveal .result p { margin: 0; }
+.reveal .result .result-label { font-weight: 700; margin-right: 0.4em; }
+
+/* Vzorec nejdřív jako "w = ?", po kliknutí celý: ::: {.swap-eq} se dvěma fragmenty */
+.reveal .swap-eq { display: grid; align-items: center; }
+.reveal .swap-eq > * { grid-area: 1 / 1; }
+
+/* Interaktivní slide: hodnoty pod posuvníky */
+.reveal .try-vals { font-size: 0.62em; line-height: 1.6; margin-top: 0.6em; }
+.reveal .try-vals .try-ml { color: #4E8F3A; }
+.reveal form input[type="checkbox"] { width: 26px; height: 26px; vertical-align: middle; }
+
+/* Pseudokód gradient descent */
+.reveal div.sourceCode pre code { font-size: 25px; line-height: 1.4; }
+
+/* Softmax: vektor čísel */
+.reveal .gt.softmax table { font-size: 0.8em; }
+.reveal .gt.softmax td, .reveal .gt.softmax th { text-align: center; }
+
+/* Obrázky vah MNIST vedle sebe */
+.reveal .weights { display: flex; gap: 28px; justify-content: center; align-items: flex-end; }
+.reveal .weights figure, .reveal .weights > div { margin: 0; text-align: center; }
+.reveal .weights img { height: 500px; width: auto; }
+.reveal .weights .wlabel { font-size: 0.7em; font-weight: 700; display: block; margin-bottom: 6px; }
