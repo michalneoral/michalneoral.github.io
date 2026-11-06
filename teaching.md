@@ -83,6 +83,16 @@ Lecturer: prof. Ing. Jiří Matas, Ph.D.<br>
     </div>
 </div>
 
+<div class="slide-deck">
+    <a href="/teaching/rpz/07-exercises/"><img src="/images/teaching/rpz-07-exercises.jpg" alt="First slide of Lab 7: 07 - Exercise Lab, Pattern Recognition and Machine Learning" width="320"></a>
+    <div>
+        <b>Lab 7: Exercise Lab</b><br>
+        Three problems from previous tests: maximum likelihood with censored data, Parzen windows with Neyman-Pearson, and Bayes with a reject option and an asymmetric loss for two normal classes.<br>
+        <a href="/teaching/rpz/07-exercises/"><div class="color-button">slides</div></a>
+        <a href="/teaching/rpz/07-exercises/rpz-07-exercises.pdf"><div class="color-button">pdf</div></a>
+    </div>
+</div>
+
 <h2>Past Courses</h2>
 <ul>
     <li>
